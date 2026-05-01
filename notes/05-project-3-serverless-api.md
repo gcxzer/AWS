@@ -367,6 +367,104 @@ permission policy = 这份工作身份能做什么
 
 这会连接回项目 1 的权限概念：不要给 Lambda 管理员权限，而是只给它完成任务所需的最小权限。
 
+### 权限是在什么时候设置的
+
+项目 3 的权限不是在一个地方一次性完成的，而是分成三个关键时间点：
+
+```text
+1. 创建 IAM Role 时，设置谁可以使用这个 role
+2. 给 IAM Role 附加 policy 时，设置这个 role 能做什么
+3. 创建或配置 Lambda 时，设置 Lambda 实际使用哪个 role
+```
+
+第一步：创建 execution role。
+
+```text
+IAM
+  -> Roles / Rollen
+  -> Create role / Rolle erstellen
+  -> Trusted entity: Lambda
+  -> Role name: learning-notes-lambda-role
+```
+
+这一步设置的是 trust policy / 信任关系：
+
+```text
+Lambda service 可以 assume learning-notes-lambda-role
+```
+
+也就是回答这个问题：
+
+```text
+谁可以使用这个 role？
+```
+
+第二步：给 role 加权限 policy。
+
+项目 3 需要两类权限：
+
+```text
+AWSLambdaBasicExecutionRole
+LearningNotesDynamoDBAccess
+```
+
+它们回答的是另一个问题：
+
+```text
+使用这个 role 以后，可以做什么？
+```
+
+具体含义：
+
+```text
+AWSLambdaBasicExecutionRole
+  -> 允许 Lambda 写 CloudWatch Logs
+
+LearningNotesDynamoDBAccess
+  -> 允许 Lambda 访问 DynamoDB table learning-notes
+  -> dynamodb:PutItem
+  -> dynamodb:GetItem
+  -> dynamodb:Scan
+  -> dynamodb:DeleteItem
+```
+
+第三步：让 Lambda function 使用这个 role。
+
+```text
+Lambda
+  -> learning-notes-api
+  -> Configuration / Konfiguration
+  -> Permissions / Berechtigungen
+  -> Execution role / Ausführungsrolle
+  -> learning-notes-lambda-role
+```
+
+这一步非常关键。即使 `learning-notes-lambda-role` 的权限完全正确，如果 Lambda function 实际使用的是另一个 role，它也拿不到这些权限。
+
+项目 3 的权限时间线：
+
+```text
+1. 创建 DynamoDB table: learning-notes
+2. 创建 IAM Role: learning-notes-lambda-role
+3. 设置信任关系：允许 Lambda 使用这个 role
+4. 附加 AWSLambdaBasicExecutionRole：允许写 CloudWatch Logs
+5. 附加 LearningNotesDynamoDBAccess：允许访问 DynamoDB
+6. 创建 Lambda function: learning-notes-api
+7. 配置 Lambda 的 execution role 为 learning-notes-lambda-role
+8. API Gateway 调用 Lambda
+9. Lambda 用这个 role 调 DynamoDB
+```
+
+权限检查发生在运行时：
+
+```text
+Lambda 代码执行 table.put_item()
+  -> boto3 调 DynamoDB PutItem API
+  -> AWS 检查 Lambda 当前 role 是否允许 dynamodb:PutItem
+  -> 允许：写入成功
+  -> 不允许：AccessDeniedException
+```
+
 ### 两种 role 不要混在一起
 
 你现在会看到两类“身份”：
@@ -620,7 +718,18 @@ LearningNotesDynamoDBAccess
 - `AWSLambdaBasicExecutionRole`：允许 Lambda 写 CloudWatch Logs。
 - `LearningNotesDynamoDBAccess`：只允许访问 `learning-notes` 表的 `PutItem`、`GetItem`、`Scan`、`DeleteItem`。
 
-注意：Lambda function 必须真的使用这个 execution role。曾经出现过一次 `AccessDeniedException`，原因是 Lambda 实际使用的是自动创建的 `learning-notes-api-role-nu8fie6u`，而 DynamoDB 权限加在了 `learning-notes-lambda-role` 上。
+注意：Lambda function 必须真的使用这个 execution role。曾经出现过一次 `AccessDeniedException`，问题发生在权限时间线的第 7 步：Lambda 实际使用的是自动创建的 `learning-notes-api-role-nu8fie6u`，而 DynamoDB 权限加在了 `learning-notes-lambda-role` 上。
+
+当时的错误可以这样读：
+
+```text
+Lambda 正在运行
+  -> Lambda 当前 role 是 learning-notes-api-role-nu8fie6u
+  -> 这个 role 没有 dynamodb:PutItem
+  -> DynamoDB 拒绝写入
+```
+
+这不是 `xzhu-admin` 没权限，而是 Lambda 运行身份没有权限。
 
 修复方式：
 
