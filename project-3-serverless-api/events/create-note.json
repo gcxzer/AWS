@@ -1,0 +1,17 @@
+{
+  "version": "2.0",
+  "routeKey": "POST /notes",
+  "rawPath": "/notes",
+  "rawQueryString": "",
+  "headers": {
+    "content-type": "application/json"
+  },
+  "requestContext": {
+    "http": {
+      "method": "POST",
+      "path": "/notes"
+    }
+  },
+  "body": "{\"title\":\"First AWS API note\",\"content\":\"API Gateway sends HTTP requests to Lambda.\"}",
+  "isBase64Encoded": false
+}

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="520" viewBox="0 0 1120 520" role="img" aria-labelledby="title desc">
+  <title id="title">S3 and CloudFront static site flow</title>
+  <desc id="desc">Browser requests HTTPS content from CloudFront, CloudFront retrieves private static files from S3, optional ACM certificate and Route 53 custom domain are shown.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#344054"/>
+    </marker>
+    <filter id="softShadow" x="-10%" y="-15%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#101828" flood-opacity="0.14"/>
+    </filter>
+    <style>
+      .bg { fill: #f7f8fb; }
+      .node { filter: url(#softShadow); stroke-width: 2.5; rx: 18; }
+      .browser { fill: #eef4ff; stroke: #155eef; }
+      .cdn { fill: #ecfdf3; stroke: #039855; }
+      .bucket { fill: #fff7ed; stroke: #f97316; }
+      .optional { fill: #fdf2fa; stroke: #c11574; }
+      .line { stroke: #344054; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+      .dash { stroke: #667085; stroke-width: 2.5; fill: none; stroke-dasharray: 8 8; marker-end: url(#arrow); }
+      .title { font: 700 26px Arial, sans-serif; fill: #101828; }
+      .label { font: 700 22px Arial, sans-serif; fill: #101828; }
+      .body { font: 400 17px Arial, sans-serif; fill: #475467; }
+      .small { font: 400 14px Arial, sans-serif; fill: #667085; }
+      .tag { font: 700 14px Arial, sans-serif; fill: #344054; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1120" height="520"/>
+  <text class="title" x="56" y="58">项目 2 目标架构：私有 S3 + CloudFront HTTPS 访问</text>
+  <text class="body" x="56" y="90">浏览器不直接访问 S3 bucket，而是通过 CloudFront 获取静态文件。</text>
+
+  <rect class="node browser" x="72" y="168" width="250" height="150"/>
+  <text class="label" x="106" y="212">Browser</text>
+  <text class="body" x="106" y="246">用户访问 HTTPS URL</text>
+  <text class="small" x="106" y="276">CloudFront 默认域名</text>
+
+  <rect class="node cdn" x="438" y="148" width="270" height="190"/>
+  <text class="label" x="474" y="198">CloudFront</text>
+  <text class="body" x="474" y="234">CDN 和 HTTPS 入口</text>
+  <text class="small" x="474" y="266">缓存静态文件</text>
+  <text class="small" x="474" y="292">限制 S3 直接公开访问</text>
+
+  <rect class="node bucket" x="824" y="168" width="240" height="150"/>
+  <text class="label" x="860" y="212">S3 Bucket</text>
+  <text class="body" x="860" y="246">存放 index.html</text>
+  <text class="small" x="860" y="276">bucket 保持私有</text>
+
+  <path class="line" d="M322 243 C360 243 392 243 438 243"/>
+  <text class="tag" x="354" y="224">HTTPS request</text>
+
+  <path class="line" d="M708 243 C746 243 780 243 824 243"/>
+  <text class="tag" x="738" y="224">origin fetch</text>
+
+  <rect class="node optional" x="162" y="380" width="250" height="84"/>
+  <text class="label" x="190" y="414">ACM</text>
+  <text class="small" x="190" y="442">自定义域名证书，暂时跳过</text>
+
+  <rect class="node optional" x="708" y="380" width="250" height="84"/>
+  <text class="label" x="736" y="414">Route 53</text>
+  <text class="small" x="736" y="442">域名解析，暂时跳过</text>
+
+  <path class="dash" d="M412 422 C490 422 590 422 708 422"/>
+  <text class="tag" x="504" y="404">custom domain path later</text>
+</svg>

@@ -1,0 +1,17 @@
+{
+  "version": "2.0",
+  "routeKey": "GET /notes/{id}",
+  "rawPath": "/notes/NOTE_ID",
+  "rawQueryString": "",
+  "headers": {},
+  "pathParameters": {
+    "id": "NOTE_ID"
+  },
+  "requestContext": {
+    "http": {
+      "method": "GET",
+      "path": "/notes/NOTE_ID"
+    }
+  },
+  "isBase64Encoded": false
+}

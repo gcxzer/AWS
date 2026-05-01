@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="780" viewBox="0 0 1320 780" role="img" aria-labelledby="title desc">
+  <title id="title">Project 3 Serverless API service relationships</title>
+  <desc id="desc">A diagram explaining how client, API Gateway, Lambda, IAM role, DynamoDB, CloudWatch Logs, and CloudTrail relate in the Learning Notes API.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#344054"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#175cd3"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-15%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#101828" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .page { fill: #f6f8fb; }
+      .box { filter: url(#shadow); stroke-width: 2.4; rx: 16; }
+      .client { fill: #eef4ff; stroke: #175cd3; }
+      .gateway { fill: #ecfdf3; stroke: #039855; }
+      .lambda { fill: #fff7ed; stroke: #f97316; }
+      .db { fill: #fdf2fa; stroke: #c11574; }
+      .iam { fill: #f4f3ff; stroke: #7a5af8; }
+      .logs { fill: #fffaeb; stroke: #dc6803; }
+      .trail { fill: #f9fafb; stroke: #667085; }
+      .title { font: 700 34px Arial, sans-serif; fill: #101828; }
+      .subtitle { font: 400 18px Arial, sans-serif; fill: #475467; }
+      .label { font: 700 24px Arial, sans-serif; fill: #101828; }
+      .body { font: 400 17px Arial, sans-serif; fill: #475467; }
+      .small { font: 400 14px Arial, sans-serif; fill: #667085; }
+      .code { font: 700 14px "SFMono-Regular", Consolas, monospace; fill: #344054; }
+      .line { stroke: #344054; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+      .line-blue { stroke: #175cd3; stroke-width: 3.2; fill: none; marker-end: url(#arrowBlue); }
+      .line-dash { stroke: #667085; stroke-width: 2.4; stroke-dasharray: 8 8; fill: none; marker-end: url(#arrow); }
+      .tag { font: 700 15px Arial, sans-serif; fill: #344054; }
+      .num { fill: #175cd3; font: 700 18px Arial, sans-serif; }
+      .note { fill: #ffffff; stroke: #d0d5dd; stroke-width: 1.8; rx: 12; }
+    </style>
+  </defs>
+
+  <rect class="page" width="1320" height="780"/>
+  <text class="title" x="52" y="58">项目 3：Serverless API 服务关系图</text>
+  <text class="subtitle" x="52" y="92">Learning Notes API: HTTP 请求进入 API Gateway，Lambda 执行业务逻辑，DynamoDB 保存数据，CloudWatch Logs 记录运行日志。</text>
+
+  <rect class="box client" x="70" y="190" width="210" height="142"/>
+  <text class="label" x="104" y="232">Client</text>
+  <text class="body" x="104" y="264">curl / browser</text>
+  <text class="small" x="104" y="292">发送 HTTP 请求</text>
+
+  <rect class="box gateway" x="390" y="168" width="250" height="186"/>
+  <text class="label" x="426" y="210">API Gateway</text>
+  <text class="body" x="426" y="244">HTTP API 入口</text>
+  <text class="small" x="426" y="274">GET /notes</text>
+  <text class="small" x="426" y="298">POST /notes</text>
+  <text class="small" x="426" y="322">GET/DELETE /notes/{id}</text>
+
+  <rect class="box lambda" x="756" y="168" width="250" height="186"/>
+  <text class="label" x="792" y="210">Lambda</text>
+  <text class="body" x="792" y="244">learning-notes-api</text>
+  <text class="small" x="792" y="274">运行 Python 代码</text>
+  <text class="small" x="792" y="298">解析 event</text>
+  <text class="small" x="792" y="322">返回 HTTP response</text>
+
+  <rect class="box db" x="1068" y="190" width="210" height="142"/>
+  <text class="label" x="1100" y="232">DynamoDB</text>
+  <text class="body" x="1100" y="264">learning-notes</text>
+  <text class="small" x="1100" y="292">id = partition key</text>
+
+  <path class="line-blue" d="M280 261 C322 261 348 261 390 261"/>
+  <text class="num" x="302" y="240">1</text>
+  <text class="tag" x="314" y="286">HTTP request</text>
+
+  <path class="line-blue" d="M640 261 C686 261 710 261 756 261"/>
+  <text class="num" x="666" y="240">2</text>
+  <text class="tag" x="672" y="286">invoke Lambda</text>
+
+  <path class="line-blue" d="M1006 261 C1030 261 1045 261 1068 261"/>
+  <text class="num" x="1022" y="240">3</text>
+  <text class="tag" x="1018" y="286">boto3 calls</text>
+
+  <path class="line" d="M1068 310 C1012 394 884 416 760 374 C610 324 460 350 308 310"/>
+  <text class="num" x="650" y="386">4</text>
+  <text class="tag" x="676" y="388">JSON response returns to client</text>
+
+  <rect class="box iam" x="690" y="470" width="300" height="158"/>
+  <text class="label" x="724" y="510">IAM Role</text>
+  <text class="body" x="724" y="542">learning-notes-lambda-role</text>
+  <text class="small" x="724" y="572">允许 Lambda 写日志</text>
+  <text class="small" x="724" y="596">允许访问 learning-notes 表</text>
+
+  <path class="line-dash" d="M840 470 C840 420 842 392 860 354"/>
+  <text class="tag" x="866" y="430">Lambda assumes role</text>
+
+  <rect class="box logs" x="388" y="480" width="250" height="138"/>
+  <text class="label" x="424" y="520">CloudWatch Logs</text>
+  <text class="body" x="424" y="552">/aws/lambda/</text>
+  <text class="body" x="424" y="578">learning-notes-api</text>
+  <text class="small" x="424" y="604">START / END / REPORT / errors</text>
+
+  <path class="line-dash" d="M756 330 C686 396 612 438 556 480"/>
+  <text class="tag" x="584" y="430">runtime logs</text>
+
+  <rect class="box trail" x="70" y="480" width="240" height="138"/>
+  <text class="label" x="104" y="520">CloudTrail</text>
+  <text class="body" x="104" y="552">账号操作审计</text>
+  <text class="small" x="104" y="580">创建 API / Lambda / role</text>
+  <text class="small" x="104" y="604">不是应用运行日志</text>
+
+  <path class="line-dash" d="M390 330 C312 384 242 426 196 480"/>
+  <text class="tag" x="232" y="430">management events</text>
+
+  <rect class="note" x="70" y="672" width="1208" height="56"/>
+  <text class="code" x="98" y="706">一句话：API Gateway 管 HTTP 入口，Lambda 管业务代码，DynamoDB 管数据持久化，IAM Role 管 Lambda 权限，CloudWatch Logs 管运行日志。</text>
+</svg>

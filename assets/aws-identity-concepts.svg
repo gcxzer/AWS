@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
+  <title id="title">AWS Identity Center concept relationships</title>
+  <desc id="desc">A diagram explaining how root user, IAM Identity Center, users, groups, permission sets, assignments, AWS accounts, console, and CLI relate.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#344054"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#101828" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .page { fill: #f6f8fb; }
+      .title { font: 700 34px Arial, sans-serif; fill: #111827; }
+      .subtitle { font: 400 18px Arial, sans-serif; fill: #475467; }
+      .box { fill: #ffffff; stroke: #d0d5dd; stroke-width: 2; rx: 14; filter: url(#shadow); }
+      .box-soft { fill: #f9fafb; stroke: #d0d5dd; stroke-width: 2; rx: 14; }
+      .root { fill: #fff4ed; stroke: #fb6514; }
+      .center { fill: #eff8ff; stroke: #2e90fa; }
+      .green { fill: #ecfdf3; stroke: #12b76a; }
+      .purple { fill: #f4f3ff; stroke: #7a5af8; }
+      .yellow { fill: #fffaeb; stroke: #f79009; }
+      .label { font: 700 20px Arial, sans-serif; fill: #101828; }
+      .small { font: 400 15px Arial, sans-serif; fill: #475467; }
+      .tiny { font: 400 13px Arial, sans-serif; fill: #667085; }
+      .callout { font: 700 16px Arial, sans-serif; fill: #344054; }
+      .arrow { stroke: #344054; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+      .arrow-dashed { stroke: #667085; stroke-width: 2.2; stroke-dasharray: 8 7; fill: none; marker-end: url(#arrow); }
+      .danger { fill: #b42318; font: 700 15px Arial, sans-serif; }
+      .ok { fill: #027a48; font: 700 15px Arial, sans-serif; }
+    </style>
+  </defs>
+
+  <rect class="page" width="1280" height="760"/>
+  <text class="title" x="52" y="58">AWS 日常登录与权限关系图</text>
+  <text class="subtitle" x="52" y="92">目标：root 只做账号级管理；日常学习使用 IAM Identity Center 用户进入 AWS account。</text>
+
+  <rect class="box root" x="52" y="140" width="300" height="170"/>
+  <text class="label" x="78" y="178">Root user</text>
+  <text class="small" x="78" y="210">账号最高所有者</text>
+  <text class="small" x="78" y="236">已开启 MFA</text>
+  <text class="danger" x="78" y="270">不用于日常操作</text>
+
+  <rect class="box center" x="450" y="128" width="380" height="195"/>
+  <text class="label" x="480" y="166">IAM Identity Center</text>
+  <text class="small" x="480" y="198">管理谁能登录、进入哪个账号、</text>
+  <text class="small" x="480" y="224">使用哪一包权限。</text>
+  <text class="tiny" x="480" y="262">你已经启用了 Organizations instance</text>
+  <text class="tiny" x="480" y="286">Region: Europe (Frankfurt)</text>
+
+  <rect class="box green" x="930" y="128" width="296" height="195"/>
+  <text class="label" x="960" y="166">AWS account</text>
+  <text class="small" x="960" y="198">资源和账单的容器</text>
+  <text class="small" x="960" y="224">账号名：xzhu</text>
+  <text class="tiny" x="960" y="262">S3 / Lambda / EC2 / RDS</text>
+  <text class="tiny" x="960" y="286">以后都创建在这里</text>
+
+  <path class="arrow-dashed" d="M352 218 C390 218 406 218 450 218"/>
+  <text class="callout" x="370" y="198">只用于启用/恢复</text>
+
+  <rect class="box-soft" x="90" y="405" width="240" height="118"/>
+  <text class="label" x="118" y="440">User</text>
+  <text class="small" x="118" y="470">xzhu-admin</text>
+  <text class="tiny" x="118" y="498">你的日常登录身份</text>
+
+  <rect class="box-soft" x="390" y="405" width="240" height="118"/>
+  <text class="label" x="418" y="440">Group</text>
+  <text class="small" x="418" y="470">AWS-Admins</text>
+  <text class="tiny" x="418" y="498">管理员用户集合</text>
+
+  <rect class="box-soft" x="690" y="405" width="260" height="118"/>
+  <text class="label" x="718" y="440">Permission set</text>
+  <text class="small" x="718" y="470">AdministratorAccess</text>
+  <text class="tiny" x="718" y="498">一包管理员权限</text>
+
+  <rect class="box yellow" x="1010" y="390" width="216" height="148"/>
+  <text class="label" x="1038" y="426">Assignment</text>
+  <text class="small" x="1038" y="458">把三件事连起来：</text>
+  <text class="tiny" x="1038" y="486">Group + Account</text>
+  <text class="tiny" x="1038" y="510">+ Permission set</text>
+
+  <path class="arrow" d="M330 464 L390 464"/>
+  <text class="callout" x="336" y="444">加入</text>
+  <path class="arrow" d="M630 464 L690 464"/>
+  <text class="callout" x="640" y="444">使用</text>
+  <path class="arrow" d="M950 464 L1010 464"/>
+  <text class="callout" x="958" y="444">分配</text>
+  <path class="arrow" d="M1118 390 C1118 350 1118 340 1118 323"/>
+
+  <rect class="box purple" x="148" y="610" width="420" height="92"/>
+  <text class="label" x="178" y="646">AWS access portal / SSO</text>
+  <text class="small" x="178" y="676">网页入口：登录后选择账号和角色</text>
+
+  <rect class="box purple" x="712" y="610" width="420" height="92"/>
+  <text class="label" x="742" y="646">Console 和 CLI</text>
+  <text class="small" x="742" y="676">Console 用浏览器点；CLI 用终端 aws 命令</text>
+
+  <path class="arrow" d="M210 523 C210 570 245 590 298 610"/>
+  <text class="callout" x="94" y="576">日常登录</text>
+  <path class="arrow" d="M568 656 L712 656"/>
+  <text class="callout" x="604" y="636">拿到临时身份</text>
+  <path class="arrow" d="M922 610 C922 575 968 550 1036 535"/>
+
+  <rect x="52" y="338" width="1174" height="1.5" fill="#d0d5dd"/>
+  <text class="ok" x="52" y="363">你现在已经完成：</text>
+  <text class="small" x="182" y="363">xzhu-admin 属于 AWS-Admins；AWS-Admins 可以进入 xzhu account；权限是 AdministratorAccess。</text>
+</svg>

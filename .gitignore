@@ -1,0 +1,75 @@
+# OS / editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+credentials
+credentials.json
+secrets.json
+*.secret
+
+# AWS local configuration and generated outputs
+.aws/
+awscliv2.zip
+samconfig.toml
+.aws-sam/
+cdk.out/
+cdk.context.json
+cdk*.json
+*.template
+packaged.yaml
+cloudformation-output*.json
+
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Node / frontend project files
+node_modules/
+.next/
+out/
+coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Lambda / deployment artifacts
+*.zip
+*.tar.gz
+lambda-package/
+package/
+deploy/
+
+# Local test outputs
+tmp/
+temp/
+*.log
+project-3-serverless-api/events/output*.json
+project-3-serverless-api/.local/
