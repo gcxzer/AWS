@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="330" viewBox="0 0 980 330" role="img" aria-labelledby="title desc">
+  <title id="title">Project 4 file processing flow</title>
+  <desc id="desc">S3 upload event triggers Lambda, Lambda writes processed results to S3, logs to CloudWatch, and can publish notifications or send failures to SQS.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155" />
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 10; }
+      .optional { fill: #fefce8; stroke: #a16207; stroke-width: 2; rx: 10; }
+      .label { fill: #0f172a; font: 700 18px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .small { fill: #475569; font: 14px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .arrow { stroke: #334155; stroke-width: 2.4; fill: none; marker-end: url(#arrow); }
+      .soft { stroke: #94a3b8; stroke-width: 2; fill: none; marker-end: url(#arrow); stroke-dasharray: 6 6; }
+    </style>
+  </defs>
+  <rect class="bg" width="980" height="330" />
+
+  <rect class="box" x="36" y="92" width="150" height="96" />
+  <text class="label" x="111" y="130" text-anchor="middle">Uploader</text>
+  <text class="small" x="111" y="156" text-anchor="middle">CSV / text file</text>
+
+  <rect class="box" x="246" y="82" width="170" height="116" />
+  <text class="label" x="331" y="122" text-anchor="middle">S3 input</text>
+  <text class="small" x="331" y="150" text-anchor="middle">uploads/ prefix</text>
+  <text class="small" x="331" y="172" text-anchor="middle">ObjectCreated event</text>
+
+  <rect class="box" x="486" y="82" width="170" height="116" />
+  <text class="label" x="571" y="122" text-anchor="middle">Lambda</text>
+  <text class="small" x="571" y="150" text-anchor="middle">read file</text>
+  <text class="small" x="571" y="172" text-anchor="middle">build JSON summary</text>
+
+  <rect class="box" x="726" y="82" width="170" height="116" />
+  <text class="label" x="811" y="122" text-anchor="middle">S3 output</text>
+  <text class="small" x="811" y="150" text-anchor="middle">processed/ prefix</text>
+  <text class="small" x="811" y="172" text-anchor="middle">summary.json</text>
+
+  <rect class="optional" x="486" y="236" width="170" height="64" />
+  <text class="label" x="571" y="262" text-anchor="middle">CloudWatch</text>
+  <text class="small" x="571" y="284" text-anchor="middle">logs and errors</text>
+
+  <rect class="optional" x="706" y="236" width="110" height="64" />
+  <text class="label" x="761" y="262" text-anchor="middle">SNS</text>
+  <text class="small" x="761" y="284" text-anchor="middle">notify</text>
+
+  <rect class="optional" x="846" y="236" width="110" height="64" />
+  <text class="label" x="901" y="262" text-anchor="middle">SQS</text>
+  <text class="small" x="901" y="284" text-anchor="middle">DLQ</text>
+
+  <path class="arrow" d="M186 140 H238" />
+  <path class="arrow" d="M416 140 H478" />
+  <path class="arrow" d="M656 140 H718" />
+  <path class="soft" d="M571 198 V228" />
+  <path class="soft" d="M632 198 C674 214 708 226 744 236" />
+  <path class="soft" d="M610 198 C692 220 792 224 884 236" />
+</svg>

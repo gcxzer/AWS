@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="380" viewBox="0 0 1080 380" role="img" aria-labelledby="title desc">
+  <title id="title">Project 5 data lake flow</title>
+  <desc id="desc">CSV files are stored in Amazon S3, cataloged in AWS Glue Data Catalog, queried by Amazon Athena, and optionally visualized in Amazon Quick Sight.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155" />
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 10; }
+      .soft { fill: #eef6ff; stroke: #2563eb; stroke-width: 2; rx: 10; }
+      .optional { fill: #fefce8; stroke: #a16207; stroke-width: 2; rx: 10; }
+      .label { fill: #0f172a; font: 700 18px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .small { fill: #475569; font: 14px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .arrow { stroke: #334155; stroke-width: 2.4; fill: none; marker-end: url(#arrow); }
+      .dashed { stroke: #64748b; stroke-width: 2.2; fill: none; marker-end: url(#arrow); stroke-dasharray: 7 6; }
+    </style>
+  </defs>
+  <rect class="bg" width="1080" height="380" />
+
+  <rect class="box" x="34" y="130" width="150" height="96" />
+  <text class="label" x="109" y="167" text-anchor="middle">Sample data</text>
+  <text class="small" x="109" y="194" text-anchor="middle">CSV / logs</text>
+
+  <rect class="soft" x="246" y="78" width="190" height="206" />
+  <text class="label" x="341" y="114" text-anchor="middle">Amazon S3</text>
+  <text class="small" x="341" y="142" text-anchor="middle">data lake storage</text>
+  <text class="small" x="341" y="178" text-anchor="middle">raw/</text>
+  <text class="small" x="341" y="202" text-anchor="middle">curated/</text>
+  <text class="small" x="341" y="226" text-anchor="middle">athena-results/</text>
+
+  <rect class="box" x="500" y="62" width="200" height="118" />
+  <text class="label" x="600" y="101" text-anchor="middle">AWS Glue</text>
+  <text class="label" x="600" y="126" text-anchor="middle">Data Catalog</text>
+  <text class="small" x="600" y="153" text-anchor="middle">database, table, schema</text>
+
+  <rect class="box" x="500" y="230" width="200" height="90" />
+  <text class="label" x="600" y="266" text-anchor="middle">Glue Crawler</text>
+  <text class="small" x="600" y="292" text-anchor="middle">optional metadata scan</text>
+
+  <rect class="soft" x="766" y="93" width="190" height="146" />
+  <text class="label" x="861" y="132" text-anchor="middle">Amazon Athena</text>
+  <text class="small" x="861" y="160" text-anchor="middle">serverless SQL query</text>
+  <text class="small" x="861" y="186" text-anchor="middle">reads S3 using catalog</text>
+  <text class="small" x="861" y="212" text-anchor="middle">writes query results</text>
+
+  <rect class="optional" x="766" y="286" width="190" height="64" />
+  <text class="label" x="861" y="312" text-anchor="middle">Amazon Quick Sight</text>
+  <text class="small" x="861" y="334" text-anchor="middle">optional dashboard</text>
+
+  <path class="arrow" d="M184 178 H238" />
+  <path class="dashed" d="M436 128 H492" />
+  <path class="dashed" d="M500 276 C448 276 435 236 435 210" />
+  <path class="arrow" d="M700 122 H758" />
+  <path class="arrow" d="M766 198 C670 210 542 236 436 242" />
+  <path class="dashed" d="M861 239 V278" />
+
+  <text class="small" x="468" y="109" text-anchor="middle">metadata</text>
+  <text class="small" x="733" y="103" text-anchor="middle">schema</text>
+  <text class="small" x="675" y="223" text-anchor="middle">SQL reads data</text>
+</svg>

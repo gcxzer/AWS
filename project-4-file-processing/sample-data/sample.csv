@@ -1,0 +1,4 @@
+date,title,service,minutes
+2026-05-01,Project 4 kickoff,S3,30
+2026-05-01,File event processing,Lambda,45
+2026-05-01,Failure tracking,SQS,20

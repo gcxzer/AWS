@@ -38,6 +38,19 @@
    - Serverless 后端和传统服务器后端的区别
    - Learning Notes API 当前资源清单和常见混淆点
 
+6. [项目 4：文件上传与数据处理](06-project-4-file-processing.md)
+   - S3 ObjectCreated event、Lambda trigger、CloudWatch Logs
+   - input bucket 和 output bucket 的职责拆分
+   - SQS、SNS、EventBridge 在事件驱动系统里的区别
+   - 文件处理结果、失败追踪和清理步骤
+
+7. [项目 5：数据湖入门](07-project-5-data-lake.md)
+   - S3 作为数据湖存储层
+   - Glue Data Catalog、database、table、schema、metadata
+   - Athena 用 SQL 查询 S3 文件
+   - CSV、Parquet、partition、schema-on-read
+   - Quick / QuickSight 在 BI dashboard 层的位置
+
 ## 相关文件
 
 - 学习路线：[../aws-learning-roadmap.md](../aws-learning-roadmap.md)
@@ -46,3 +59,7 @@
 - 项目 2 README：[../project-2-static-site/README.md](../project-2-static-site/README.md)
 - 项目 3 Lambda 代码：[../project-3-serverless-api/lambda_function.py](../project-3-serverless-api/lambda_function.py)
 - 项目 3 README：[../project-3-serverless-api/README.md](../project-3-serverless-api/README.md)
+- 项目 4 Lambda 代码：[../project-4-file-processing/lambda_function.py](../project-4-file-processing/lambda_function.py)
+- 项目 4 README：[../project-4-file-processing/README.md](../project-4-file-processing/README.md)
+- 项目 5 笔记：[../notes/07-project-5-data-lake.md](../notes/07-project-5-data-lake.md)
+- 项目 5 架构图：[../assets/project-5-data-lake-flow.svg](../assets/project-5-data-lake-flow.svg)

@@ -1,0 +1,21 @@
+{
+  "Records": [
+    {
+      "eventVersion": "2.1",
+      "eventSource": "aws:s3",
+      "awsRegion": "eu-central-1",
+      "eventTime": "2026-05-01T10:00:00.000Z",
+      "eventName": "ObjectCreated:Put",
+      "s3": {
+        "bucket": {
+          "name": "xzhu-aws-learning-file-input-20260501",
+          "arn": "arn:aws:s3:::xzhu-aws-learning-file-input-20260501"
+        },
+        "object": {
+          "key": "uploads/sample.csv",
+          "size": 151
+        }
+      }
+    }
+  ]
+}
