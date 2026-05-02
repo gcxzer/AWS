@@ -1,0 +1,10 @@
+{"id":"r001","text":"  The model answered quickly and the response was clear.  ","sentiment":"positive","source":"demo"}
+{"id":"r002","text":"The endpoint was expensive when I forgot to delete it overnight.","sentiment":"negative","source":"demo"}
+{"id":"r003","text":"Batch transform finished the offline inference job without keeping a server alive.","sentiment":"positive","source":"demo"}
+{"id":"r004","text":"I could not find the CloudWatch logs at first, but the training job itself completed.","sentiment":"neutral","source":"demo"}
+{"id":"r005","text":"The notebook instance stayed running longer than expected.","sentiment":"negative","source":"demo"}
+{"id":"r006","text":"S3 artifacts made it easy to inspect the processed data and model output.","sentiment":"positive","source":"demo"}
+{"id":"r007","text":"The IAM role was confusing because local credentials and job execution credentials are different.","sentiment":"neutral","source":"demo"}
+{"id":"r008","text":"Serverless inference is useful for traffic that is not constant.","sentiment":"positive","source":"demo"}
+{"id":"r009","text":"The job failed because the input channel path was wrong.","sentiment":"negative","source":"demo"}
+{"id":"r010","text":"Using VS Code locally feels better than opening a cloud notebook for every small edit.","sentiment":"positive","source":"demo"}

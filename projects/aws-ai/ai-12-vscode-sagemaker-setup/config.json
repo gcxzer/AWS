@@ -1,0 +1,8 @@
+{
+  "profile": "aws-learning",
+  "region": "eu-central-1",
+  "account_id": "089781651608",
+  "sagemaker_role_arn": "arn:aws:iam::089781651608:role/ai-12-sagemaker-execution-role",
+  "bucket": "aws-ai-sagemaker-learning-089781651608-eu-central-1-an",
+  "prefix": "sagemaker/ai-12"
+}

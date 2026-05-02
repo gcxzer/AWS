@@ -15,6 +15,9 @@
 9. [AI-9：AI 生产化、观测与治理](09-ai-production-governance.md)
 10. [AI-10：AWS 专用 AI API](10-aws-specialized-ai-apis.md)
 11. [AI-11：SageMaker 总览与选型](11-sagemaker-overview-and-selection.md)
+12. [AI-12：VS Code、Domain、IAM 与 S3](12-vscode-sagemaker-setup.md)
+13. [AI-13：Processing Jobs](13-processing-jobs.md)
+14. [AI-14：Hugging Face Training Jobs 基础](14-huggingface-training-jobs.md)
 
 ## 相关文件
 
@@ -41,3 +44,9 @@
 - AI-10 README：[../../projects/aws-ai/ai-10-aws-specialized-ai-apis/README.md](../../projects/aws-ai/ai-10-aws-specialized-ai-apis/README.md)
 - AI-11 本地代码：[../../projects/aws-ai/ai-11-sagemaker-overview-and-selection/](../../projects/aws-ai/ai-11-sagemaker-overview-and-selection/)
 - AI-11 README：[../../projects/aws-ai/ai-11-sagemaker-overview-and-selection/README.md](../../projects/aws-ai/ai-11-sagemaker-overview-and-selection/README.md)
+- AI-12 本地代码：[../../projects/aws-ai/ai-12-vscode-sagemaker-setup/](../../projects/aws-ai/ai-12-vscode-sagemaker-setup/)
+- AI-12 README：[../../projects/aws-ai/ai-12-vscode-sagemaker-setup/README.md](../../projects/aws-ai/ai-12-vscode-sagemaker-setup/README.md)
+- AI-13 本地代码：[../../projects/aws-ai/ai-13-processing-jobs/](../../projects/aws-ai/ai-13-processing-jobs/)
+- AI-13 README：[../../projects/aws-ai/ai-13-processing-jobs/README.md](../../projects/aws-ai/ai-13-processing-jobs/README.md)
+- AI-14 本地代码：[../../projects/aws-ai/ai-14-huggingface-training-jobs/](../../projects/aws-ai/ai-14-huggingface-training-jobs/)
+- AI-14 README：[../../projects/aws-ai/ai-14-huggingface-training-jobs/README.md](../../projects/aws-ai/ai-14-huggingface-training-jobs/README.md)

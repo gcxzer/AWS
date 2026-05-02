@@ -1,0 +1,12 @@
+{
+  "profile": "aws-learning",
+  "region": "eu-central-1",
+  "account_id": "089781651608",
+  "sagemaker_role_arn": "arn:aws:iam::089781651608:role/ai-12-sagemaker-execution-role",
+  "bucket": "aws-ai-sagemaker-learning-089781651608-eu-central-1-an",
+  "prefix": "sagemaker/ai-13",
+  "processing_image_uri": "763104351884.dkr.ecr.eu-central-1.amazonaws.com/pytorch-training:2.1.0-cpu-py310",
+  "processing_instance_type": "ml.t3.medium",
+  "processing_volume_size_gb": 30,
+  "processing_max_runtime_seconds": 900
+}
