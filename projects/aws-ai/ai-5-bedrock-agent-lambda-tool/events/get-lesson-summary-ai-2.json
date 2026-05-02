@@ -1,0 +1,28 @@
+{
+  "messageVersion": "1.0",
+  "agent": {
+    "name": "ai-5-lesson-helper-agent",
+    "id": "LOCALTEST",
+    "alias": "TSTALIASID",
+    "version": "DRAFT"
+  },
+  "inputText": "Summarize what I learned in AI-2.",
+  "sessionId": "local-test-session",
+  "actionGroup": "LessonSummaryActionGroup",
+  "apiPath": "/lesson-summary",
+  "httpMethod": "GET",
+  "parameters": [
+    {
+      "name": "lesson_id",
+      "type": "string",
+      "value": "AI-2"
+    },
+    {
+      "name": "detail_level",
+      "type": "string",
+      "value": "brief"
+    }
+  ],
+  "sessionAttributes": {},
+  "promptSessionAttributes": {}
+}

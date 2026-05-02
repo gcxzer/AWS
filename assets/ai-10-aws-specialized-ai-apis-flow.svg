@@ -1,0 +1,85 @@
+<svg width="1120" height="620" viewBox="0 0 1120 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">AI-10 AWS specialized AI APIs flow</title>
+  <desc id="desc">Architecture diagram showing when to use AWS specialized AI APIs and when to use Bedrock.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 12; }
+      .input { fill: #ecfeff; stroke: #0891b2; }
+      .service { fill: #fff7ed; stroke: #ea580c; }
+      .bedrock { fill: #f5f3ff; stroke: #7c3aed; }
+      .store { fill: #f0fdf4; stroke: #16a34a; }
+      .observe { fill: #eff6ff; stroke: #2563eb; }
+      .text { font-family: Arial, Helvetica, sans-serif; fill: #0f172a; }
+      .title { font-size: 28px; font-weight: 700; }
+      .label { font-size: 18px; font-weight: 700; }
+      .small { font-size: 14px; }
+      .tiny { font-size: 12px; fill: #475569; }
+      .line { stroke: #475569; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+      .dash { stroke-dasharray: 6 6; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#475569" />
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1120" height="620" />
+  <text class="text title" x="40" y="52">AI-10: AWS 专用 AI API 选型</text>
+  <text class="text small" x="40" y="82">先判断任务类型：专用识别/转换任务优先用专用 API；开放式总结、问答、推理再用 Bedrock。</text>
+
+  <rect class="box input" x="40" y="130" width="180" height="80" />
+  <text class="text label" x="72" y="164">输入数据</text>
+  <text class="text small" x="72" y="190">文本 / 图片 / PDF / 音频</text>
+
+  <rect class="box" x="270" y="110" width="220" height="120" />
+  <text class="text label" x="300" y="145">任务判断</text>
+  <text class="text small" x="300" y="174">能被专用 API 稳定解决？</text>
+  <text class="text tiny" x="300" y="202">OCR、翻译、语音、PII、图像识别</text>
+
+  <rect class="box service" x="560" y="115" width="220" height="70" />
+  <text class="text label" x="590" y="147">Comprehend</text>
+  <text class="text small" x="590" y="170">实体 / 情绪 / PII</text>
+
+  <rect class="box service" x="820" y="115" width="220" height="70" />
+  <text class="text label" x="850" y="147">Translate</text>
+  <text class="text small" x="850" y="170">文本翻译</text>
+
+  <rect class="box service" x="560" y="215" width="220" height="70" />
+  <text class="text label" x="590" y="247">Textract</text>
+  <text class="text small" x="590" y="270">OCR / 表格 / 表单</text>
+
+  <rect class="box service" x="820" y="215" width="220" height="70" />
+  <text class="text label" x="850" y="247">Transcribe / Polly</text>
+  <text class="text small" x="850" y="270">语音转文字 / 文字转语音</text>
+
+  <rect class="box service" x="560" y="315" width="220" height="70" />
+  <text class="text label" x="590" y="347">Rekognition</text>
+  <text class="text small" x="590" y="370">图片标签 / 内容审核</text>
+
+  <rect class="box bedrock" x="820" y="315" width="220" height="70" />
+  <text class="text label" x="850" y="347">Bedrock</text>
+  <text class="text small" x="850" y="370">总结 / 问答 / 推理 / Agent</text>
+
+  <rect class="box store" x="270" y="430" width="220" height="80" />
+  <text class="text label" x="300" y="464">S3 可选</text>
+  <text class="text small" x="300" y="490">大文件、异步任务输入输出</text>
+
+  <rect class="box observe" x="560" y="430" width="220" height="80" />
+  <text class="text label" x="590" y="464">CloudWatch</text>
+  <text class="text small" x="590" y="490">日志、错误、延迟</text>
+
+  <rect class="box observe" x="820" y="430" width="220" height="80" />
+  <text class="text label" x="850" y="464">Cost / IAM</text>
+  <text class="text small" x="850" y="490">按页、字符、分钟、图片计费</text>
+
+  <path class="line" d="M220 170 H270" />
+  <path class="line" d="M490 150 H560" />
+  <path class="line" d="M490 170 C520 170 520 250 560 250" />
+  <path class="line" d="M490 190 C525 190 525 350 560 350" />
+  <path class="line" d="M780 150 H820" />
+  <path class="line" d="M780 250 H820" />
+  <path class="line" d="M780 350 H820" />
+  <path class="line dash" d="M380 230 V430" />
+  <path class="line dash" d="M670 385 V430" />
+  <path class="line dash" d="M930 385 V430" />
+</svg>

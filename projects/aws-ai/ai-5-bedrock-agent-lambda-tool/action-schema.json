@@ -1,0 +1,112 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "AWS AI Lesson Helper API",
+    "version": "1.0.0",
+    "description": "Tools for retrieving structured summaries of AWS AI learning lessons."
+  },
+  "paths": {
+    "/lesson-summary": {
+      "get": {
+        "summary": "Get a structured summary for an AWS AI lesson",
+        "description": "Use this operation when the user asks what they learned in a specific AWS AI lesson, asks for a lesson recap, or asks which AWS services and outputs belonged to a lesson.",
+        "operationId": "get_lesson_summary",
+        "parameters": [
+          {
+            "name": "lesson_id",
+            "in": "query",
+            "description": "Lesson identifier. Valid examples are AI-1, AI-2, AI-3, AI-4, and AI-5. If the user says AI2 or lesson 2, normalize it to AI-2.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["AI-1", "AI-2", "AI-3", "AI-4", "AI-5"]
+            }
+          },
+          {
+            "name": "detail_level",
+            "in": "query",
+            "description": "Use brief for a short recap. Use detailed when the user asks for key concepts or more detail.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["brief", "detailed"],
+              "default": "brief"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Structured lesson summary",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "lesson_id": {
+                      "type": "string",
+                      "description": "The normalized lesson identifier."
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "The lesson title."
+                    },
+                    "summary": {
+                      "type": "string",
+                      "description": "A concise lesson recap."
+                    },
+                    "key_services": {
+                      "type": "array",
+                      "description": "AWS services used in the lesson.",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "completed_outputs": {
+                      "type": "array",
+                      "description": "Artifacts or learning outputs from the lesson.",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "concepts": {
+                      "type": "array",
+                      "description": "Optional detailed concepts from the lesson.",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "next_step": {
+                      "type": "string",
+                      "description": "The recommended next learning step."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid lesson request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "valid_lesson_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

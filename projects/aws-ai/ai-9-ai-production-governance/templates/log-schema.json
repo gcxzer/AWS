@@ -1,0 +1,21 @@
+{
+  "request_id": "string",
+  "timestamp": "ISO-8601",
+  "environment": "dev|staging|prod",
+  "service": "api|lambda|agent|flow|evaluation",
+  "operation": "summarize|retrieve|invoke_agent|invoke_flow|evaluate",
+  "user_id_hash": "string|null",
+  "tenant_id": "string|null",
+  "region": "string",
+  "model_id": "string|null",
+  "resource_id": "knowledge_base_id|agent_id|flow_id|null",
+  "input_chars": 0,
+  "output_chars": 0,
+  "input_tokens_estimated": 0,
+  "output_tokens_estimated": 0,
+  "latency_ms": 0,
+  "status": "success|client_error|server_error|throttled|blocked",
+  "error_type": "string|null",
+  "guardrail_action": "none|intervened|blocked|masked|null",
+  "cost_center": "string|null"
+}

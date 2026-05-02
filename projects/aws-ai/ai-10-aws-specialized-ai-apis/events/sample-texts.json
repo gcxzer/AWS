@@ -1,0 +1,11 @@
+{
+  "comprehend": {
+    "language_code": "en",
+    "text": "Hello, my name is Alex Chen. Please send the invoice to alex.chen@example.com or call +1-206-555-0100."
+  },
+  "translate": {
+    "source_language_code": "en",
+    "target_language_code": "zh",
+    "text": "Amazon Bedrock is useful for open-ended generation, while specialized AI APIs are useful for stable recognition and conversion tasks."
+  }
+}

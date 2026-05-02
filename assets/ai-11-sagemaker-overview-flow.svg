@@ -1,0 +1,93 @@
+<svg width="1180" height="700" viewBox="0 0 1180 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">AI-11 SageMaker overview and selection flow</title>
+  <desc id="desc">SageMaker lifecycle from S3 data through processing, training, model artifact, registry, inference, monitoring, and cleanup.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 12; }
+      .data { fill: #ecfeff; stroke: #0891b2; }
+      .job { fill: #fff7ed; stroke: #ea580c; }
+      .model { fill: #f5f3ff; stroke: #7c3aed; }
+      .deploy { fill: #f0fdf4; stroke: #16a34a; }
+      .ops { fill: #eff6ff; stroke: #2563eb; }
+      .danger { fill: #fef2f2; stroke: #dc2626; }
+      .text { font-family: Arial, Helvetica, sans-serif; fill: #0f172a; }
+      .title { font-size: 28px; font-weight: 700; }
+      .label { font-size: 17px; font-weight: 700; }
+      .small { font-size: 13px; }
+      .tiny { font-size: 12px; fill: #475569; }
+      .line { stroke: #475569; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+      .dash { stroke-dasharray: 6 6; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#475569" />
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1180" height="700" />
+  <text class="text title" x="40" y="54">AI-11: SageMaker AI 总览与选型</text>
+  <text class="text small" x="40" y="82">SageMaker 是 ML / MLOps 平台：处理数据、训练模型、部署推理、监控质量，并管理版本和清理成本。</text>
+
+  <rect class="box data" x="40" y="135" width="150" height="86" />
+  <text class="text label" x="70" y="168">S3 数据</text>
+  <text class="text small" x="70" y="194">raw / train / test</text>
+
+  <rect class="box job" x="245" y="125" width="180" height="106" />
+  <text class="text label" x="280" y="158">Processing Job</text>
+  <text class="text small" x="280" y="184">清洗、切分</text>
+  <text class="text tiny" x="280" y="206">临时计算，跑完停止</text>
+
+  <rect class="box job" x="480" y="125" width="180" height="106" />
+  <text class="text label" x="520" y="158">Training Job</text>
+  <text class="text small" x="520" y="184">训练模型</text>
+  <text class="text tiny" x="520" y="206">临时计算，跑完停止</text>
+
+  <rect class="box model" x="715" y="125" width="180" height="106" />
+  <text class="text label" x="748" y="158">Model Artifact</text>
+  <text class="text small" x="748" y="184">S3 model.tar.gz</text>
+  <text class="text tiny" x="748" y="206">只是文件，不是服务</text>
+
+  <rect class="box model" x="950" y="125" width="180" height="106" />
+  <text class="text label" x="982" y="158">Model Registry</text>
+  <text class="text small" x="982" y="184">版本、审批</text>
+  <text class="text tiny" x="982" y="206">staging / production</text>
+
+  <rect class="box deploy" x="715" y="305" width="180" height="96" />
+  <text class="text label" x="748" y="338">Batch Transform</text>
+  <text class="text small" x="748" y="364">离线批量推理</text>
+  <text class="text tiny" x="748" y="384">job 型资源</text>
+
+  <rect class="box danger" x="950" y="292" width="180" height="122" />
+  <text class="text label" x="988" y="325">Endpoint</text>
+  <text class="text small" x="988" y="351">实时推理</text>
+  <text class="text tiny" x="988" y="374">持续运行</text>
+  <text class="text tiny" x="988" y="394">容易忘记收费</text>
+
+  <rect class="box ops" x="245" y="485" width="180" height="92" />
+  <text class="text label" x="282" y="518">CloudWatch</text>
+  <text class="text small" x="282" y="544">日志、指标</text>
+
+  <rect class="box ops" x="480" y="485" width="180" height="92" />
+  <text class="text label" x="532" y="518">IAM Role</text>
+  <text class="text small" x="532" y="544">执行权限</text>
+
+  <rect class="box ops" x="715" y="485" width="180" height="92" />
+  <text class="text label" x="752" y="518">Model Monitor</text>
+  <text class="text small" x="752" y="544">质量、漂移</text>
+
+  <rect class="box danger" x="950" y="485" width="180" height="92" />
+  <text class="text label" x="994" y="518">Cleanup</text>
+  <text class="text small" x="994" y="544">endpoint 优先删</text>
+
+  <path class="line" d="M190 178 H245" />
+  <path class="line" d="M425 178 H480" />
+  <path class="line" d="M660 178 H715" />
+  <path class="line" d="M895 178 H950" />
+  <path class="line" d="M1040 231 V292" />
+  <path class="line" d="M950 353 H895" />
+  <path class="line" d="M805 231 V305" />
+  <path class="line dash" d="M335 231 V485" />
+  <path class="line dash" d="M570 231 V485" />
+  <path class="line dash" d="M1040 414 V485" />
+  <path class="line dash" d="M805 401 V485" />
+</svg>

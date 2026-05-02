@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="390" viewBox="0 0 1120 390" role="img" aria-labelledby="title desc">
+  <title id="title">AI-7 Bedrock Flows workflow</title>
+  <desc id="desc">A minimal Bedrock Flow connects a flow input node to a prompt node and then to a flow output node. Flow draft can be versioned and invoked through aliases.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155" />
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 10; }
+      .flow { fill: #eff6ff; stroke: #2563eb; stroke-width: 2; rx: 10; }
+      .prompt { fill: #fef3c7; stroke: #b45309; stroke-width: 2; rx: 10; }
+      .publish { fill: #ecfdf5; stroke: #047857; stroke-width: 2; rx: 10; }
+      .alt { fill: #fdf2f8; stroke: #be185d; stroke-width: 2; rx: 10; }
+      .label { fill: #0f172a; font: 700 18px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .small { fill: #475569; font: 14px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .tiny { fill: #64748b; font: 12px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .arrow { stroke: #334155; stroke-width: 2.4; fill: none; marker-end: url(#arrow); }
+      .soft { stroke: #94a3b8; stroke-width: 2; fill: none; marker-end: url(#arrow); stroke-dasharray: 6 6; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1120" height="390" />
+
+  <rect class="box" x="42" y="130" width="142" height="110" />
+  <text class="label" x="113" y="170" text-anchor="middle">InvokeFlow</text>
+  <text class="small" x="113" y="198" text-anchor="middle">JSON input</text>
+  <text class="tiny" x="113" y="220" text-anchor="middle">topic / audience</text>
+
+  <rect class="flow" x="244" y="100" width="162" height="170" />
+  <text class="label" x="325" y="140" text-anchor="middle">Flow input</text>
+  <text class="small" x="325" y="168" text-anchor="middle">validates input</text>
+  <text class="tiny" x="325" y="194" text-anchor="middle">Object</text>
+  <text class="tiny" x="325" y="218" text-anchor="middle">$.data.topic</text>
+  <text class="tiny" x="325" y="240" text-anchor="middle">$.data.audience</text>
+
+  <rect class="prompt" x="466" y="100" width="188" height="170" />
+  <text class="label" x="560" y="140" text-anchor="middle">Prompt node</text>
+  <text class="small" x="560" y="168" text-anchor="middle">SummarizeTopic</text>
+  <text class="tiny" x="560" y="194" text-anchor="middle">uses {{topic}}</text>
+  <text class="tiny" x="560" y="218" text-anchor="middle">and {{audience}}</text>
+  <text class="tiny" x="560" y="240" text-anchor="middle">calls model</text>
+
+  <rect class="flow" x="714" y="100" width="162" height="170" />
+  <text class="label" x="795" y="140" text-anchor="middle">Flow output</text>
+  <text class="small" x="795" y="168" text-anchor="middle">document</text>
+  <text class="tiny" x="795" y="194" text-anchor="middle">modelCompletion</text>
+  <text class="tiny" x="795" y="218" text-anchor="middle">returned to caller</text>
+
+  <rect class="box" x="936" y="130" width="142" height="110" />
+  <text class="label" x="1007" y="170" text-anchor="middle">Response</text>
+  <text class="small" x="1007" y="198" text-anchor="middle">workflow result</text>
+
+  <rect class="publish" x="244" y="308" width="188" height="58" />
+  <text class="label" x="338" y="332" text-anchor="middle">DRAFT</text>
+  <text class="small" x="338" y="356" text-anchor="middle">edit and test with TSTALIASID</text>
+
+  <rect class="publish" x="466" y="308" width="188" height="58" />
+  <text class="label" x="560" y="332" text-anchor="middle">Version</text>
+  <text class="small" x="560" y="356" text-anchor="middle">immutable snapshot</text>
+
+  <rect class="publish" x="714" y="308" width="188" height="58" />
+  <text class="label" x="808" y="332" text-anchor="middle">Alias</text>
+  <text class="small" x="808" y="356" text-anchor="middle">stable app target</text>
+
+  <rect class="alt" x="466" y="26" width="410" height="48" />
+  <text class="small" x="671" y="56" text-anchor="middle">Later: add Knowledge Base, Lambda, Agent, or inline code nodes</text>
+
+  <path class="arrow" d="M184 185 H236" />
+  <path class="arrow" d="M406 185 H458" />
+  <path class="arrow" d="M654 185 H706" />
+  <path class="arrow" d="M876 185 H928" />
+  <path class="soft" d="M338 308 C390 282 460 270 526 270" />
+  <path class="soft" d="M560 308 V278" />
+  <path class="soft" d="M808 308 C850 282 880 258 912 220" />
+</svg>

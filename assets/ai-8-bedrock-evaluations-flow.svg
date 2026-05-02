@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="430" viewBox="0 0 1120 430" role="img" aria-labelledby="title desc">
+  <title id="title">AI-8 Bedrock Evaluations flow</title>
+  <desc id="desc">A prompt dataset with questions, expected answers, and expected sources is stored in S3. Bedrock Evaluations runs retrieve-only or retrieve-and-generate evaluation against a knowledge base or RAG source, uses an evaluator model, and writes reports to S3.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155" />
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 10; }
+      .store { fill: #ecfdf5; stroke: #047857; stroke-width: 2; rx: 10; }
+      .eval { fill: #eff6ff; stroke: #2563eb; stroke-width: 2; rx: 10; }
+      .judge { fill: #fdf2f8; stroke: #be185d; stroke-width: 2; rx: 10; }
+      .warn { fill: #fff7ed; stroke: #c2410c; stroke-width: 2; rx: 10; }
+      .label { fill: #0f172a; font: 700 18px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .small { fill: #475569; font: 14px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .tiny { fill: #64748b; font: 12px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .arrow { stroke: #334155; stroke-width: 2.4; fill: none; marker-end: url(#arrow); }
+      .soft { stroke: #94a3b8; stroke-width: 2; fill: none; marker-end: url(#arrow); stroke-dasharray: 6 6; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1120" height="430" />
+
+  <rect class="store" x="36" y="78" width="174" height="126" />
+  <text class="label" x="123" y="118" text-anchor="middle">Prompt dataset</text>
+  <text class="small" x="123" y="146" text-anchor="middle">JSONL in S3</text>
+  <text class="tiny" x="123" y="170" text-anchor="middle">question</text>
+  <text class="tiny" x="123" y="190" text-anchor="middle">ground truth</text>
+
+  <rect class="eval" x="270" y="78" width="190" height="126" />
+  <text class="label" x="365" y="118" text-anchor="middle">Bedrock</text>
+  <text class="label" x="365" y="142" text-anchor="middle">Evaluations</text>
+  <text class="small" x="365" y="170" text-anchor="middle">job orchestration</text>
+
+  <rect class="box" x="520" y="38" width="180" height="106" />
+  <text class="label" x="610" y="78" text-anchor="middle">Retrieve only</text>
+  <text class="small" x="610" y="106" text-anchor="middle">source chunks</text>
+  <text class="tiny" x="610" y="126" text-anchor="middle">context relevance</text>
+
+  <rect class="box" x="520" y="178" width="180" height="106" />
+  <text class="label" x="610" y="218" text-anchor="middle">Retrieve +</text>
+  <text class="label" x="610" y="242" text-anchor="middle">Generate</text>
+  <text class="small" x="610" y="268" text-anchor="middle">answer quality</text>
+
+  <rect class="eval" x="760" y="78" width="164" height="126" />
+  <text class="label" x="842" y="118" text-anchor="middle">RAG source</text>
+  <text class="small" x="842" y="146" text-anchor="middle">Knowledge Base</text>
+  <text class="tiny" x="842" y="170" text-anchor="middle">or external RAG</text>
+
+  <rect class="judge" x="760" y="248" width="164" height="94" />
+  <text class="label" x="842" y="286" text-anchor="middle">Judge model</text>
+  <text class="small" x="842" y="314" text-anchor="middle">scores + explanation</text>
+
+  <rect class="store" x="974" y="78" width="120" height="126" />
+  <text class="label" x="1034" y="118" text-anchor="middle">S3</text>
+  <text class="small" x="1034" y="146" text-anchor="middle">reports</text>
+  <text class="tiny" x="1034" y="170" text-anchor="middle">metrics</text>
+  <text class="tiny" x="1034" y="190" text-anchor="middle">job output</text>
+
+  <rect class="warn" x="36" y="320" width="424" height="70" />
+  <text class="label" x="248" y="348" text-anchor="middle">Use results to improve the system</text>
+  <text class="small" x="248" y="374" text-anchor="middle">docs / chunking / top_k / prompt / model choice</text>
+
+  <rect class="box" x="520" y="320" width="180" height="70" />
+  <text class="label" x="610" y="348" text-anchor="middle">Local first</text>
+  <text class="small" x="610" y="374" text-anchor="middle">validate JSONL before S3</text>
+
+  <path class="arrow" d="M210 141 H262" />
+  <path class="arrow" d="M460 124 H512" />
+  <path class="arrow" d="M460 158 C492 176 496 216 512 231" />
+  <path class="arrow" d="M700 91 H752" />
+  <path class="arrow" d="M700 231 C730 206 740 166 752 141" />
+  <path class="soft" d="M842 204 V240" />
+  <path class="arrow" d="M924 141 H966" />
+  <path class="soft" d="M842 248 C826 224 832 206 842 204" />
+  <path class="soft" d="M365 204 C360 270 318 300 248 320" />
+  <path class="soft" d="M610 284 V312" />
+</svg>

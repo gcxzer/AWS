@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="390" viewBox="0 0 1120 390" role="img" aria-labelledby="title desc">
+  <title id="title">AI-6 Bedrock Guardrails safety flow</title>
+  <desc id="desc">User input is checked by a Bedrock Guardrail before model inference. Model output is checked by the same guardrail before the final application response is returned.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155" />
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 10; }
+      .guard { fill: #fdf2f8; stroke: #be185d; stroke-width: 2; rx: 10; }
+      .ai { fill: #eff6ff; stroke: #2563eb; stroke-width: 2; rx: 10; }
+      .app { fill: #ecfdf5; stroke: #047857; stroke-width: 2; rx: 10; }
+      .warn { fill: #fff7ed; stroke: #c2410c; stroke-width: 2; rx: 10; }
+      .label { fill: #0f172a; font: 700 18px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .small { fill: #475569; font: 14px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .tiny { fill: #64748b; font: 12px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .arrow { stroke: #334155; stroke-width: 2.4; fill: none; marker-end: url(#arrow); }
+      .soft { stroke: #94a3b8; stroke-width: 2; fill: none; marker-end: url(#arrow); stroke-dasharray: 6 6; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1120" height="390" />
+
+  <rect class="box" x="42" y="132" width="132" height="106" />
+  <text class="label" x="108" y="172" text-anchor="middle">User</text>
+  <text class="small" x="108" y="200" text-anchor="middle">prompt</text>
+
+  <rect class="guard" x="224" y="112" width="168" height="146" />
+  <text class="label" x="308" y="152" text-anchor="middle">Guardrail</text>
+  <text class="small" x="308" y="180" text-anchor="middle">INPUT check</text>
+  <text class="tiny" x="308" y="204" text-anchor="middle">PII / denied topics</text>
+  <text class="tiny" x="308" y="226" text-anchor="middle">prompt attack filters</text>
+
+  <rect class="ai" x="442" y="112" width="168" height="146" />
+  <text class="label" x="526" y="152" text-anchor="middle">Bedrock</text>
+  <text class="small" x="526" y="180" text-anchor="middle">model / agent / KB</text>
+  <text class="tiny" x="526" y="204" text-anchor="middle">generates response</text>
+
+  <rect class="guard" x="660" y="112" width="168" height="146" />
+  <text class="label" x="744" y="152" text-anchor="middle">Guardrail</text>
+  <text class="small" x="744" y="180" text-anchor="middle">OUTPUT check</text>
+  <text class="tiny" x="744" y="204" text-anchor="middle">mask or block</text>
+  <text class="tiny" x="744" y="226" text-anchor="middle">sensitive output</text>
+
+  <rect class="app" x="878" y="132" width="160" height="106" />
+  <text class="label" x="958" y="172" text-anchor="middle">Application</text>
+  <text class="small" x="958" y="200" text-anchor="middle">final response</text>
+
+  <rect class="warn" x="224" y="292" width="386" height="58" />
+  <text class="label" x="417" y="316" text-anchor="middle">Not a permission system</text>
+  <text class="small" x="417" y="340" text-anchor="middle">IAM and app auth still enforce resource and business access</text>
+
+  <rect class="box" x="660" y="292" width="378" height="58" />
+  <text class="label" x="849" y="316" text-anchor="middle">ApplyGuardrail</text>
+  <text class="small" x="849" y="340" text-anchor="middle">can test INPUT or OUTPUT without calling a model</text>
+
+  <path class="arrow" d="M174 185 H216" />
+  <path class="arrow" d="M392 185 H434" />
+  <path class="arrow" d="M610 185 H652" />
+  <path class="arrow" d="M828 185 H870" />
+  <path class="soft" d="M308 258 V284" />
+  <path class="soft" d="M744 258 V284" />
+</svg>
