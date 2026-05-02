@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="380" viewBox="0 0 1080 380" role="img" aria-labelledby="title desc">
+  <title id="title">AI-3 S3 AI document pipeline flow</title>
+  <desc id="desc">A user uploads a document to an S3 input bucket. S3 triggers Lambda. Lambda reads the file, calls Bedrock Runtime, writes a summary JSON to an S3 output bucket, and sends logs to CloudWatch.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155" />
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 10; }
+      .ai { fill: #eff6ff; stroke: #2563eb; stroke-width: 2; rx: 10; }
+      .store { fill: #ecfdf5; stroke: #047857; stroke-width: 2; rx: 10; }
+      .logs { fill: #fefce8; stroke: #a16207; stroke-width: 2; rx: 10; }
+      .label { fill: #0f172a; font: 700 18px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .small { fill: #475569; font: 14px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .tiny { fill: #64748b; font: 12px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .arrow { stroke: #334155; stroke-width: 2.4; fill: none; marker-end: url(#arrow); }
+      .soft { stroke: #94a3b8; stroke-width: 2; fill: none; marker-end: url(#arrow); stroke-dasharray: 6 6; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1080" height="380" />
+
+  <rect class="box" x="36" y="96" width="150" height="104" />
+  <text class="label" x="111" y="135" text-anchor="middle">Uploader</text>
+  <text class="small" x="111" y="162" text-anchor="middle">txt / md file</text>
+  <text class="tiny" x="111" y="184" text-anchor="middle">manual upload</text>
+
+  <rect class="store" x="246" y="86" width="170" height="124" />
+  <text class="label" x="331" y="126" text-anchor="middle">S3 input</text>
+  <text class="small" x="331" y="154" text-anchor="middle">documents/ prefix</text>
+  <text class="tiny" x="331" y="176" text-anchor="middle">ObjectCreated event</text>
+
+  <rect class="ai" x="476" y="86" width="180" height="124" />
+  <text class="label" x="566" y="126" text-anchor="middle">Lambda</text>
+  <text class="small" x="566" y="154" text-anchor="middle">read object</text>
+  <text class="tiny" x="566" y="176" text-anchor="middle">validate size</text>
+  <text class="tiny" x="566" y="194" text-anchor="middle">call Bedrock</text>
+
+  <rect class="box" x="726" y="86" width="170" height="124" />
+  <text class="label" x="811" y="126" text-anchor="middle">Bedrock</text>
+  <text class="small" x="811" y="154" text-anchor="middle">Runtime</text>
+  <text class="tiny" x="811" y="176" text-anchor="middle">summarize document</text>
+
+  <rect class="store" x="916" y="86" width="128" height="124" />
+  <text class="label" x="980" y="126" text-anchor="middle">S3 output</text>
+  <text class="small" x="980" y="154" text-anchor="middle">summaries/</text>
+  <text class="tiny" x="980" y="176" text-anchor="middle">summary.json</text>
+
+  <rect class="ai" x="476" y="260" width="180" height="72" />
+  <text class="label" x="566" y="289" text-anchor="middle">Execution role</text>
+  <text class="small" x="566" y="313" text-anchor="middle">S3 + Bedrock + logs</text>
+
+  <rect class="logs" x="726" y="260" width="170" height="72" />
+  <text class="label" x="811" y="289" text-anchor="middle">CloudWatch</text>
+  <text class="small" x="811" y="313" text-anchor="middle">logs and errors</text>
+
+  <path class="arrow" d="M186 148 H238" />
+  <path class="arrow" d="M416 148 H468" />
+  <path class="arrow" d="M656 148 H718" />
+  <path class="arrow" d="M896 148 H908" />
+  <path class="soft" d="M566 210 V252" />
+  <path class="soft" d="M626 210 C676 232 726 250 770 268" />
+</svg>

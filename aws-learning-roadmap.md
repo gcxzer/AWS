@@ -394,13 +394,13 @@
 
 ### 目标
 
-先不急着重构架构，而是把 Hetzner 单机上的 TopicFollow 拆成三块：`应用`、`数据库`、`上传文件`。然后用 AWS 上最容易理解的低改造架构跑通一个测试环境。
+先不急着重构架构，而是把 Hetzner 单机上的 TopicFollow 拆成三块：`应用`、`数据库`、`图片/uploads 文件`。当前真实状态是：网站、PostgreSQL 数据库、图片/uploads 都在 Hetzner 服务器上。项目 6 的目标不是正式迁移，而是先用 AWS 上最容易理解的低改造架构跑通一个 `staging` 测试环境。
 
 推荐 V1 架构：
 
 - Next.js 应用：`EC2` 上运行 `next start`，尽量复用现有 systemd 部署方式。
 - 数据库：`Amazon RDS for PostgreSQL`。
-- 上传文件：先识别本地 uploads 行为，项目 7 再正式迁移到 `S3`。
+- 上传文件：项目 6 只盘点和临时验证本地 uploads 行为，不把 `S3` 当成已完成目标；项目 7 再正式迁移到 `S3`。
 - 入口：测试阶段可先用 EC2 public DNS 或临时子域名，不急着切正式域名。
 
 ### 核心服务
@@ -410,7 +410,7 @@
 - `Security Group`
 - `Amazon EC2`
 - `Amazon RDS for PostgreSQL`
-- `Amazon S3`
+- `Amazon S3`，项目 6 只做备份/文件迁移设计，不作为应用正式依赖
 - `CloudWatch`
 - `AWS Systems Manager Session Manager`
 - `AWS Backup` 或 RDS automated backups
@@ -419,8 +419,10 @@
 
 - [ ] 画出当前 Hetzner 架构：Next.js、Postgres、本地 uploads、systemd、Nginx/反向代理、域名、备份。
 - [ ] 整理 TopicFollow 必需环境变量：`DATABASE_URL`、`UPLOADS_STORAGE_DIR`、`AUTH_SECRET`、`RESEND_API_KEY`、Google OAuth 等。
-- [ ] 设计 AWS V1 目标架构图：EC2 + RDS + S3 + CloudWatch。
+- [ ] 整理完整生产环境变量：`NEXT_PUBLIC_APP_URL`、`COOKIE_DOMAIN`、`DATABASE_URL`、`UPLOADS_STORAGE_DIR`、`AUTH_SECRET`、`CONTENT_ADMIN_EMAILS`、`RESEND_API_KEY`、`RESEND_FROM_EMAIL`、`RESEND_WEBHOOK_SECRET`、`OPENAI_API_KEY`、Google OAuth、support/privacy/legal 相关变量。
+- [ ] 设计 AWS V1 目标架构图：EC2 + RDS + 临时本地 uploads + CloudWatch；S3 只作为项目 7 的目标存储层标注。
 - [ ] 建立 `staging` 概念：使用临时域名或 AWS 默认入口，不改 `www.topicfollow.com` 正式 DNS。
+- [ ] staging 使用独立数据库、独立 uploads 目录、独立环境变量；导入生产备份后必须禁用真实邮件、真实 webhook、topic digest、topic orchestrator 等会产生副作用的 job。
 - [ ] 创建低规格 EC2 测试机，安装 Node.js 和项目依赖。
 - [ ] 创建 RDS PostgreSQL 测试库，不导入生产数据时可先用空库跑 migration。
 - [ ] 从现有 Hetzner 备份或本地拉取备份中选择一个测试备份，导入 RDS staging，记录 restore 命令和耗时。
@@ -437,6 +439,7 @@
 - [ ] Next.js 应用能连接 RDS PostgreSQL。
 - [ ] 至少完成一次 RDS staging 恢复演练，并记录恢复步骤。
 - [ ] staging 环境不影响 Hetzner production 域名和用户。
+- [ ] staging 不发送真实用户邮件，不接收生产 webhook，不运行会改写生产语义的后台 job。
 - [ ] 能通过 SSH 或 SSM Session Manager 进入 EC2，并解释两者安全差异。
 - [ ] 能解释 VPC、Subnet、Security Group、EC2、RDS 的关系。
 - [ ] 能说明为什么 RDS 不应该暴露给公网。
@@ -449,6 +452,7 @@
 - RDS 帮你接管了哪些数据库运维责任？
 - RDS 仍然有哪些成本和安全风险？
 - staging 和 production 的环境变量、数据库、文件 bucket 为什么必须分开？
+- 为什么 staging 导入生产数据后必须关闭真实邮件、webhook 和定时任务？
 - 如果恢复备份后 `/api/health` 返回 `503`，第一批排查点是什么？
 
 ### 清理步骤
@@ -484,12 +488,14 @@
 - `AWS KMS` 可选
 - `AWS CLI`
 - `CloudWatch Logs`
+- `CloudFront Origin Access Control`，推荐用于让 CloudFront 访问私有 S3 bucket
 
 ### 动手任务
 
 - [ ] 盘点当前上传文件来源：`public/uploads`、生产 `UPLOADS_STORAGE_DIR`、topic images、avatars。
+- [ ] 盘点数据库里保存图片/附件引用的字段，确认保存的是 `/uploads/...`、完整 URL，还是其他 pathname。
 - [ ] 设计 S3 key 结构，例如 `uploads/topic-images/...`、`uploads/avatars/...`。
-- [ ] 创建私有 S3 bucket，不直接公开 bucket。
+- [ ] 创建私有 S3 bucket，不直接公开 bucket；CloudFront 访问 S3 时优先使用 OAC。
 - [ ] 为应用创建最小权限 IAM policy：只允许读写指定 bucket/prefix。
 - [ ] 设计应用层 storage adapter：本地文件系统和 S3 两种实现，staging/production 用 S3。
 - [ ] 决定长期 URL 策略：数据库保存稳定 `object key`，展示层拼接 CloudFront URL 或通过 helper 转换。
@@ -498,7 +504,7 @@
 - [ ] 更新数据库里保存的文件 URL 或 pathname 规则，避免硬编码旧服务器路径和旧域名。
 - [ ] 保留旧 `/uploads/...` 路径兼容策略：临时 redirect 到 CloudFront，或在应用层将旧 path 映射到 S3 object。
 - [ ] 制定回滚策略：S3 写入失败时如何回退本地 adapter，旧图片如何临时从 Hetzner 服务。
-- [ ] 验证新上传文件进入 S3，旧图片仍能访问。
+- [ ] 验证新上传文件进入 S3，旧图片仍能访问；抽样检查 topic images、avatars、feedback attachments。
 
 ### 验收标准
 
@@ -507,6 +513,7 @@
 - [ ] 数据库中长期保存的不是脆弱的旧服务器绝对路径。
 - [ ] `/uploads/...` 旧路径有兼容策略，不会在切流当天大量 404。
 - [ ] S3 bucket 不需要 public write，也不把长期 access key 写进代码。
+- [ ] CloudFront 能读取私有 S3 bucket，用户不能绕过 CloudFront 任意写入 bucket。
 - [ ] 能解释 S3 object key、bucket policy、IAM policy、CloudFront 的关系。
 - [ ] 有一份旧文件迁移清单和回滚办法。
 
@@ -516,6 +523,7 @@
 - 图片 URL 应该存完整 URL，还是存 object key？各有什么代价？
 - 为什么 S3 bucket 不建议直接全公开？
 - CloudFront 在图片访问里解决了什么？
+- 为什么容器化之前最好先把 uploads 从本地磁盘迁走？
 
 ### 清理步骤
 
@@ -538,6 +546,8 @@
 
 推荐学习路径：先本地 Docker 跑通，再 ECR，再 ECS Fargate 测试环境。`App Runner` 可以作为更简单的备选，但主线用 ECS Fargate 学习容器架构。
 
+注意：项目 8 必须先做网络和成本决策。Fargate task 如果放在私有 subnet，通常需要 NAT Gateway 或等价出网方案来拉镜像、访问外部 API。NAT Gateway 对学习项目可能偏贵，所以这里要明确选择：低成本继续 EC2，还是接受 ECS/Fargate 的网络成本并记录原因。
+
 ### 核心服务
 
 - `Docker`
@@ -559,6 +569,7 @@
 - [ ] 创建 ECR repository，推送 TopicFollow 镜像。
 - [ ] 创建 ECS cluster、task definition、service。
 - [ ] 配置 task role，让应用访问 S3 和必要 AWS 服务。
+- [ ] 做 ECS 网络决策：public subnet + public IP、private subnet + NAT Gateway、VPC endpoints，或暂时保留 EC2；记录安全性和成本取舍。
 - [ ] 通过 ALB 暴露 ECS service。
 - [ ] 配置 CloudWatch Logs 收集容器日志。
 - [ ] 盘点后台任务迁移：server cron、`/api/cron/send-topic-digests`、`/api/cron/purge-deleted-accounts`、topic orchestrator、backup pull。
@@ -570,6 +581,7 @@
 - [ ] TopicFollow 镜像本地可运行。
 - [ ] 镜像能推送到 ECR。
 - [ ] ECS Fargate 测试环境可访问 `/api/health`。
+- [ ] 已记录 ECS 出网方案和 NAT Gateway/ALB/Fargate 的持续费用风险。
 - [ ] 容器日志能在 CloudWatch Logs 查看。
 - [ ] 至少有一个后台 job 的 AWS 迁移方案：ECS scheduled task、EventBridge Scheduler 或 CI job。
 - [ ] 能解释 image、container、ECR repository、task definition、service、cluster、ALB 的区别。
@@ -580,6 +592,7 @@
 - Fargate 解决了哪些服务器运维问题？
 - task role 和 execution role 有什么区别？
 - 为什么环境变量和 secret 不应该打进 Docker image？
+- 为什么 Fargate 私有 subnet 往往会引入 NAT Gateway 成本？
 - HTTP cron、server cron、ECS scheduled task、EventBridge Scheduler 分别适合什么？
 
 ### 清理步骤
@@ -623,6 +636,8 @@
 - [ ] CI 中运行质量门禁：`npm test`、`npm run test:pages`、`npm run lint`、`npm run build`。
 - [ ] 部署到 ECS 或 EC2 测试环境。
 - [ ] 把 `DATABASE_URL`、`AUTH_SECRET`、`RESEND_API_KEY`、Google OAuth secret 放入 Secrets Manager 或 SSM。
+- [ ] 把 staging 和 production secret 分开命名，避免 CI/CD 或任务定义误用生产 secret。
+- [ ] 为 staging 配置“无真实副作用”策略：不发真实用户邮件，不接生产 webhook，不运行生产 digest/topic orchestrator。
 - [ ] 配置 `/api/health` 健康检查。
 - [ ] 为 5xx、任务重启、RDS 连接失败、磁盘/内存异常设置 CloudWatch Alarm。
 - [ ] 建立 IaC 最小边界：至少用一种工具记录 VPC、安全组、RDS、S3、ECS、IAM、CloudWatch 的目标配置，不只靠控制台点击。
@@ -635,6 +650,7 @@
 - [ ] 一次 commit 能触发测试和部署。
 - [ ] 失败时能从 CI 日志或 CloudWatch Logs 定位原因。
 - [ ] secret 不再散落在部署脚本或镜像里。
+- [ ] staging 和 production 的 secret、数据库、bucket、cron/job 配置不会互相串用。
 - [ ] 有至少 3 个关键告警：应用健康、错误率、数据库/运行环境。
 - [ ] 有一份 IaC 或资源定义草案，能复现关键基础设施。
 - [ ] 有一份 Hetzner 监控到 AWS 监控的映射表。
@@ -646,6 +662,7 @@
 - GitHub Actions 和 CodePipeline 各自适合什么？
 - Secrets Manager 和 SSM Parameter Store 怎么选？
 - 监控、日志、告警和健康检查分别解决什么问题？
+- staging 为什么要默认关闭真实邮件、webhook 和生产后台任务？
 - 哪些资源必须用 IaC 管理，哪些临时实验资源可以手动创建？
 
 ### 清理步骤
@@ -687,7 +704,7 @@
 | Resend | sender domain DNS 记录正确，`RESEND_API_KEY`、`RESEND_WEBHOOK_SECRET`、inbound webhook URL 已切到新环境 |
 | HTTPS | ACM 证书已签发，CloudFront/ALB 使用正确证书 |
 | DNS | TTL 已提前降低，旧记录和新记录都截图保存，回滚命令或操作步骤已写入 Runbook |
-| 数据库 | RDS production 导入完成，migration 已跑，写入窗口明确 |
+| 数据库 | Hetzner 写入冻结窗口明确，最终备份已导出，RDS production 导入完成，migration 已跑，切流后写入只进入 AWS |
 | uploads | S3 文件数量、抽样图片、avatars、topic images 验证通过 |
 | 监控 | `/api/health`、CloudWatch Alarm、外部监控、备份检查都启用 |
 | 成本 | RDS、ALB、ECS/Fargate 或 EC2、CloudWatch Logs、Secrets Manager、S3、CloudFront 都有 tag 和预算告警 |
@@ -695,16 +712,19 @@
 ### 动手任务
 
 - [ ] 写迁移 Runbook：准备、冻结窗口、备份、数据导入、文件同步、验证、DNS 切换、回滚。
-- [ ] 从 Hetzner 导出 Postgres 备份。
+- [ ] 正式迁移前降低 DNS TTL，并记录旧记录、新记录和回滚步骤。
+- [ ] 设置写入冻结窗口：暂停 Hetzner 上会写数据库的应用入口和后台 job，避免 AWS 与 Hetzner 双写。
+- [ ] 从 Hetzner 导出最终 Postgres 备份。
 - [ ] 导入到 RDS 测试库，跑 migrations 和健康检查。
-- [ ] 同步 uploads 到 S3，并验证页面图片。
+- [ ] 将最终备份导入 RDS production，跑 migrations 和健康检查。
+- [ ] 同步 uploads 到 S3，并验证页面图片；必要时在冻结窗口内做最后一次增量 sync。
 - [ ] 在 AWS 生产环境部署 TopicFollow。
 - [ ] 配置正式域名、HTTPS、OAuth callback URL、cookie domain。
 - [ ] 验证 Resend 发送域名、webhook、密码重置、账号验证、topic digest 邮件。
 - [ ] 验证所有 cron/job：digests、deleted account purge、topic orchestrator、备份和监控日报。
 - [ ] 切换 DNS 前，用临时域名或 host override 做完整验证。
 - [ ] 设置短 TTL，执行 DNS 切流。
-- [ ] 保留 Hetzner 旧服务一段观察期，作为回滚路径。
+- [ ] 切流后 Hetzner 旧服务进入观察期，但应保持只读或暂停写入，作为短期回滚路径。
 - [ ] 完成后整理架构图、成本表、迁移复盘。
 
 ### 验收标准
@@ -712,6 +732,7 @@
 - [ ] 正式域名访问 AWS 版本 TopicFollow。
 - [ ] 登录、Google OAuth、账号页、topic 页面、搜索、图片、邮件发送、健康检查都正常。
 - [ ] RDS 数据和 S3 文件迁移完整。
+- [ ] 切流后没有 AWS 与 Hetzner 双写；回滚方案明确说明哪些数据会丢失或需要补同步。
 - [ ] cron/job 和邮件链路在 AWS 环境中正常。
 - [ ] 有明确回滚方案。
 - [ ] 有完整 README/Runbook：部署步骤、迁移步骤、清理步骤、成本说明、服务选型解释。
@@ -721,6 +742,7 @@
 
 - 这次迁移最大的风险是什么：数据库、文件、域名、OAuth、邮件，还是成本？
 - 哪些组件从“自己运维”变成了“AWS 托管”？
+- 如果 DNS 已切到 AWS 但需要回滚，数据库和 uploads 如何避免数据分叉？
 - 如果访问量增长，哪些组件先扩容？
 - 如果要进一步降低成本，可以合并或替换哪些服务？
 - 如果要进一步提高可靠性，需要增加哪些能力？

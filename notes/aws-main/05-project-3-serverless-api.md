@@ -4,7 +4,7 @@
 
 目标架构：
 
-![Project 3 Serverless API flow](../assets/project-3-serverless-api-flow.svg)
+![Project 3 Serverless API flow](../../assets/project-3-serverless-api-flow.svg)
 
 ```text
 curl / browser
@@ -673,7 +673,7 @@ boto3 = Python 调 AWS 的工具
 已创建项目目录：
 
 ```text
-project-3-serverless-api/
+projects/aws-main/project-3-serverless-api/
   README.md
   lambda_function.py
   events/
@@ -805,7 +805,7 @@ TABLE_NAME=learning-notes
 先设置环境变量：
 
 ```bash
-cd /Users/xzhu/Documents/AWS/project-3-serverless-api
+cd /Users/xzhu/Documents/AWS/projects/aws-main/project-3-serverless-api
 export AWS_PROFILE=aws-learning
 export AWS_REGION=eu-central-1
 export TABLE_NAME=learning-notes
@@ -864,7 +864,7 @@ python -c 'import json; import lambda_function as f; event=json.load(open("event
 本地保留：
 
 ```text
-project-3-serverless-api/
+projects/aws-main/project-3-serverless-api/
 ```
 
 保留本地代码和笔记是为了复盘和以后重建项目。保留本地文件不会产生 AWS 费用。

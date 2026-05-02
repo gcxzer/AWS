@@ -1,6 +1,6 @@
 # AWS 身份与权限
 
-![AWS Identity Center concepts](../assets/aws-identity-concepts.svg)
+![AWS Identity Center concepts](../../assets/aws-identity-concepts.svg)
 
 ## 为什么先做身份和权限
 

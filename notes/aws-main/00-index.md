@@ -1,6 +1,6 @@
 # AWS 学习笔记索引
 
-这个文件只保留目录。详细内容已经拆到 `notes/` 文件夹里，避免单个 note 太长。
+这个文件只保留 AWS 主线目录。详细内容已经拆到 `notes/aws-main/` 文件夹里，避免单个 note 太长。
 
 ## 笔记目录
 
@@ -51,15 +51,18 @@
    - CSV、Parquet、partition、schema-on-read
    - Quick / QuickSight 在 BI dashboard 层的位置
 
+8. [项目 6：TopicFollow 迁移盘点与 V1 低改造原型](08-project-6-topicfollow-migration.md)
+
 ## 相关文件
 
-- 学习路线：[../aws-learning-roadmap.md](../aws-learning-roadmap.md)
-- 服务分类说明：[../aws-services-by-category.md](../aws-services-by-category.md)
-- 项目 2 本地站点：[../project-2-static-site/index.html](../project-2-static-site/index.html)
-- 项目 2 README：[../project-2-static-site/README.md](../project-2-static-site/README.md)
-- 项目 3 Lambda 代码：[../project-3-serverless-api/lambda_function.py](../project-3-serverless-api/lambda_function.py)
-- 项目 3 README：[../project-3-serverless-api/README.md](../project-3-serverless-api/README.md)
-- 项目 4 Lambda 代码：[../project-4-file-processing/lambda_function.py](../project-4-file-processing/lambda_function.py)
-- 项目 4 README：[../project-4-file-processing/README.md](../project-4-file-processing/README.md)
-- 项目 5 笔记：[../notes/07-project-5-data-lake.md](../notes/07-project-5-data-lake.md)
-- 项目 5 架构图：[../assets/project-5-data-lake-flow.svg](../assets/project-5-data-lake-flow.svg)
+- 学习路线：[../../aws-learning-roadmap.md](../../aws-learning-roadmap.md)
+- 服务分类说明：[../../aws-services-by-category.md](../../aws-services-by-category.md)
+- 项目 2 本地站点：[../../projects/aws-main/project-2-static-site/index.html](../../projects/aws-main/project-2-static-site/index.html)
+- 项目 2 README：[../../projects/aws-main/project-2-static-site/README.md](../../projects/aws-main/project-2-static-site/README.md)
+- 项目 3 Lambda 代码：[../../projects/aws-main/project-3-serverless-api/lambda_function.py](../../projects/aws-main/project-3-serverless-api/lambda_function.py)
+- 项目 3 README：[../../projects/aws-main/project-3-serverless-api/README.md](../../projects/aws-main/project-3-serverless-api/README.md)
+- 项目 4 Lambda 代码：[../../projects/aws-main/project-4-file-processing/lambda_function.py](../../projects/aws-main/project-4-file-processing/lambda_function.py)
+- 项目 4 README：[../../projects/aws-main/project-4-file-processing/README.md](../../projects/aws-main/project-4-file-processing/README.md)
+- 项目 5 笔记：[07-project-5-data-lake.md](07-project-5-data-lake.md)
+- 项目 5 架构图：[../../assets/project-5-data-lake-flow.svg](../../assets/project-5-data-lake-flow.svg)
+- 项目 6 笔记：[08-project-6-topicfollow-migration.md](08-project-6-topicfollow-migration.md)

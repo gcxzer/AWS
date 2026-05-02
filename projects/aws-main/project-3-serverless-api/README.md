@@ -62,7 +62,7 @@ CloudWatch log group: /aws/lambda/learning-notes-api (deleted)
 ## Files
 
 ```text
-project-3-serverless-api/
+projects/aws-main/project-3-serverless-api/
   lambda_function.py
   events/
     create-note.json
@@ -146,5 +146,5 @@ curl -X DELETE https://p74uenx0qd.execute-api.eu-central-1.amazonaws.com/notes/N
 See the Chinese learning note:
 
 ```text
-../notes/05-project-3-serverless-api.md
+../../../notes/aws-main/05-project-3-serverless-api.md
 ```

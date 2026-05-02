@@ -5,7 +5,7 @@
 ## 本地文件
 
 ```text
-project-2-static-site/
+projects/aws-main/project-2-static-site/
   index.html
   README.md
   assets/
@@ -15,12 +15,12 @@ project-2-static-site/
 入口文件：
 
 ```text
-../project-2-static-site/index.html
+../../projects/aws-main/project-2-static-site/index.html
 ```
 
 架构图：
 
-![S3 and CloudFront static site flow](../project-2-static-site/assets/static-site-flow.svg)
+![S3 and CloudFront static site flow](../../projects/aws-main/project-2-static-site/assets/static-site-flow.svg)
 
 ## 低成本规则
 
@@ -102,7 +102,7 @@ index.html
 上传命令：
 
 ```bash
-aws s3 sync project-2-static-site s3://xzhu-aws-learning-static-site-20260501 --exclude README.md --profile aws-learning
+aws s3 sync projects/aws-main/project-2-static-site s3://xzhu-aws-learning-static-site-20260501 --exclude README.md --profile aws-learning
 ```
 
 验证命令：
@@ -279,10 +279,10 @@ learn.xzhu.com
 
 ## 本地更新后的手动部署步骤
 
-如果本地修改了 `project-2-static-site` 中的文件，需要：
+如果本地修改了 `projects/aws-main/project-2-static-site` 中的文件，需要：
 
 ```bash
-aws s3 sync project-2-static-site s3://xzhu-aws-learning-static-site-20260501 --exclude README.md --profile aws-learning
+aws s3 sync projects/aws-main/project-2-static-site s3://xzhu-aws-learning-static-site-20260501 --exclude README.md --profile aws-learning
 aws cloudfront create-invalidation --distribution-id E3M6RP17632GUT --paths "/*" --profile aws-learning
 ```
 

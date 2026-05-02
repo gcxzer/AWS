@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="390" viewBox="0 0 1120 390" role="img" aria-labelledby="title desc">
+  <title id="title">AI-4 Bedrock Knowledge Base RAG flow</title>
+  <desc id="desc">Documents in S3 are connected to a Bedrock Knowledge Base. An ingestion job chunks documents, creates embeddings, stores vectors, and retrieve-and-generate answers user questions with citations.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155" />
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 10; }
+      .ai { fill: #eff6ff; stroke: #2563eb; stroke-width: 2; rx: 10; }
+      .store { fill: #ecfdf5; stroke: #047857; stroke-width: 2; rx: 10; }
+      .query { fill: #fdf2f8; stroke: #be185d; stroke-width: 2; rx: 10; }
+      .label { fill: #0f172a; font: 700 18px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .small { fill: #475569; font: 14px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .tiny { fill: #64748b; font: 12px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .arrow { stroke: #334155; stroke-width: 2.4; fill: none; marker-end: url(#arrow); }
+      .soft { stroke: #94a3b8; stroke-width: 2; fill: none; marker-end: url(#arrow); stroke-dasharray: 6 6; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1120" height="390" />
+
+  <rect class="store" x="36" y="88" width="150" height="116" />
+  <text class="label" x="111" y="128" text-anchor="middle">S3 docs</text>
+  <text class="small" x="111" y="156" text-anchor="middle">markdown / txt</text>
+  <text class="tiny" x="111" y="178" text-anchor="middle">data source</text>
+
+  <rect class="ai" x="246" y="88" width="180" height="116" />
+  <text class="label" x="336" y="128" text-anchor="middle">Knowledge Base</text>
+  <text class="small" x="336" y="156" text-anchor="middle">Bedrock managed</text>
+  <text class="tiny" x="336" y="178" text-anchor="middle">connects source + vector store</text>
+
+  <rect class="box" x="486" y="88" width="150" height="116" />
+  <text class="label" x="561" y="128" text-anchor="middle">Ingestion</text>
+  <text class="small" x="561" y="156" text-anchor="middle">chunk docs</text>
+  <text class="tiny" x="561" y="178" text-anchor="middle">create embeddings</text>
+
+  <rect class="store" x="696" y="88" width="170" height="116" />
+  <text class="label" x="781" y="128" text-anchor="middle">Vector store</text>
+  <text class="small" x="781" y="156" text-anchor="middle">embeddings</text>
+  <text class="tiny" x="781" y="178" text-anchor="middle">semantic retrieval</text>
+
+  <rect class="query" x="36" y="260" width="150" height="86" />
+  <text class="label" x="111" y="292" text-anchor="middle">Question</text>
+  <text class="small" x="111" y="318" text-anchor="middle">user query</text>
+
+  <rect class="ai" x="246" y="250" width="180" height="106" />
+  <text class="label" x="336" y="290" text-anchor="middle">Retrieve</text>
+  <text class="small" x="336" y="318" text-anchor="middle">relevant chunks</text>
+
+  <rect class="ai" x="486" y="250" width="150" height="106" />
+  <text class="label" x="561" y="290" text-anchor="middle">Generate</text>
+  <text class="small" x="561" y="318" text-anchor="middle">answer</text>
+
+  <rect class="box" x="696" y="250" width="170" height="106" />
+  <text class="label" x="781" y="290" text-anchor="middle">Citations</text>
+  <text class="small" x="781" y="318" text-anchor="middle">source references</text>
+
+  <rect class="box" x="926" y="165" width="150" height="116" />
+  <text class="label" x="1001" y="205" text-anchor="middle">Answer</text>
+  <text class="small" x="1001" y="233" text-anchor="middle">grounded response</text>
+  <text class="tiny" x="1001" y="255" text-anchor="middle">with sources</text>
+
+  <path class="arrow" d="M186 146 H238" />
+  <path class="arrow" d="M426 146 H478" />
+  <path class="arrow" d="M636 146 H688" />
+  <path class="soft" d="M781 204 V242" />
+  <path class="arrow" d="M186 303 H238" />
+  <path class="arrow" d="M426 303 H478" />
+  <path class="arrow" d="M636 303 H688" />
+  <path class="arrow" d="M866 303 C908 286 926 264 926 232" />
+</svg>

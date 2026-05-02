@@ -14,7 +14,7 @@ CSV / 日志文件放在 S3
 
 架构图：
 
-![Project 5 data lake flow](../assets/project-5-data-lake-flow.svg)
+![Project 5 data lake flow](../../assets/project-5-data-lake-flow.svg)
 
 ## 当前状态
 

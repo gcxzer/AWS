@@ -1,0 +1,5 @@
+Amazon Bedrock is a managed AWS service for building generative AI applications with foundation models. Developers can call Bedrock through AWS SDKs such as boto3.
+
+In this project, an S3 upload event triggers Lambda. Lambda reads the uploaded document, calls Bedrock Runtime to summarize the content, and writes a summary JSON file to an S3 output bucket.
+
+CloudWatch Logs are used to inspect execution details, errors, latency, and token usage. IAM controls what the Lambda execution role can read, write, and invoke.

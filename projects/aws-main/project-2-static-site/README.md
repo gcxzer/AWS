@@ -5,7 +5,7 @@
 ## 当前本地文件
 
 ```text
-project-2-static-site/
+projects/aws-main/project-2-static-site/
   index.html
   README.md
   assets/
@@ -51,7 +51,7 @@ xzhu-aws-learning-static-site-20260501
 ```
 
 ```bash
-aws s3 sync ./project-2-static-site s3://xzhu-aws-learning-static-site-20260501 --exclude "README.md" --profile aws-learning
+aws s3 sync ./projects/aws-main/project-2-static-site s3://xzhu-aws-learning-static-site-20260501 --exclude "README.md" --profile aws-learning
 ```
 
 当前 CloudFront distribution：
@@ -68,7 +68,7 @@ CloudFront 已配置 S3 bucket 作为 origin，并允许 CloudFront 访问私有
 更新本地文件后，运行：
 
 ```bash
-aws s3 sync ./project-2-static-site s3://xzhu-aws-learning-static-site-20260501 --exclude "README.md" --profile aws-learning
+aws s3 sync ./projects/aws-main/project-2-static-site s3://xzhu-aws-learning-static-site-20260501 --exclude "README.md" --profile aws-learning
 aws cloudfront create-invalidation --distribution-id E3M6RP17632GUT --paths "/*" --profile aws-learning
 ```
 

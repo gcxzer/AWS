@@ -15,7 +15,7 @@
 
 架构图：
 
-![Project 4 file processing flow](../assets/project-4-file-processing-flow.svg)
+![Project 4 file processing flow](../../assets/project-4-file-processing-flow.svg)
 
 ## 当前状态
 
@@ -38,7 +38,7 @@ s3://xzhu-aws-learning-file-input-20260501/uploads/sample.csv
 ## 本地文件
 
 ```text
-project-4-file-processing/
+projects/aws-main/project-4-file-processing/
   lambda_function.py
   events/
     s3-object-created.json
@@ -49,13 +49,13 @@ project-4-file-processing/
 核心代码：
 
 ```text
-../project-4-file-processing/lambda_function.py
+../../projects/aws-main/project-4-file-processing/lambda_function.py
 ```
 
 样例文件：
 
 ```text
-../project-4-file-processing/sample-data/sample.csv
+../../projects/aws-main/project-4-file-processing/sample-data/sample.csv
 ```
 
 ## 已创建并已删除的 AWS 资源

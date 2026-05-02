@@ -29,13 +29,13 @@ Optional later:
 Architecture diagram:
 
 ```text
-../assets/project-4-file-processing-flow.svg
+../../../assets/project-4-file-processing-flow.svg
 ```
 
 ## Files
 
 ```text
-project-4-file-processing/
+projects/aws-main/project-4-file-processing/
   lambda_function.py
   events/
     s3-object-created.json
@@ -125,7 +125,7 @@ SNS_TOPIC_ARN=
 This does not call AWS. It only checks the text/CSV summary logic with the local sample file.
 
 ```bash
-cd project-4-file-processing
+cd projects/aws-main/project-4-file-processing
 python lambda_function.py sample-data/sample.csv
 ```
 
@@ -235,5 +235,5 @@ Cleanup was completed on 2026-05-01. The deletion order was:
 See the Chinese learning note:
 
 ```text
-../notes/06-project-4-file-processing.md
+../../../notes/aws-main/06-project-4-file-processing.md
 ```
