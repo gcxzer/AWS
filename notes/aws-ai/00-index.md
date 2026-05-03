@@ -19,6 +19,9 @@
 13. [AI-13：Processing Jobs](13-processing-jobs.md)
 14. [AI-14：Hugging Face Training Jobs 基础](14-huggingface-training-jobs.md)
 15. [AI-15：SageMaker 模型产物与部署准备](15-sagemaker-model-artifact-deployment.md)
+16. [AI-16：Batch Transform / 离线批量推理](16-batch-transform-offline-inference.md)
+17. [AI-17：Inference 模式全家桶](17-inference-modes.md)
+18. [AI-18：Model、Endpoint Config 与 Endpoint](18-realtime-endpoint-checklist.md)
 
 ## 相关文件
 
@@ -53,3 +56,9 @@
 - AI-14 README：[../../projects/aws-ai/ai-14-huggingface-training-jobs/README.md](../../projects/aws-ai/ai-14-huggingface-training-jobs/README.md)
 - AI-15 本地代码：[../../projects/aws-ai/ai-15-sagemaker-model-deployment/](../../projects/aws-ai/ai-15-sagemaker-model-deployment/)
 - AI-15 README：[../../projects/aws-ai/ai-15-sagemaker-model-deployment/README.md](../../projects/aws-ai/ai-15-sagemaker-model-deployment/README.md)
+- AI-16 本地代码：[../../projects/aws-ai/ai-16-batch-transform-offline-inference/](../../projects/aws-ai/ai-16-batch-transform-offline-inference/)
+- AI-16 README：[../../projects/aws-ai/ai-16-batch-transform-offline-inference/README.md](../../projects/aws-ai/ai-16-batch-transform-offline-inference/README.md)
+- AI-17 本地代码：[../../projects/aws-ai/ai-17-inference-modes/](../../projects/aws-ai/ai-17-inference-modes/)
+- AI-17 README：[../../projects/aws-ai/ai-17-inference-modes/README.md](../../projects/aws-ai/ai-17-inference-modes/README.md)
+- AI-18 本地代码：[../../projects/aws-ai/ai-18-realtime-endpoint-checklist/](../../projects/aws-ai/ai-18-realtime-endpoint-checklist/)
+- AI-18 README：[../../projects/aws-ai/ai-18-realtime-endpoint-checklist/README.md](../../projects/aws-ai/ai-18-realtime-endpoint-checklist/README.md)

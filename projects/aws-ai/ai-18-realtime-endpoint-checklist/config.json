@@ -1,0 +1,12 @@
+{
+  "profile": "aws-learning",
+  "region": "eu-central-1",
+  "account_id": "089781651608",
+  "sagemaker_role_arn": "arn:aws:iam::089781651608:role/ai-12-sagemaker-execution-role",
+  "bucket": "aws-ai-sagemaker-learning-089781651608-eu-central-1-an",
+  "prefix": "sagemaker/ai-18",
+  "source_model_artifact_s3_uri": "s3://aws-ai-sagemaker-learning-089781651608-eu-central-1-an/sagemaker/ai-14/models/<training-job-name>/model.tar.gz",
+  "inference_image_uri": "763104351884.dkr.ecr.eu-central-1.amazonaws.com/pytorch-inference:2.1.0-cpu-py310",
+  "endpoint_instance_type": "ml.m5.large",
+  "endpoint_initial_instance_count": 1
+}
