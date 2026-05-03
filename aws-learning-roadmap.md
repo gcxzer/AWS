@@ -135,7 +135,7 @@
 | 7 | TopicFollow 图片/上传文件迁移 | S3、CloudFront、IAM policy、KMS 可选 | 本地 uploads 到 S3 的迁移方案 | 新上传文件进 S3，旧文件可访问，能解释对象存储和本地文件系统差异 |
 | 8 | TopicFollow 容器化部署 | Docker、ECR、ECS Fargate、ALB、CloudWatch Logs | 容器化 TopicFollow 服务 | ECS 测试环境可访问，镜像可回滚，日志可查 |
 | 9 | TopicFollow CI/CD、监控与成本治理 | GitHub Actions 或 CodeBuild/CodePipeline、CloudWatch、Secrets Manager、Budgets、Cost Explorer | 自动部署、告警、secret 管理和成本复盘 | 一次 commit 能部署测试环境，有健康检查、告警和清理清单 |
-| 10 | TopicFollow AWS 正式迁移 Capstone | Route 53、ACM、CloudFront/ALB、ECS 或 EC2、RDS、S3、CloudWatch | TopicFollow 从 Hetzner 到 AWS 的完整迁移 | 有架构图、回滚方案、数据迁移步骤、切流步骤、清理旧资源计划 |
+| 10 | TopicFollow Hetzner -> AWS 现代生产架构迁移 | Route 53、ACM、CloudFront、ALB、ECR、ECS Fargate、RDS PostgreSQL、S3、Secrets Manager、CloudWatch、EventBridge | 把当前 Hetzner production 网站内容真正迁到现代 AWS production | 正式域名访问 AWS，应用运行在 ECS Fargate，数据库和 uploads 完整迁移，有回滚方案 |
 
 ## 项目 1：账号与安全地基项目
 
@@ -678,21 +678,22 @@
 - Secrets Manager、CloudWatch Logs、CloudWatch Alarms、CodeBuild、ALB、ECS、RDS 都可能持续收费。
 - 监控资源也要纳入成本复盘，不要只看计算和数据库。
 
-## 项目 10：TopicFollow AWS 正式迁移 Capstone
+## 项目 10：TopicFollow Hetzner -> AWS 现代生产架构迁移
 
 ### 目标
 
-完成一次真实生产迁移：把 TopicFollow 从 Hetzner 单机切到 AWS。这个项目是整条路线的 Capstone，重点不是“用最多服务”，而是能安全迁移、能回滚、能解释、能控制成本。
+从 2026-05-04 开始，真正把当前运行在 Hetzner 的 TopicFollow production 迁移到 AWS。这个项目不是学习演示，不是 staging 练习，也不是低改造 EC2 搬家，而是迁移真实网站内容到现代 AWS production：CloudFront、ALB、ECS Fargate、ECR、RDS、S3、Secrets、CloudWatch 和 EventBridge。
 
 ### 推荐目标架构
 
-- 入口：`Route 53` + `ACM` + `CloudFront` 或 `Application Load Balancer`。
-- 应用：优先使用项目 8 跑通的 `ECS Fargate`；低改造备选是 `EC2`。
+- 入口：`Route 53 / DNS` + `ACM` + `CloudFront` + `ALB`。
+- 应用：`ECS Fargate` 运行 TopicFollow container，image 存在 `ECR`。
 - 数据库：`RDS PostgreSQL`。
-- 图片和上传文件：`S3` + `CloudFront`。
-- 密钥：`Secrets Manager` 或 `SSM Parameter Store`。
+- 图片和上传文件：`S3` production bucket，保持 `/uploads/...` 兼容路径。
+- 密钥：`Secrets Manager` 或 `SSM Parameter Store` 注入 ECS task，不把 secret 写进仓库、笔记或 image。
 - 日志和监控：`CloudWatch Logs` + `CloudWatch Alarms`。
-- 部署：`GitHub Actions` 或 `CodePipeline/CodeBuild`。
+- 定时任务：`EventBridge Scheduler`、ECS scheduled task 或受控 HTTP schedule。
+- 部署：`GitHub Actions` 构建 image、推送 ECR、更新 ECS service。
 
 ### 正式切流检查清单
 
@@ -707,7 +708,7 @@
 | 数据库 | Hetzner 写入冻结窗口明确，最终备份已导出，RDS production 导入完成，migration 已跑，切流后写入只进入 AWS |
 | uploads | S3 文件数量、抽样图片、avatars、topic images 验证通过 |
 | 监控 | `/api/health`、CloudWatch Alarm、外部监控、备份检查都启用 |
-| 成本 | RDS、ALB、ECS/Fargate 或 EC2、CloudWatch Logs、Secrets Manager、S3、CloudFront 都有 tag 和预算告警 |
+| 成本 | RDS、ECS Fargate、ALB、CloudFront、S3、CloudWatch Logs、Secrets Manager、NAT Gateway 或 VPC endpoints 都有 tag、预算告警和保留/清理决策 |
 
 ### 动手任务
 
@@ -736,7 +737,7 @@
 - [ ] cron/job 和邮件链路在 AWS 环境中正常。
 - [ ] 有明确回滚方案。
 - [ ] 有完整 README/Runbook：部署步骤、迁移步骤、清理步骤、成本说明、服务选型解释。
-- [ ] 能解释为什么选择 ECS/EC2、RDS、S3、CloudFront，而不是继续单机部署。
+- [ ] 能解释为什么选择 ECS Fargate、RDS、S3、CloudFront/ALB，而不是继续 Hetzner/EC2 单机部署。
 
 ### 复盘问题
 
@@ -749,7 +750,7 @@
 
 ### 清理步骤
 
-- 删除所有测试 ECS service、EC2 instance、ALB、ECR 测试镜像。
+- 删除所有测试 ECS service、临时 EC2 跳板机、ALB、ECR 测试镜像。
 - 删除临时 RDS instance 和 snapshot，保留正式备份策略。
 - 删除测试 S3 bucket 或临时 prefix。
 - 删除临时 CloudFront distribution。
@@ -758,8 +759,8 @@
 
 ### 费用提醒
 
-- 生产迁移后，长期费用主要来自 RDS、ECS/Fargate 或 EC2、ALB、CloudFront、S3、CloudWatch、Secrets Manager。
-- RDS、ALB、NAT Gateway、EKS、OpenSearch 是最容易让学习预算失控的服务；本路线不把 NAT Gateway、EKS、OpenSearch 放入 TopicFollow 主线。
+- 生产迁移后，长期费用主要来自 RDS、ECS Fargate、ALB、CloudFront、S3、CloudWatch、Secrets Manager，以及可能需要的 NAT Gateway 或 VPC endpoints。
+- RDS、ALB、NAT Gateway、EKS、OpenSearch 是最容易让预算失控的服务；本项目不使用 EKS/OpenSearch，NAT Gateway 是否使用必须作为明天的网络和成本决策单独记录。
 
 ## 可选分支路线
 

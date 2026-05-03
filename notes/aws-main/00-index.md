@@ -53,6 +53,14 @@
 
 8. [项目 6：TopicFollow 迁移盘点与 V1 低改造原型](08-project-6-topicfollow-migration.md)
 
+9. [项目 7：TopicFollow 图片/上传文件迁移到 S3](09-project-7-topicfollow-uploads-s3.md)
+
+10. [项目 8：TopicFollow 容器化部署到 ECS Fargate](10-project-8-topicfollow-ecs-fargate.md)
+
+11. [项目 9：TopicFollow CI/CD、监控与成本治理](11-project-9-topicfollow-cicd-monitoring-cost.md)
+
+12. [项目 10：TopicFollow Hetzner -> AWS 现代生产架构迁移](12-project-10-topicfollow-production-migration.md)
+
 ## 相关文件
 
 - 学习路线：[../../aws-learning-roadmap.md](../../aws-learning-roadmap.md)
@@ -66,3 +74,7 @@
 - 项目 5 笔记：[07-project-5-data-lake.md](07-project-5-data-lake.md)
 - 项目 5 架构图：[../../assets/project-5-data-lake-flow.svg](../../assets/project-5-data-lake-flow.svg)
 - 项目 6 笔记：[08-project-6-topicfollow-migration.md](08-project-6-topicfollow-migration.md)
+- 项目 7 笔记：[09-project-7-topicfollow-uploads-s3.md](09-project-7-topicfollow-uploads-s3.md)
+- 项目 8 笔记：[10-project-8-topicfollow-ecs-fargate.md](10-project-8-topicfollow-ecs-fargate.md)
+- 项目 9 笔记：[11-project-9-topicfollow-cicd-monitoring-cost.md](11-project-9-topicfollow-cicd-monitoring-cost.md)
+- 项目 10 笔记：[12-project-10-topicfollow-production-migration.md](12-project-10-topicfollow-production-migration.md)
