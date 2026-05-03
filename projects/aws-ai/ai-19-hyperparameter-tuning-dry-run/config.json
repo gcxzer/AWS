@@ -1,0 +1,19 @@
+{
+  "profile": "aws-learning",
+  "region": "eu-central-1",
+  "account_id": "089781651608",
+  "sagemaker_role_arn": "arn:aws:iam::089781651608:role/ai-12-sagemaker-execution-role",
+  "bucket": "aws-ai-sagemaker-learning-089781651608-eu-central-1-an",
+  "prefix": "sagemaker/ai-19",
+  "source_training_prefix": "sagemaker/ai-14",
+  "training_image_uri": "763104351884.dkr.ecr.eu-central-1.amazonaws.com/pytorch-training:2.1.0-cpu-py310",
+  "training_instance_type": "ml.m5.large",
+  "training_volume_size_gb": 30,
+  "training_max_runtime_seconds": 1800,
+  "hf_model_id": "prajjwal1/bert-tiny",
+  "num_labels": 3,
+  "objective_metric_name": "eval_loss",
+  "objective_type": "Minimize",
+  "max_number_of_training_jobs": 4,
+  "max_parallel_training_jobs": 1
+}

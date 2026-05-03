@@ -1,0 +1,13 @@
+{
+  "profile": "aws-learning",
+  "region": "eu-central-1",
+  "account_id": "089781651608",
+  "model_package_group_name": "ai-20-review-classifier",
+  "model_package_group_description": "Learning model package group for AWS AI-20",
+  "model_package_description": "Candidate Hugging Face text classifier model package",
+  "source_model_artifact_s3_uri": "s3://aws-ai-sagemaker-learning-089781651608-eu-central-1-an/sagemaker/ai-14/models/<training-job-name>/model.tar.gz",
+  "inference_image_uri": "763104351884.dkr.ecr.eu-central-1.amazonaws.com/pytorch-inference:2.1.0-cpu-py310",
+  "approval_status": "PendingManualApproval",
+  "eval_accuracy": 0.91,
+  "eval_loss": 0.42
+}

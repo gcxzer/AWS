@@ -22,6 +22,8 @@
 16. [AI-16：Batch Transform / 离线批量推理](16-batch-transform-offline-inference.md)
 17. [AI-17：Inference 模式全家桶](17-inference-modes.md)
 18. [AI-18：Model、Endpoint Config 与 Endpoint](18-realtime-endpoint-checklist.md)
+19. [AI-19：Hyperparameter Tuning / HPO 自动调参](19-hyperparameter-tuning.md)
+20. [AI-20：Model Registry / 模型注册表](20-model-registry.md)
 
 ## 相关文件
 
@@ -62,3 +64,7 @@
 - AI-17 README：[../../projects/aws-ai/ai-17-inference-modes/README.md](../../projects/aws-ai/ai-17-inference-modes/README.md)
 - AI-18 本地代码：[../../projects/aws-ai/ai-18-realtime-endpoint-checklist/](../../projects/aws-ai/ai-18-realtime-endpoint-checklist/)
 - AI-18 README：[../../projects/aws-ai/ai-18-realtime-endpoint-checklist/README.md](../../projects/aws-ai/ai-18-realtime-endpoint-checklist/README.md)
+- AI-19 本地代码：[../../projects/aws-ai/ai-19-hyperparameter-tuning-dry-run/](../../projects/aws-ai/ai-19-hyperparameter-tuning-dry-run/)
+- AI-19 README：[../../projects/aws-ai/ai-19-hyperparameter-tuning-dry-run/README.md](../../projects/aws-ai/ai-19-hyperparameter-tuning-dry-run/README.md)
+- AI-20 本地代码：[../../projects/aws-ai/ai-20-model-registry-dry-run/](../../projects/aws-ai/ai-20-model-registry-dry-run/)
+- AI-20 README：[../../projects/aws-ai/ai-20-model-registry-dry-run/README.md](../../projects/aws-ai/ai-20-model-registry-dry-run/README.md)
