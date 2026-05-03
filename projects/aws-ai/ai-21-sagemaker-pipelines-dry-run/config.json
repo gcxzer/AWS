@@ -1,0 +1,17 @@
+{
+  "profile": "aws-learning",
+  "region": "eu-central-1",
+  "account_id": "089781651608",
+  "pipeline_name": "ai-21-review-classifier-pipeline",
+  "pipeline_description": "Learning pipeline plan for processing, training, evaluation, and model registration",
+  "sagemaker_role_arn": "arn:aws:iam::089781651608:role/ai-12-sagemaker-execution-role",
+  "bucket": "aws-ai-sagemaker-learning-089781651608-eu-central-1-an",
+  "prefix": "sagemaker/ai-21",
+  "source_raw_data_s3_uri": "s3://aws-ai-sagemaker-learning-089781651608-eu-central-1-an/sagemaker/ai-13/raw/sample_reviews.jsonl",
+  "processing_image_uri": "763104351884.dkr.ecr.eu-central-1.amazonaws.com/pytorch-training:2.1.0-cpu-py310",
+  "training_image_uri": "763104351884.dkr.ecr.eu-central-1.amazonaws.com/pytorch-training:2.1.0-cpu-py310",
+  "inference_image_uri": "763104351884.dkr.ecr.eu-central-1.amazonaws.com/pytorch-inference:2.1.0-cpu-py310",
+  "model_package_group_name": "ai-20-review-classifier",
+  "accuracy_threshold": 0.9,
+  "default_approval_status": "PendingManualApproval"
+}

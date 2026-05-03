@@ -24,6 +24,7 @@
 18. [AI-18：Model、Endpoint Config 与 Endpoint](18-realtime-endpoint-checklist.md)
 19. [AI-19：Hyperparameter Tuning / HPO 自动调参](19-hyperparameter-tuning.md)
 20. [AI-20：Model Registry / 模型注册表](20-model-registry.md)
+21. [AI-21：SageMaker Pipelines](21-sagemaker-pipelines.md)
 
 ## 相关文件
 
@@ -68,3 +69,5 @@
 - AI-19 README：[../../projects/aws-ai/ai-19-hyperparameter-tuning-dry-run/README.md](../../projects/aws-ai/ai-19-hyperparameter-tuning-dry-run/README.md)
 - AI-20 本地代码：[../../projects/aws-ai/ai-20-model-registry-dry-run/](../../projects/aws-ai/ai-20-model-registry-dry-run/)
 - AI-20 README：[../../projects/aws-ai/ai-20-model-registry-dry-run/README.md](../../projects/aws-ai/ai-20-model-registry-dry-run/README.md)
+- AI-21 本地代码：[../../projects/aws-ai/ai-21-sagemaker-pipelines-dry-run/](../../projects/aws-ai/ai-21-sagemaker-pipelines-dry-run/)
+- AI-21 README：[../../projects/aws-ai/ai-21-sagemaker-pipelines-dry-run/README.md](../../projects/aws-ai/ai-21-sagemaker-pipelines-dry-run/README.md)
