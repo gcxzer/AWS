@@ -16,6 +16,30 @@ SageMaker 临时开一台机器
 
 它适合清洗、切分、转换数据，不适合长期 API 服务或在线推理。
 
+## 架构图
+
+```mermaid
+flowchart LR
+  VSCode["Local VS Code"] --> Upload["upload_inputs.py"]
+  Upload --> S3Input["S3 raw data + script"]
+  S3Input --> ProcessingJob["SageMaker Processing Job"]
+  ProcessingJob --> Container["Processing container"]
+  Container --> Script["preprocess_reviews.py"]
+  Script --> S3Output["S3 processed train/test"]
+  Script --> Logs["CloudWatch Logs"]
+  ProcessingJob --> Stop["Job completes and instance stops"]
+  S3Output --> AI14["AI-14 training input"]
+```
+
+关键理解：
+
+```text
+Processing Job 是一次性计算任务。
+输入和脚本来自 S3。
+输出写回 S3。
+实例在 job 完成后自动停止。
+```
+
 ## 本节项目
 
 目录：

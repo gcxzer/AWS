@@ -18,6 +18,7 @@
 12. [AI-12：VS Code、Domain、IAM 与 S3](12-vscode-sagemaker-setup.md)
 13. [AI-13：Processing Jobs](13-processing-jobs.md)
 14. [AI-14：Hugging Face Training Jobs 基础](14-huggingface-training-jobs.md)
+15. [AI-15：SageMaker 模型产物与部署准备](15-sagemaker-model-artifact-deployment.md)
 
 ## 相关文件
 
@@ -50,3 +51,5 @@
 - AI-13 README：[../../projects/aws-ai/ai-13-processing-jobs/README.md](../../projects/aws-ai/ai-13-processing-jobs/README.md)
 - AI-14 本地代码：[../../projects/aws-ai/ai-14-huggingface-training-jobs/](../../projects/aws-ai/ai-14-huggingface-training-jobs/)
 - AI-14 README：[../../projects/aws-ai/ai-14-huggingface-training-jobs/README.md](../../projects/aws-ai/ai-14-huggingface-training-jobs/README.md)
+- AI-15 本地代码：[../../projects/aws-ai/ai-15-sagemaker-model-deployment/](../../projects/aws-ai/ai-15-sagemaker-model-deployment/)
+- AI-15 README：[../../projects/aws-ai/ai-15-sagemaker-model-deployment/README.md](../../projects/aws-ai/ai-15-sagemaker-model-deployment/README.md)

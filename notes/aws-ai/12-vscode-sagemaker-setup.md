@@ -15,6 +15,28 @@ Local VS Code
   -> S3 artifact bucket
 ```
 
+## 架构图
+
+```mermaid
+flowchart LR
+  VSCode["Local VS Code"] --> Profile["aws-learning profile"]
+  Profile --> SDK["boto3 / SageMaker SDK"]
+  SDK --> ControlPlane["SageMaker control plane"]
+  ControlPlane --> Jobs["Processing / Training / Batch jobs"]
+  Jobs --> ExecRole["Execution role: ai-12-sagemaker-execution-role"]
+  ExecRole --> S3["S3 artifact bucket"]
+  ControlPlane -. "Studio UI boundary" .-> Domain["SageMaker Domain"]
+  Domain -. "contains" .-> UserProfile["User profile"]
+```
+
+关键理解：
+
+```text
+VS Code 是开发入口。
+SageMaker Domain 是 Studio 工作区边界。
+真正跑 job 时，SageMaker 用 execution role 访问 S3 和日志。
+```
+
 ## 核心概念
 
 | 概念 | 作用 |
@@ -25,6 +47,19 @@ Local VS Code
 | User profile | Domain 里的 Studio 用户身份 |
 | Execution role | SageMaker job 运行时使用的 IAM role |
 | S3 artifact bucket | 保存数据、脚本、模型和输出 |
+
+## VS Code 和 SageMaker Domain 的关系
+
+本地 VS Code 不属于 SageMaker Domain。
+
+```text
+本地 VS Code
+  -> 使用 aws-learning profile 调 AWS API
+  -> 创建 SageMaker jobs
+  -> jobs 用 execution role 运行
+```
+
+Domain 主要服务 Studio / JupyterLab / Code Editor / Canvas 这些托管开发界面。我们后续不把 Studio JupyterLab 当主开发入口，但保留 Domain 有助于理解 SageMaker 的工作区、用户和权限边界。
 
 ## 已创建资源
 

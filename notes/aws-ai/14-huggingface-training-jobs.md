@@ -2,7 +2,9 @@
 
 ## 目标
 
-用 SageMaker Training Job 跑一个 Hugging Face transformer 训练流程，并生成 SageMaker 可管理的 `model.tar.gz`。
+准备一个 SageMaker Training Job 的 Hugging Face transformer 训练流程，理解它如何生成 SageMaker 可管理的 `model.tar.gz`。
+
+本节当前不实际运行 Training Job，因为账号在 `eu-central-1` 的常见 training instance quota 为 `0`，而且当前学习目标是理解链路，不是消耗训练资源。
 
 本节不走传统表格模型路线，主线是：
 
@@ -12,6 +14,31 @@ AI-13 processed JSONL
   -> Hugging Face transformer
   -> /opt/ml/model
   -> S3 model.tar.gz
+```
+
+## 架构图
+
+```mermaid
+flowchart LR
+  AI13["AI-13 processed JSONL"] --> Upload["upload_training_inputs.py"]
+  Upload --> S3Train["S3 train/test data"]
+  Upload --> S3Code["S3 training script + requirements"]
+  S3Train --> TrainingJob["SageMaker Training Job"]
+  S3Code --> TrainingJob
+  TrainingJob --> Container["PyTorch training container"]
+  Container --> HFModel["Hugging Face model: prajjwal1/bert-tiny"]
+  Container --> ModelDir["/opt/ml/model"]
+  ModelDir --> Artifact["S3 model.tar.gz"]
+  Artifact --> AI15["AI-15 deployment preparation"]
+  Quota["Current training quota: 0"] -. "blocks actual run" .-> TrainingJob
+```
+
+关键理解：
+
+```text
+upload_training_inputs.py 只准备 S3 输入。
+run_training_job.py 才会创建 SageMaker Training Job。
+train_text_classifier.py 是容器里真正执行的训练代码。
 ```
 
 ## 准备工作状态
@@ -91,24 +118,31 @@ ml.t3.large for training job usage: 0
 ml.g5.xlarge for training job usage: 0
 ```
 
-因此 AI-14 明天不能直接跑 Training Job，除非：
+因此 AI-14 当前不直接跑 Training Job。以后如果要真正训练，需要先满足其中一个条件：
 
 ```text
 1. 申请 training job quota increase，例如 ml.m5.large
 2. 或切换到有训练配额的 Region
 ```
 
-## 明天第一步
+## 当前决策
 
-先处理 quota：
+本节不继续申请 quota，也不运行 `run_training_job.py`。
+
+原因：
+
+```text
+1. 当前已经读完并理解 Training Job 代码结构。
+2. AI-14 的目标是理解 HF training artifact 链路。
+3. 继续跑 Training Job 会引入 quota 和计算费用问题。
+4. 下一节可以先学习部署概念和 Batch Transform 这种更安全的一次性推理方式。
+```
+
+如果以后需要真的训练，再回来处理：
 
 ```text
 Service Quotas
   -> Amazon SageMaker
-  -> ml.m5.large for training job usage
-  -> request increase to 1
+  -> training job usage
+  -> request quota for a small CPU or GPU instance
 ```
-
-或者先查其他 Region 是否有非零 training quota。
-
-在 quota 解决前，不运行 `run_training_job.py`。

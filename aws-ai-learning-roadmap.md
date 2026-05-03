@@ -41,8 +41,8 @@
 | AI-11 | SageMaker 总览与选型 | SageMaker AI、Bedrock、S3、IAM | SageMaker 专项路线和核心概念图 | 能解释 Bedrock 与 SageMaker 的边界 |
 | AI-12 | VS Code、Domain、IAM 与 S3 | SageMaker Domain、IAM、S3、KMS、CloudWatch、VS Code | 本地 VS Code 控制 SageMaker 的安全工作区设计 | 能解释 Domain、user profile、space、execution role |
 | AI-13 | Processing Jobs | SageMaker Processing、S3、CloudWatch | 一个数据预处理 job | 能把本地预处理脚本迁移到托管 job |
-| AI-14 | Hugging Face Training Jobs 基础 | SageMaker Training、Hugging Face、PyTorch、S3、CloudWatch | 一个 Hugging Face 模型训练或打包 job | 能产出并解释 HF 模型 artifact / `model.tar.gz` |
-| AI-15 | Hugging Face 容器、PyTorch 与自定义推理 | Hugging Face containers、PyTorch、ECR、S3 | HF 模型在 SageMaker 中的训练/推理方式对比 | 能判断何时用 HF container、PyTorch container 或自定义容器 |
+| AI-14 | Hugging Face Training Jobs 基础 | SageMaker Training、Hugging Face、PyTorch、S3、CloudWatch | Hugging Face training job 脚本和 artifact 设计 | 能解释 HF 模型 artifact / `model.tar.gz` 的生成链路 |
+| AI-15 | 模型产物与部署准备 | SageMaker Model、Endpoint Config、Endpoint、S3、PyTorch inference | HF 模型 artifact、推理入口和部署计划 | 能解释 model.tar.gz、Model、Endpoint Config、Endpoint 的关系 |
 | AI-16 | 大模型参数实验与 HPO | HPO、Training jobs、metrics、LoRA/训练参数 | 一个小规模 HF 参数实验 | 能解释 objective metric、search range、best training job 和成本放大 |
 | AI-17 | Model、Endpoint Config 与 Endpoint | SageMaker Model、Endpoint、IAM、CloudWatch | 一个短时实时 endpoint | 能解释 endpoint 为什么会持续收费并能正确删除 |
 | AI-18 | Inference 模式全家桶 | Real-time、Serverless、Async、Batch、MME | 推理模式选型表 | 能根据延迟、吞吐和成本选择推理方式 |
@@ -789,7 +789,7 @@ Raw data in S3
 
 ### AI-14：Hugging Face Training Jobs 基础
 
-目标：跑通一次 Hugging Face 模型相关的最小训练或打包任务，产出可被 SageMaker 使用的模型 artifact。
+目标：准备并理解一次 Hugging Face 模型相关的最小训练或打包任务，知道它如何产出可被 SageMaker 使用的模型 artifact。
 
 推荐项目：
 
@@ -802,7 +802,8 @@ Raw data in S3
 动手任务：
 
 - [ ] 准备训练数据到 S3。
-- [ ] 在本地 VS Code 使用 SageMaker Hugging Face Estimator 或 PyTorch Estimator 启动 training job。
+- [ ] 在本地 VS Code 准备 SageMaker Hugging Face / PyTorch training job 脚本。
+- [ ] 明确当前是否有 training quota；没有 quota 时不强行运行 job。
 - [ ] 记录 `HF_MODEL_ID`、entry point、requirements、instance type、role、input channels、output path。
 - [ ] 查看 CloudWatch Logs 和 training metrics。
 - [ ] 下载或查看 S3 中的 `model.tar.gz`。
@@ -813,28 +814,31 @@ Raw data in S3
 - [ ] 能解释 model artifact 只是文件，不是在线服务。
 - [ ] 能解释 Hugging Face Hub 模型、S3 artifact、SageMaker Model 三者不是一回事。
 
-### AI-15：Hugging Face 容器、PyTorch 与自定义推理
+### AI-15：模型产物与部署准备
 
-目标：理解 Hugging Face 模型在 SageMaker 中训练和推理的几条路。
+目标：理解 Hugging Face 训练产物如何变成 SageMaker 可部署资源，但先不创建 endpoint。
 
-| 方式 | 适合场景 |
-| --- | --- |
-| Hugging Face container | 直接使用 HF Hub 模型、Trainer、transformers |
-| PyTorch container | 自己写更灵活的训练/推理脚本 |
-| Custom container | 需要 vLLM、TGI、特殊 CUDA 依赖或完全自定义运行环境 |
-| JumpStart | 快速体验预训练模型和解决方案模板 |
+核心关系：
+
+```text
+model.tar.gz in S3
+  -> SageMaker Model
+  -> Endpoint Configuration
+  -> Endpoint
+  -> InvokeEndpoint
+```
 
 动手任务：
 
-- [ ] 对比 Hugging Face Estimator、PyTorch Estimator、自定义容器。
-- [ ] 记录训练镜像、entry point、environment variables、hyperparameters 的区别。
-- [ ] 理解 `HF_MODEL_ID`、`HF_TASK`、model artifact 和 inference image 的关系。
-- [ ] 了解 ECR 在 custom container 中的作用。
+- [ ] 解释 `model.tar.gz` 里模型权重、tokenizer、`code/inference.py` 的作用。
+- [ ] 写一个 SageMaker 推理入口 `inference.py` 骨架。
+- [ ] 写一个只打印 API request 的 deployment dry-run 脚本。
+- [ ] 记录 endpoint 为什么是持续计费资源。
 
 验收标准：
 
-- [ ] 能判断什么时候不需要自定义容器。
-- [ ] 能解释 training image 和 inference image 的关系。
+- [ ] 能解释 `model.tar.gz`、SageMaker Model、Endpoint Config、Endpoint 不是一回事。
+- [ ] 能说清楚部署前必须确认 artifact、quota 和删除计划。
 
 ### AI-16：Hyperparameter Tuning
 
