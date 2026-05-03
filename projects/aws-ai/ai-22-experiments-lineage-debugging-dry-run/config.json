@@ -1,0 +1,30 @@
+{
+  "profile": "aws-learning",
+  "region": "eu-central-1",
+  "account_id": "089781651608",
+  "bucket": "aws-ai-sagemaker-learning-089781651608-eu-central-1-an",
+  "prefix": "sagemaker/ai-22",
+  "sagemaker_role_arn": "arn:aws:iam::089781651608:role/ai-12-sagemaker-execution-role",
+  "experiment_name": "ai-22-hf-review-classifier-experiment",
+  "trial_name": "ai-22-bert-tiny-baseline-trial",
+  "trial_component_name": "ai-22-training-job-baseline",
+  "training_job_name": "ai-14-hf-review-classifier-dry-run",
+  "model_name": "prajjwal1/bert-tiny",
+  "model_package_group_name": "ai-20-review-classifier",
+  "source_data_s3_uri": "s3://aws-ai-sagemaker-learning-089781651608-eu-central-1-an/sagemaker/ai-14/train/train.jsonl",
+  "test_data_s3_uri": "s3://aws-ai-sagemaker-learning-089781651608-eu-central-1-an/sagemaker/ai-14/test/test.jsonl",
+  "training_script_s3_uri": "s3://aws-ai-sagemaker-learning-089781651608-eu-central-1-an/sagemaker/ai-14/scripts/train_text_classifier.py",
+  "model_artifact_s3_uri": "s3://aws-ai-sagemaker-learning-089781651608-eu-central-1-an/sagemaker/ai-14/output/model.tar.gz",
+  "debugger_output_s3_uri": "s3://aws-ai-sagemaker-learning-089781651608-eu-central-1-an/sagemaker/ai-22/debugger/",
+  "profiler_output_s3_uri": "s3://aws-ai-sagemaker-learning-089781651608-eu-central-1-an/sagemaker/ai-22/profiler/",
+  "hyperparameters": {
+    "learning_rate": 0.00002,
+    "epochs": 1,
+    "batch_size": 8,
+    "max_length": 128
+  },
+  "example_metrics": {
+    "eval_loss": 0.42,
+    "eval_accuracy": 0.88
+  }
+}

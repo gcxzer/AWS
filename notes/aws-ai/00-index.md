@@ -25,6 +25,10 @@
 19. [AI-19：Hyperparameter Tuning / HPO 自动调参](19-hyperparameter-tuning.md)
 20. [AI-20：Model Registry / 模型注册表](20-model-registry.md)
 21. [AI-21：SageMaker Pipelines](21-sagemaker-pipelines.md)
+22. [AI-22：Experiments、Lineage 与 Debugging](22-experiments-lineage-debugging.md)
+23. [AI-23：Model Monitor 与 Clarify](23-model-monitor-clarify.md)
+24. [AI-24：Feature Store、Ground Truth 与高级能力](24-feature-store-ground-truth-advanced.md)
+25. [AI-25：SageMaker Capstone](25-sagemaker-capstone.md)
 
 ## 相关文件
 
@@ -71,3 +75,7 @@
 - AI-20 README：[../../projects/aws-ai/ai-20-model-registry-dry-run/README.md](../../projects/aws-ai/ai-20-model-registry-dry-run/README.md)
 - AI-21 本地代码：[../../projects/aws-ai/ai-21-sagemaker-pipelines-dry-run/](../../projects/aws-ai/ai-21-sagemaker-pipelines-dry-run/)
 - AI-21 README：[../../projects/aws-ai/ai-21-sagemaker-pipelines-dry-run/README.md](../../projects/aws-ai/ai-21-sagemaker-pipelines-dry-run/README.md)
+- AI-22 本地代码：[../../projects/aws-ai/ai-22-experiments-lineage-debugging-dry-run/](../../projects/aws-ai/ai-22-experiments-lineage-debugging-dry-run/)
+- AI-22 README：[../../projects/aws-ai/ai-22-experiments-lineage-debugging-dry-run/README.md](../../projects/aws-ai/ai-22-experiments-lineage-debugging-dry-run/README.md)
+- AI-25 本地代码：[../../projects/aws-ai/ai-25-sagemaker-capstone/](../../projects/aws-ai/ai-25-sagemaker-capstone/)
+- AI-25 README：[../../projects/aws-ai/ai-25-sagemaker-capstone/README.md](../../projects/aws-ai/ai-25-sagemaker-capstone/README.md)
