@@ -94,6 +94,10 @@ SageMaker = 托管模型部署平台
 EC2 = 自己搭服务器和推理服务
 ```
 
+相关基础笔记：
+
+- [EC2 Instance 类型命名与 GPU 选型](../aws-main/13-ec2-instance-types.md)
+
 典型 SageMaker 链路：
 
 ```text

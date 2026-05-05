@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
+  <title id="title">AWS cost control mental model</title>
+  <desc id="desc">A Chinese diagram explaining common AWS cost sources and the tools used to see, alert, allocate, and reduce cost.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#344054"/>
+    </marker>
+    <style>
+      .page { fill: #f6f8fb; }
+      .title { font: 700 34px Arial, sans-serif; fill: #111827; }
+      .subtitle { font: 400 18px Arial, sans-serif; fill: #475467; }
+      .box { fill: #ffffff; stroke: #d0d5dd; stroke-width: 2; rx: 14; }
+      .cost { fill: #fff7ed; stroke: #f97316; stroke-width: 2.4; rx: 14; }
+      .center { fill: #eef4ff; stroke: #175cd3; stroke-width: 3; rx: 20; }
+      .tool { fill: #ecfdf3; stroke: #039855; stroke-width: 2.4; rx: 14; }
+      .save { fill: #fdf2fa; stroke: #c11574; stroke-width: 2.4; rx: 14; }
+      .label { font: 700 21px Arial, sans-serif; fill: #101828; }
+      .body { font: 400 15.5px Arial, sans-serif; fill: #475467; }
+      .tiny { font: 400 13.5px Arial, sans-serif; fill: #667085; }
+      .line { stroke: #344054; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+      .dash { stroke: #667085; stroke-width: 2.2; stroke-dasharray: 8 7; fill: none; marker-end: url(#arrow); }
+      .note { fill: #ffffff; stroke: #d0d5dd; stroke-width: 1.8; rx: 12; }
+      .noteText { font: 700 16px Arial, sans-serif; fill: #344054; }
+    </style>
+  </defs>
+  <rect class="page" width="1280" height="760"/>
+  <text class="title" x="52" y="58">图 15：AWS 成本从哪里来，怎么控制</text>
+  <text class="subtitle" x="52" y="92">AWS 花钱不是只因为“开了服务器”，还包括存储、请求次数、流量、托管服务和跨区域传输。</text>
+
+  <rect class="cost" x="60" y="150" width="230" height="82"/>
+  <text class="label" x="92" y="188">计算时间</text>
+  <text class="tiny" x="92" y="214">EC2 / Lambda / Fargate</text>
+
+  <rect class="cost" x="60" y="268" width="230" height="82"/>
+  <text class="label" x="92" y="306">存储容量</text>
+  <text class="tiny" x="92" y="332">S3 / EBS / RDS storage</text>
+
+  <rect class="cost" x="60" y="386" width="230" height="82"/>
+  <text class="label" x="92" y="424">请求和 API 调用</text>
+  <text class="tiny" x="92" y="450">S3 request / API Gateway</text>
+
+  <rect class="cost" x="60" y="504" width="230" height="82"/>
+  <text class="label" x="92" y="542">数据传输</text>
+  <text class="tiny" x="92" y="568">出网、跨 AZ、跨 Region</text>
+
+  <rect class="center" x="400" y="244" width="300" height="180"/>
+  <text class="label" x="440" y="292">Billing and Cost</text>
+  <text class="label" x="440" y="322">Management</text>
+  <text class="body" x="440" y="360">账单、成本、预算、异常</text>
+  <text class="tiny" x="440" y="388">先看这里，不要盲猜钱花在哪</text>
+
+  <path class="line" d="M290 190 C338 212 360 250 400 288"/>
+  <path class="line" d="M290 310 L400 320"/>
+  <path class="line" d="M290 428 C340 412 362 390 400 366"/>
+  <path class="line" d="M290 546 C348 520 370 452 432 414"/>
+
+  <rect class="tool" x="790" y="128" width="230" height="82"/>
+  <text class="label" x="822" y="166">Cost Explorer</text>
+  <text class="tiny" x="822" y="192">看费用按服务/时间拆分</text>
+
+  <rect class="tool" x="790" y="246" width="230" height="82"/>
+  <text class="label" x="822" y="284">Budgets</text>
+  <text class="tiny" x="822" y="310">超预算前发邮件告警</text>
+
+  <rect class="tool" x="790" y="364" width="230" height="82"/>
+  <text class="label" x="822" y="402">Cost Anomaly</text>
+  <text class="label" x="822" y="426">Detection</text>
+
+  <rect class="tool" x="790" y="482" width="230" height="82"/>
+  <text class="label" x="822" y="520">Cost Allocation</text>
+  <text class="tiny" x="822" y="546">用 tag 分项目/环境/Owner</text>
+
+  <rect class="save" x="1062" y="246" width="166" height="82"/>
+  <text class="label" x="1092" y="284">Savings</text>
+  <text class="tiny" x="1092" y="310">长期稳定负载省钱</text>
+
+  <rect class="save" x="1062" y="364" width="166" height="82"/>
+  <text class="label" x="1092" y="402">Stop/Delete</text>
+  <text class="tiny" x="1092" y="428">不用就停或删</text>
+
+  <path class="line" d="M700 294 C738 230 750 176 790 168"/>
+  <path class="line" d="M700 320 L790 288"/>
+  <path class="line" d="M700 356 L790 404"/>
+  <path class="line" d="M700 388 C738 454 750 512 790 524"/>
+  <path class="dash" d="M1020 288 L1062 288"/>
+  <path class="dash" d="M1020 406 L1062 406"/>
+
+  <rect class="note" x="60" y="684" width="1168" height="44"/>
+  <text class="noteText" x="92" y="712">一句话：先用 Budgets 设上限，再用 Cost Explorer 找大头，最后通过关停、降配、生命周期、Savings Plans 优化。</text>
+</svg>

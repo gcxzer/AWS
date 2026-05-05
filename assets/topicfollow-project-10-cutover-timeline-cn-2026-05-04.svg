@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1040" viewBox="0 0 1700 1040" role="img" aria-labelledby="title desc">
+  <title id="title">ECS Task 启动与运行时配置</title>
+  <desc id="desc">展示 ECS task 启动时如何使用 ECR、Task Definition、Execution Role、S3 env file、Secrets Manager、CloudWatch Logs，以及运行后如何用 Task Role 访问 S3 和 RDS。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="13" markerHeight="10" refX="12" refY="5" orient="auto">
+      <path d="M0,0 L13,5 L0,10 Z" fill="#263449"/>
+    </marker>
+    <style>
+      .bg{fill:#f8fafc}
+      .title{font:700 34px Arial,"Noto Sans SC",sans-serif;fill:#0f172a}
+      .subtitle{font:18px Arial,"Noto Sans SC",sans-serif;fill:#334155}
+      .panel{fill:#fff;stroke:#cbd5e1;stroke-width:2.2}
+      .build{fill:#eff6ff;stroke:#2563eb;stroke-width:3}
+      .iam{fill:#fefce8;stroke:#ca8a04;stroke-width:3}
+      .runtime{fill:#ecfeff;stroke:#0891b2;stroke-width:3}
+      .data{fill:#f0fdf4;stroke:#16a34a;stroke-width:3}
+      .external{fill:#fdf2f8;stroke:#db2777;stroke-width:3}
+      .box{fill:#fff;stroke:#cbd5e1;stroke-width:2}
+      .h{font:700 22px Arial,"Noto Sans SC",sans-serif;fill:#0f172a}
+      .h2{font:700 17px Arial,"Noto Sans SC",sans-serif;fill:#0f172a}
+      .t{font:16px Arial,"Noto Sans SC",sans-serif;fill:#334155}
+      .s{font:14px Arial,"Noto Sans SC",sans-serif;fill:#475569}
+      .m{font:13px Consolas,"SFMono-Regular",monospace;fill:#1e293b}
+      .arrow{stroke:#263449;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .soft{stroke:#64748b;stroke-width:2.5;fill:none;marker-end:url(#arrow)}
+      .dash{stroke-dasharray:8 7}
+      .num{fill:#0f172a}.numText{font:700 13px Arial,sans-serif;fill:#fff}
+    </style>
+  </defs>
+  <rect class="bg" width="1700" height="1040"/>
+  <text class="title" x="52" y="62">ECS task 启动时到底拿了哪些东西</text>
+  <text class="subtitle" x="52" y="96">这张图专门区分：task 启动前 ECS 平台要做什么；container 跑起来后应用代码要做什么。</text>
+
+  <rect class="panel" x="50" y="150" width="750" height="720" rx="22"/>
+  <text class="h" x="82" y="192">启动阶段：ECS 平台准备 container</text>
+
+  <rect class="build" x="82" y="250" width="280" height="100" rx="14"/>
+  <text class="h2" x="112" y="284">Task Definition</text>
+  <text class="m" x="112" y="312">topicfollow-prod-web:3</text>
+  <text class="s" x="112" y="336">启动说明书</text>
+
+  <rect class="build" x="450" y="250" width="280" height="100" rx="14"/>
+  <text class="h2" x="480" y="284">ECR image</text>
+  <text class="m" x="480" y="312">topicfollow-prod:latest</text>
+  <text class="s" x="480" y="336">真正要运行的镜像</text>
+
+  <rect class="iam" x="82" y="420" width="280" height="126" rx="14"/>
+  <text class="h2" x="112" y="454">Execution Role</text>
+  <text class="m" x="112" y="482">ecsTaskExecutionRole</text>
+  <text class="s" x="112" y="510">给 ECS 平台用</text>
+  <text class="s" x="112" y="532">不是给应用代码用</text>
+
+  <rect class="box" x="450" y="400" width="280" height="82" rx="12"/>
+  <text class="h2" x="480" y="432">S3 env file</text>
+  <text class="s" x="480" y="458">非 secret 配置</text>
+  <rect class="box" x="450" y="512" width="280" height="82" rx="12"/>
+  <text class="h2" x="480" y="544">Secrets Manager</text>
+  <text class="s" x="480" y="570">DATABASE_URL / token</text>
+  <rect class="box" x="450" y="624" width="280" height="82" rx="12"/>
+  <text class="h2" x="480" y="656">CloudWatch Logs</text>
+  <text class="s" x="480" y="682">创建 log stream / 写日志</text>
+
+  <rect class="runtime" x="270" y="755" width="310" height="82" rx="14"/>
+  <text class="h2" x="300" y="788">Fargate task starts</text>
+  <text class="s" x="300" y="814">container 开始监听 3000</text>
+
+  <path class="arrow" d="M362 300 L450 300"/>
+  <path class="arrow" d="M222 350 L222 420"/>
+  <path class="soft dash" d="M362 483 C405 470 410 445 450 441"/>
+  <path class="soft dash" d="M362 492 C405 500 410 553 450 553"/>
+  <path class="soft dash" d="M362 502 C405 540 410 665 450 665"/>
+  <path class="arrow" d="M590 706 C570 735 535 755 500 755"/>
+  <path class="arrow" d="M222 546 C225 660 300 725 380 755"/>
+
+  <rect class="panel" x="900" y="150" width="748" height="720" rx="22"/>
+  <text class="h" x="932" y="192">运行阶段：应用代码处理业务</text>
+
+  <rect class="runtime" x="1090" y="250" width="310" height="116" rx="14"/>
+  <text class="h2" x="1120" y="284">TopicFollow container</text>
+  <text class="m" x="1120" y="312">topicfollow-web :3000</text>
+  <text class="s" x="1120" y="338">处理网页和 API 请求</text>
+
+  <rect class="iam" x="940" y="440" width="280" height="126" rx="14"/>
+  <text class="h2" x="970" y="474">Task Role</text>
+  <text class="m" x="970" y="502">topicfollow-prod-web-task-role</text>
+  <text class="s" x="970" y="530">给应用代码用</text>
+  <text class="s" x="970" y="552">例如访问 S3 uploads</text>
+
+  <rect class="data" x="1325" y="420" width="270" height="82" rx="12"/>
+  <text class="h2" x="1352" y="452">RDS PostgreSQL</text>
+  <text class="m" x="1352" y="478">private :5432</text>
+  <rect class="data" x="1325" y="532" width="270" height="82" rx="12"/>
+  <text class="h2" x="1352" y="564">S3 uploads</text>
+  <text class="s" x="1352" y="590">读写上传文件</text>
+  <rect class="external" x="1325" y="644" width="270" height="82" rx="12"/>
+  <text class="h2" x="1352" y="676">External APIs</text>
+  <text class="s" x="1352" y="702">通过 NAT Gateway 出网</text>
+
+  <rect class="box" x="940" y="660" width="280" height="94" rx="12"/>
+  <text class="h2" x="970" y="692">Security Groups</text>
+  <text class="s" x="970" y="718">ALB SG -&gt; ECS SG :3000</text>
+  <text class="s" x="970" y="740">ECS SG -&gt; RDS SG :5432</text>
+
+  <path class="arrow" d="M1245 366 L1245 440"/>
+  <path class="soft dash" d="M1220 503 C1265 495 1285 462 1325 461"/>
+  <path class="soft dash" d="M1220 512 C1265 520 1285 572 1325 573"/>
+  <path class="soft dash" d="M1400 366 C1470 420 1500 590 1460 644"/>
+  <path class="soft dash" d="M1220 714 C1265 700 1285 462 1325 461"/>
+
+  <circle class="num" cx="82" cy="240" r="15"/><text class="numText" x="78" y="245">1</text>
+  <circle class="num" cx="82" cy="410" r="15"/><text class="numText" x="78" y="415">2</text>
+  <circle class="num" cx="270" cy="745" r="15"/><text class="numText" x="266" y="750">3</text>
+  <circle class="num" cx="1090" cy="240" r="15"/><text class="numText" x="1086" y="245">4</text>
+  <circle class="num" cx="940" cy="430" r="15"/><text class="numText" x="936" y="435">5</text>
+
+  <rect class="panel" x="50" y="910" width="1598" height="82" rx="16"/>
+  <text class="h2" x="82" y="944">最重要的区分</text>
+  <text class="t" x="82" y="972">Execution role 是 ECS 启动 task 时用的；task role 是 container 里的 TopicFollow 应用运行时用的。两个 role 不要混。</text>
+</svg>

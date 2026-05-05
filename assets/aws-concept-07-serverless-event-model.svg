@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
+  <title id="title">Serverless event-driven model</title>
+  <desc id="desc">A diagram explaining event sources, Lambda functions, destinations, IAM role, and CloudWatch Logs.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#344054"/>
+    </marker>
+    <style>
+      .page { fill: #f6f8fb; }
+      .title { font: 700 34px Arial, sans-serif; fill: #111827; }
+      .subtitle { font: 400 18px Arial, sans-serif; fill: #475467; }
+      .box { fill: #ffffff; stroke: #d0d5dd; stroke-width: 2.2; rx: 14; }
+      .source { fill: #eef4ff; stroke: #175cd3; }
+      .lambda { fill: #fff7ed; stroke: #f97316; }
+      .dest { fill: #ecfdf3; stroke: #039855; }
+      .ops { fill: #f4f3ff; stroke: #7a5af8; }
+      .label { font: 700 22px Arial, sans-serif; fill: #101828; }
+      .body { font: 400 16px Arial, sans-serif; fill: #475467; }
+      .tiny { font: 400 14px Arial, sans-serif; fill: #667085; }
+      .line { stroke: #344054; stroke-width: 2.6; fill: none; marker-end: url(#arrow); }
+      .dash { stroke: #667085; stroke-width: 2.2; stroke-dasharray: 8 7; fill: none; marker-end: url(#arrow); }
+      .note { fill: #ffffff; stroke: #d0d5dd; stroke-width: 1.8; rx: 12; }
+      .noteText { font: 700 16px Arial, sans-serif; fill: #344054; }
+    </style>
+  </defs>
+  <rect class="page" width="1280" height="760"/>
+  <text class="title" x="52" y="58">图 7：Serverless 事件驱动模型</text>
+  <text class="subtitle" x="52" y="92">Serverless 常见思路：某个事件发生，触发 Lambda，Lambda 做短任务，再把结果写到别的服务。</text>
+
+  <rect class="box source" x="74" y="168" width="242" height="92"/>
+  <text class="label" x="106" y="206">API Gateway</text>
+  <text class="tiny" x="106" y="234">用户 HTTP 请求触发</text>
+
+  <rect class="box source" x="74" y="318" width="242" height="92"/>
+  <text class="label" x="106" y="356">S3 Event</text>
+  <text class="tiny" x="106" y="384">文件上传触发</text>
+
+  <rect class="box source" x="74" y="468" width="242" height="92"/>
+  <text class="label" x="106" y="506">EventBridge</text>
+  <text class="tiny" x="106" y="534">定时或事件规则触发</text>
+
+  <rect class="box lambda" x="486" y="284" width="290" height="160"/>
+  <text class="label" x="548" y="328">Lambda Function</text>
+  <text class="body" x="548" y="360">运行短时间代码</text>
+  <text class="tiny" x="548" y="390">处理 event</text>
+  <text class="tiny" x="548" y="414">返回或写入结果</text>
+
+  <path class="line" d="M316 214 C386 214 420 296 486 330"/>
+  <path class="line" d="M316 364 L486 364"/>
+  <path class="line" d="M316 514 C386 514 420 432 486 398"/>
+
+  <rect class="box dest" x="944" y="166" width="244" height="86"/>
+  <text class="label" x="976" y="204">DynamoDB</text>
+  <text class="tiny" x="976" y="232">保存结构化结果</text>
+  <path class="line" d="M776 332 C834 286 880 236 944 210"/>
+
+  <rect class="box dest" x="944" y="320" width="244" height="86"/>
+  <text class="label" x="976" y="358">SQS</text>
+  <text class="tiny" x="976" y="386">把任务放进队列</text>
+  <path class="line" d="M776 364 L944 364"/>
+
+  <rect class="box dest" x="944" y="474" width="244" height="86"/>
+  <text class="label" x="976" y="512">S3</text>
+  <text class="tiny" x="976" y="540">保存文件或输出对象</text>
+  <path class="line" d="M776 396 C834 440 880 490 944 516"/>
+
+  <rect class="box ops" x="434" y="566" width="220" height="92"/>
+  <text class="label" x="466" y="604">IAM Role</text>
+  <text class="tiny" x="466" y="632">决定 Lambda 能访问什么</text>
+  <path class="dash" d="M560 566 L600 444"/>
+
+  <rect class="box ops" x="704" y="566" width="220" height="92"/>
+  <text class="label" x="736" y="604">CloudWatch Logs</text>
+  <text class="tiny" x="736" y="632">看运行日志和报错</text>
+  <path class="dash" d="M814 566 L678 444"/>
+
+  <rect class="note" x="74" y="704" width="1114" height="40"/>
+  <text class="noteText" x="106" y="730">一句话：Serverless 不是没有服务器，而是你只关心事件、函数、权限、日志和下游服务。</text>
+</svg>

@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1030" viewBox="0 0 1700 1030" role="img" aria-labelledby="title desc">
+  <title id="title">ALB Target Group ECS Service Task 关系</title>
+  <desc id="desc">解释 ALB、Listener、Target Group、ECS Service、Task Definition、Task 和 Container 的关系。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="13" markerHeight="10" refX="12" refY="5" orient="auto">
+      <path d="M0,0 L13,5 L0,10 Z" fill="#263449"/>
+    </marker>
+    <style>
+      .bg{fill:#f8fafc}
+      .title{font:700 34px Arial,"Noto Sans SC",sans-serif;fill:#0f172a}
+      .subtitle{font:18px Arial,"Noto Sans SC",sans-serif;fill:#334155}
+      .panel{fill:#fff;stroke:#cbd5e1;stroke-width:2.2}
+      .traffic{fill:#fff7ed;stroke:#f97316;stroke-width:3}
+      .routing{fill:#eff6ff;stroke:#2563eb;stroke-width:3}
+      .control{fill:#fefce8;stroke:#ca8a04;stroke-width:3}
+      .runtime{fill:#ecfdf5;stroke:#16a34a;stroke-width:3}
+      .task{fill:#ffffff;stroke:#0891b2;stroke-width:2.8}
+      .note{fill:#f8fafc;stroke:#94a3b8;stroke-width:2}
+      .h{font:700 22px Arial,"Noto Sans SC",sans-serif;fill:#0f172a}
+      .h2{font:700 17px Arial,"Noto Sans SC",sans-serif;fill:#0f172a}
+      .t{font:16px Arial,"Noto Sans SC",sans-serif;fill:#334155}
+      .s{font:14px Arial,"Noto Sans SC",sans-serif;fill:#475569}
+      .m{font:13px Consolas,"SFMono-Regular",monospace;fill:#1e293b}
+      .arrow{stroke:#263449;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .soft{stroke:#64748b;stroke-width:2.5;fill:none;marker-end:url(#arrow)}
+      .dash{stroke-dasharray:8 7}
+    </style>
+  </defs>
+  <rect class="bg" width="1700" height="1030"/>
+  <text class="title" x="52" y="62">ALB / Zielgruppe / ECS Service / Task：它们不是同一种东西</text>
+  <text class="subtitle" x="52" y="96">上半部分是“流量转发”；下半部分是“ECS 控制容器生命周期”。Target Group 是两层之间的名单。</text>
+
+  <rect class="panel" x="50" y="145" width="1600" height="375" rx="22"/>
+  <text class="h" x="82" y="188">A. 流量转发层：谁把请求交给谁</text>
+
+  <rect class="traffic" x="82" y="245" width="265" height="120" rx="15"/>
+  <text class="h2" x="112" y="280">ALB</text>
+  <text class="m" x="112" y="307">topicfollow-prod-alb</text>
+  <text class="s" x="112" y="335">公网入口，接收 HTTP/HTTPS</text>
+
+  <rect class="routing" x="430" y="245" width="265" height="120" rx="15"/>
+  <text class="h2" x="460" y="280">Listener</text>
+  <text class="m" x="460" y="307">:80 / :443</text>
+  <text class="s" x="460" y="335">端口规则，不保存后端 IP</text>
+
+  <rect class="routing" x="778" y="215" width="360" height="180" rx="15"/>
+  <text class="h2" x="808" y="250">Target Group / Zielgruppe</text>
+  <text class="m" x="808" y="277">topicfollow-prod-web-tg</text>
+  <text class="s" x="808" y="307">名单：哪些 IP:port 可以接请求</text>
+  <text class="s" x="808" y="333">健康检查：GET /api/health</text>
+  <text class="s" x="808" y="359">只选择 healthy target</text>
+
+  <rect class="task" x="1230" y="205" width="350" height="200" rx="15"/>
+  <text class="h2" x="1260" y="240">Target entry</text>
+  <text class="m" x="1260" y="272">10.20.145.92:3000 healthy</text>
+  <text class="m" x="1260" y="300">10.20.x.x:3000 draining</text>
+  <text class="s" x="1260" y="334">这些 IP 来自 ECS task</text>
+  <text class="s" x="1260" y="362">不是你手动长期维护的服务器地址</text>
+
+  <path class="arrow" d="M347 305 L430 305"/>
+  <path class="arrow" d="M695 305 L778 305"/>
+  <path class="arrow" d="M1138 305 L1230 305"/>
+
+  <rect class="panel" x="50" y="575" width="1600" height="330" rx="22"/>
+  <text class="h" x="82" y="618">B. ECS 控制层：谁负责启动、替换、注册 task</text>
+
+  <rect class="control" x="82" y="672" width="300" height="150" rx="15"/>
+  <text class="h2" x="112" y="707">Task Definition</text>
+  <text class="m" x="112" y="734">topicfollow-prod-web:3</text>
+  <text class="s" x="112" y="762">说明书：image、CPU、内存、</text>
+  <text class="s" x="112" y="788">端口、env、secret、roles</text>
+
+  <rect class="control" x="470" y="645" width="350" height="205" rx="15"/>
+  <text class="h2" x="500" y="680">ECS Service</text>
+  <text class="m" x="500" y="707">topicfollow-prod-web-service...</text>
+  <text class="s" x="500" y="737">desired count = 1</text>
+  <text class="s" x="500" y="763">task 挂了就补一个</text>
+  <text class="s" x="500" y="789">部署时启动新 task、停旧 task</text>
+  <text class="s" x="500" y="815">自动注册到 target group</text>
+
+  <rect class="runtime" x="925" y="645" width="285" height="205" rx="15"/>
+  <text class="h2" x="955" y="680">Fargate Task</text>
+  <text class="s" x="955" y="710">真正运行的一份任务</text>
+  <text class="s" x="955" y="738">有自己的 ENI / 私有 IP</text>
+  <text class="m" x="955" y="768">10.20.x.x</text>
+  <text class="s" x="955" y="798">被注册为 target</text>
+
+  <rect class="runtime" x="1295" y="645" width="285" height="205" rx="15"/>
+  <text class="h2" x="1325" y="680">Container</text>
+  <text class="m" x="1325" y="710">topicfollow-web</text>
+  <text class="s" x="1325" y="738">Next.js 应用进程</text>
+  <text class="m" x="1325" y="768">listen 3000/tcp</text>
+  <text class="s" x="1325" y="798">处理真实业务请求</text>
+
+  <path class="arrow" d="M382 747 L470 747"/>
+  <path class="arrow" d="M820 747 L925 747"/>
+  <path class="arrow" d="M1210 747 L1295 747"/>
+  <path class="soft dash" d="M645 645 C710 520 800 450 958 395"/>
+  <text class="s" x="695" y="555">Service 把 task 注册进 Zielgruppe</text>
+  <path class="soft dash" d="M1067 645 C1048 560 1030 475 1000 395"/>
+  <text class="s" x="1082" y="545">不健康就移出或替换</text>
+
+  <rect class="note" x="82" y="930" width="1498" height="70" rx="14"/>
+  <text class="h2" x="112" y="960">一句话记忆</text>
+  <text class="t" x="112" y="986">ALB 是门口，Listener 是门口规则，Target Group 是后端名单，ECS Service 是主管，Task 是员工，Container 是员工手里真正干活的程序。</text>
+</svg>

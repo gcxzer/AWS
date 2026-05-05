@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
+  <title id="title">Infrastructure as Code on AWS</title>
+  <desc id="desc">IaC, CloudFormation, CDK, Terraform, stacks, state, drift, and deployment.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#344054"/></marker>
+    <style>
+      .page{fill:#f6f8fb}.title{font:700 34px Arial,sans-serif;fill:#111827}.subtitle{font:400 18px Arial,sans-serif;fill:#475467}
+      .box{fill:#fff;stroke:#d0d5dd;stroke-width:2;rx:14}.code{fill:#eef4ff;stroke:#175cd3;stroke-width:2.4;rx:14}.engine{fill:#fff7ed;stroke:#f97316;stroke-width:2.6;rx:18}
+      .aws{fill:#ecfdf3;stroke:#039855;stroke-width:2.4;rx:14}.risk{fill:#fdf2fa;stroke:#c11574;stroke-width:2.4;rx:14}
+      .label{font:700 21px Arial,sans-serif;fill:#101828}.body{font:400 15.5px Arial,sans-serif;fill:#475467}.tiny{font:400 13.5px Arial,sans-serif;fill:#667085}
+      .line{stroke:#344054;stroke-width:2.5;fill:none;marker-end:url(#arrow)}.dash{stroke:#667085;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#arrow)}
+      .note{fill:#fff;stroke:#d0d5dd;stroke-width:1.8;rx:12}.noteText{font:700 16px Arial,sans-serif;fill:#344054}
+    </style>
+  </defs>
+  <rect class="page" width="1280" height="760"/>
+  <text class="title" x="52" y="58">图 25：IaC，用代码创建 AWS 资源</text>
+  <text class="subtitle" x="52" y="92">控制台点击适合学习；生产更常用 IaC，把 VPC、ECS、RDS、IAM 等资源写成可复现的代码。</text>
+  <rect class="code" x="68" y="164" width="228" height="90"/><text class="label" x="100" y="202">CDK Code</text><text class="tiny" x="100" y="228">TypeScript / Python</text>
+  <rect class="code" x="68" y="302" width="228" height="90"/><text class="label" x="100" y="340">CloudFormation</text><text class="tiny" x="100" y="366">YAML / JSON template</text>
+  <rect class="code" x="68" y="440" width="228" height="90"/><text class="label" x="100" y="478">Terraform</text><text class="tiny" x="100" y="504">HCL + state</text>
+  <rect class="engine" x="414" y="216" width="270" height="172"/><text class="label" x="454" y="258">Deploy Engine</text><text class="body" x="454" y="292">plan / diff / deploy</text><text class="tiny" x="454" y="326">stack / state / change set</text>
+  <path class="line" d="M296 210 C350 214 374 250 414 270"/><path class="line" d="M296 348 L414 306"/><path class="line" d="M296 486 C354 474 380 400 414 350"/>
+  <rect class="aws" x="802" y="132" width="180" height="72"/><text class="label" x="834" y="174">VPC</text>
+  <rect class="aws" x="1028" y="132" width="180" height="72"/><text class="label" x="1060" y="174">IAM</text>
+  <rect class="aws" x="802" y="250" width="180" height="72"/><text class="label" x="834" y="292">ECS</text>
+  <rect class="aws" x="1028" y="250" width="180" height="72"/><text class="label" x="1060" y="292">RDS</text>
+  <rect class="aws" x="802" y="368" width="180" height="72"/><text class="label" x="834" y="410">S3</text>
+  <rect class="aws" x="1028" y="368" width="180" height="72"/><text class="label" x="1060" y="410">CloudWatch</text>
+  <path class="line" d="M684 302 C730 230 756 178 802 168"/><path class="line" d="M684 302 C780 210 944 168 1028 168"/><path class="line" d="M684 302 L802 286"/><path class="line" d="M684 302 L1028 286"/><path class="line" d="M684 302 C732 372 760 404 802 404"/><path class="line" d="M684 302 C802 426 954 410 1028 404"/>
+  <rect class="risk" x="414" y="502" width="270" height="90"/><text class="label" x="454" y="540">Drift</text><text class="tiny" x="454" y="566">控制台手改，代码不知道</text><path class="dash" d="M548 388 L548 502"/>
+  <rect class="box" x="802" y="512" width="406" height="86"/><text class="label" x="834" y="550">CI/CD Pipeline</text><text class="tiny" x="834" y="576">代码审查后自动部署基础设施</text><path class="dash" d="M684 548 L802 548"/>
+  <rect class="note" x="68" y="684" width="1140" height="44"/><text class="noteText" x="100" y="712">一句话：IaC 把“我在控制台点了什么”变成代码；CloudFormation/CDK 原生，Terraform 跨云常见。</text>
+</svg>

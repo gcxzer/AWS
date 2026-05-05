@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
+  <title id="title">TopicFollow 当前 AWS 总览</title>
+  <desc id="desc">展示浏览器请求如何经过公网 ALB 到私有 ECS，再访问 RDS 和 S3。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="9" refX="11" refY="4.5" orient="auto">
+      <path d="M0,0 L12,4.5 L0,9 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .bg{fill:#f8fafc}.box{fill:#fff;stroke:#cbd5e1;stroke-width:2}.blue{fill:#eff6ff;stroke:#2563eb;stroke-width:3}
+      .cyan{fill:#ecfeff;stroke:#0891b2;stroke-width:3}.green{fill:#f0fdf4;stroke:#16a34a;stroke-width:3}
+      .orange{fill:#fff7ed;stroke:#f97316;stroke-width:3}.purple{fill:#faf5ff;stroke:#9333ea;stroke-width:3}
+      .title{font:700 34px Arial,sans-serif;fill:#0f172a}.h{font:700 22px Arial,sans-serif;fill:#0f172a}
+      .t{font:17px Arial,sans-serif;fill:#334155}.s{font:15px Arial,sans-serif;fill:#475569}
+      .m{font:14px Consolas,monospace;fill:#1e293b}.arrow{stroke:#334155;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .dash{stroke-dasharray:8 7}.note{fill:#fefce8;stroke:#ca8a04;stroke-width:2}
+    </style>
+  </defs>
+  <rect class="bg" width="1400" height="820"/>
+  <text class="title" x="48" y="58">图 1：现在 AWS 上到底搭了什么</text>
+  <text class="t" x="48" y="90">一句话：公网只到 ALB；真正的应用和数据库都在私有网络里。</text>
+
+  <rect class="box" x="55" y="145" width="230" height="120" rx="16"/>
+  <text class="h" x="95" y="190">用户浏览器</text>
+  <text class="s" x="88" y="222">以后访问 topicfollow.com</text>
+
+  <rect class="orange" x="390" y="125" width="280" height="160" rx="16"/>
+  <text class="h" x="430" y="168">ALB 公网入口</text>
+  <text class="m" x="430" y="198">topicfollow-prod-alb</text>
+  <text class="s" x="430" y="226">放在 2 个 public subnet</text>
+  <text class="s" x="430" y="252">监听 HTTP:80</text>
+
+  <rect class="blue" x="760" y="90" width="575" height="590" rx="22"/>
+  <text class="h" x="790" y="132">VPC: topicfollow-prod-vpc</text>
+  <text class="m" x="790" y="160">10.20.0.0/16</text>
+
+  <rect class="cyan" x="805" y="205" width="455" height="160" rx="16"/>
+  <text class="h" x="840" y="250">ECS Fargate Service</text>
+  <text class="m" x="840" y="280">topicfollow-prod-web-service-sesec3gq</text>
+  <text class="s" x="840" y="310">运行 Next.js container</text>
+  <text class="s" x="840" y="338">放在 private app subnets</text>
+
+  <rect class="green" x="805" y="425" width="455" height="150" rx="16"/>
+  <text class="h" x="840" y="470">RDS PostgreSQL</text>
+  <text class="m" x="840" y="500">topicfollow-prod-postgres</text>
+  <text class="s" x="840" y="530">私有数据库，不给公网 IP</text>
+
+  <rect class="purple" x="390" y="500" width="280" height="150" rx="16"/>
+  <text class="h" x="430" y="545">S3 uploads bucket</text>
+  <text class="m" x="430" y="575">uploads/</text>
+  <text class="s" x="430" y="605">保存用户上传文件</text>
+
+  <path class="arrow" d="M285 205 C335 205 345 205 390 205"/>
+  <path class="arrow" d="M670 205 C720 205 735 280 805 280"/>
+  <path class="arrow" d="M1032 365 L1032 425"/>
+  <path class="arrow dash" d="M805 315 C690 400 675 545 670 575"/>
+
+  <rect class="note" x="72" y="710" width="1250" height="70" rx="14"/>
+  <text class="h" x="100" y="750">目前已经验证：</text>
+  <text class="t" x="250" y="750">ALB /api/health 返回 200，ECS task running，RDS connected=true，内容来自 database，不是 fallback。</text>
+</svg>

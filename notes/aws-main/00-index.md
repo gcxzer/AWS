@@ -61,6 +61,12 @@
 
 12. [项目 10：TopicFollow Hetzner -> AWS 现代生产架构迁移](12-project-10-topicfollow-production-migration.md)
 
+13. [EC2 Instance 类型命名与 GPU 选型](13-ec2-instance-types.md)
+   - `g5.xlarge`、`m7i.large`、`p4d.24xlarge` 这类代号怎么读
+   - EC2、AMI、EBS、VPC、Subnet、Security Group、Key Pair 的关系
+   - GPU instance 与 A10G、L4、A100、H100 的对应关系
+   - GPU EC2 的启动入口、quota 和成本提醒
+
 ## 相关文件
 
 - 学习路线：[../../aws-learning-roadmap.md](../../aws-learning-roadmap.md)
@@ -78,3 +84,4 @@
 - 项目 8 笔记：[10-project-8-topicfollow-ecs-fargate.md](10-project-8-topicfollow-ecs-fargate.md)
 - 项目 9 笔记：[11-project-9-topicfollow-cicd-monitoring-cost.md](11-project-9-topicfollow-cicd-monitoring-cost.md)
 - 项目 10 笔记：[12-project-10-topicfollow-production-migration.md](12-project-10-topicfollow-production-migration.md)
+- EC2 Instance 类型命名与 GPU 选型：[13-ec2-instance-types.md](13-ec2-instance-types.md)

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
+  <title id="title">TopicFollow 子网用途</title>
+  <desc id="desc">展示 public subnet、private app subnet、private database subnet 各自放什么资源。</desc>
+  <defs>
+    <style>
+      .bg{fill:#f8fafc}.vpc{fill:#eff6ff;stroke:#2563eb;stroke-width:3}.pub{fill:#fff7ed;stroke:#f97316;stroke-width:3}
+      .app{fill:#ecfeff;stroke:#0891b2;stroke-width:3}.db{fill:#f0fdf4;stroke:#16a34a;stroke-width:3}
+      .title{font:700 34px Arial,sans-serif;fill:#0f172a}.h{font:700 22px Arial,sans-serif;fill:#0f172a}
+      .t{font:17px Arial,sans-serif;fill:#334155}.s{font:15px Arial,sans-serif;fill:#475569}.m{font:14px Consolas,monospace;fill:#1e293b}
+      .no{fill:#fef2f2;stroke:#dc2626;stroke-width:2}
+    </style>
+  </defs>
+  <rect class="bg" width="1400" height="820"/>
+  <text class="title" x="48" y="58">图 4：为什么有这么多 subnet</text>
+  <text class="t" x="48" y="90">同一个 VPC 里分三类区域：入口、应用、数据库。不是所有东西都应该放一起。</text>
+
+  <rect class="vpc" x="65" y="130" width="1270" height="600" rx="24"/>
+  <text class="h" x="100" y="175">VPC: topicfollow-prod-vpc</text>
+  <text class="m" x="100" y="205">10.20.0.0/16</text>
+
+  <rect class="pub" x="110" y="250" width="360" height="380" rx="18"/>
+  <text class="h" x="145" y="295">Public subnets</text>
+  <text class="s" x="145" y="330">用途：放公网入口</text>
+  <text class="m" x="145" y="365">public1 10.20.0.0/20</text>
+  <text class="m" x="145" y="395">public2 10.20.16.0/20</text>
+  <text class="h" x="145" y="455">现在放：</text>
+  <text class="s" x="145" y="488">ALB</text>
+  <text class="s" x="145" y="518">NAT Gateway</text>
+  <rect class="no" x="145" y="555" width="280" height="45" rx="10"/>
+  <text class="s" x="170" y="583">不放数据库，不放 ECS app task</text>
+
+  <rect class="app" x="520" y="250" width="360" height="380" rx="18"/>
+  <text class="h" x="555" y="295">Private app subnets</text>
+  <text class="s" x="555" y="330">用途：放应用服务</text>
+  <text class="m" x="555" y="365">private1 10.20.128.0/20</text>
+  <text class="m" x="555" y="395">private2 10.20.144.0/20</text>
+  <text class="h" x="555" y="455">现在放：</text>
+  <text class="s" x="555" y="488">ECS Fargate task</text>
+  <text class="s" x="555" y="518">没有 public IP</text>
+  <rect class="no" x="555" y="555" width="280" height="45" rx="10"/>
+  <text class="s" x="580" y="583">只接收 ALB 转发来的 3000</text>
+
+  <rect class="db" x="930" y="250" width="360" height="380" rx="18"/>
+  <text class="h" x="965" y="295">Private database subnets</text>
+  <text class="s" x="965" y="330">用途：放数据库</text>
+  <text class="m" x="965" y="365">private3 10.20.160.0/20</text>
+  <text class="m" x="965" y="395">private4 10.20.176.0/20</text>
+  <text class="h" x="965" y="455">现在放：</text>
+  <text class="s" x="965" y="488">RDS PostgreSQL</text>
+  <text class="s" x="965" y="518">没有 public access</text>
+  <rect class="no" x="965" y="555" width="280" height="45" rx="10"/>
+  <text class="s" x="990" y="583">只接收 ECS SG 的 5432</text>
+
+  <text class="t" x="135" y="695">记忆法：Public = 门口；Private app = 厨房；Private database = 保险柜。浏览器只能到门口，不能直接进厨房或保险柜。</text>
+</svg>

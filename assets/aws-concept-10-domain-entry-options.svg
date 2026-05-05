@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
+  <title id="title">Domain entry options with AWS and Cloudflare</title>
+  <desc id="desc">A diagram showing common domain entry paths using Route 53 and CloudFront, Cloudflare DNS to CloudFront, or Cloudflare DNS and CDN to AWS origin.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#344054"/>
+    </marker>
+    <style>
+      .page { fill: #f6f8fb; }
+      .title { font: 700 34px Arial, sans-serif; fill: #111827; }
+      .subtitle { font: 400 18px Arial, sans-serif; fill: #475467; }
+      .lane { fill: #ffffff; stroke: #d0d5dd; stroke-width: 2; rx: 18; }
+      .user { fill: #f9fafb; stroke: #667085; stroke-width: 2.2; rx: 14; }
+      .aws { fill: #fff7ed; stroke: #f97316; stroke-width: 2.4; rx: 14; }
+      .aws2 { fill: #ecfdf3; stroke: #039855; stroke-width: 2.4; rx: 14; }
+      .cf { fill: #eef4ff; stroke: #175cd3; stroke-width: 2.4; rx: 14; }
+      .origin { fill: #fdf2fa; stroke: #c11574; stroke-width: 2.4; rx: 14; }
+      .label { font: 700 21px Arial, sans-serif; fill: #101828; }
+      .body { font: 400 15.5px Arial, sans-serif; fill: #475467; }
+      .tiny { font: 400 13.5px Arial, sans-serif; fill: #667085; }
+      .line { stroke: #344054; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+      .note { fill: #ffffff; stroke: #d0d5dd; stroke-width: 1.8; rx: 12; }
+      .noteText { font: 700 16px Arial, sans-serif; fill: #344054; }
+    </style>
+  </defs>
+  <rect class="page" width="1280" height="760"/>
+  <text class="title" x="52" y="58">图 10：自己的域名接到 AWS，有几种常见入口</text>
+  <text class="subtitle" x="52" y="92">你没用 Route 53，通常是因为还没接自己的域名，或者域名 DNS 已经放在 Cloudflare。</text>
+
+  <rect class="lane" x="52" y="138" width="1176" height="138"/>
+  <text class="label" x="82" y="178">方案 A：AWS 全家桶</text>
+  <rect class="user" x="82" y="204" width="150" height="48"/>
+  <text class="tiny" x="116" y="234">User</text>
+  <rect class="aws" x="310" y="204" width="160" height="48"/>
+  <text class="tiny" x="346" y="234">Route 53</text>
+  <rect class="aws2" x="548" y="204" width="170" height="48"/>
+  <text class="tiny" x="582" y="234">CloudFront</text>
+  <rect class="origin" x="796" y="204" width="212" height="48"/>
+  <text class="tiny" x="824" y="234">S3 / ALB / API GW</text>
+  <path class="line" d="M232 228 L310 228"/>
+  <path class="line" d="M470 228 L548 228"/>
+  <path class="line" d="M718 228 L796 228"/>
+
+  <rect class="lane" x="52" y="328" width="1176" height="138"/>
+  <text class="label" x="82" y="368">方案 B：Cloudflare 只管 DNS，AWS 管 CDN 和源站</text>
+  <rect class="user" x="82" y="394" width="150" height="48"/>
+  <text class="tiny" x="116" y="424">User</text>
+  <rect class="cf" x="310" y="394" width="180" height="48"/>
+  <text class="tiny" x="342" y="424">Cloudflare DNS</text>
+  <rect class="aws2" x="568" y="394" width="170" height="48"/>
+  <text class="tiny" x="602" y="424">CloudFront</text>
+  <rect class="origin" x="816" y="394" width="212" height="48"/>
+  <text class="tiny" x="844" y="424">S3 / ALB / API GW</text>
+  <path class="line" d="M232 418 L310 418"/>
+  <path class="line" d="M490 418 L568 418"/>
+  <path class="line" d="M738 418 L816 418"/>
+
+  <rect class="lane" x="52" y="518" width="1176" height="138"/>
+  <text class="label" x="82" y="558">方案 C：Cloudflare 管 DNS + CDN/WAF，AWS 只做源站</text>
+  <rect class="user" x="82" y="584" width="150" height="48"/>
+  <text class="tiny" x="116" y="614">User</text>
+  <rect class="cf" x="310" y="584" width="180" height="48"/>
+  <text class="tiny" x="342" y="614">Cloudflare DNS</text>
+  <rect class="cf" x="568" y="584" width="190" height="48"/>
+  <text class="tiny" x="600" y="614">Cloudflare CDN</text>
+  <rect class="origin" x="836" y="584" width="212" height="48"/>
+  <text class="tiny" x="864" y="614">S3 / ALB / API GW</text>
+  <path class="line" d="M232 608 L310 608"/>
+  <path class="line" d="M490 608 L568 608"/>
+  <path class="line" d="M758 608 L836 608"/>
+
+  <rect class="note" x="52" y="698" width="1176" height="44"/>
+  <text class="noteText" x="84" y="726">一句话：Route 53 不是必用。只要你的域名 DNS 能指到 AWS 入口，DNS 可以在 Route 53，也可以在 Cloudflare。</text>
+</svg>

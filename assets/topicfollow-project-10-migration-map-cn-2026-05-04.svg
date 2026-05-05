@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1060" viewBox="0 0 1700 1060" role="img" aria-labelledby="title desc">
+  <title id="title">TopicFollow AWS 组件总览</title>
+  <desc id="desc">展示 TopicFollow 在 AWS 上的主要组件：Cloudflare、ALB、ECS Fargate、RDS、S3、ECR、Secrets Manager、CloudWatch、NAT Gateway 和安全组。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="13" markerHeight="10" refX="12" refY="5" orient="auto">
+      <path d="M0,0 L13,5 L0,10 Z" fill="#25364d"/>
+    </marker>
+    <style>
+      .bg{fill:#f8fafc}
+      .title{font:700 34px Arial,"Noto Sans SC",sans-serif;fill:#0f172a}
+      .subtitle{font:18px Arial,"Noto Sans SC",sans-serif;fill:#334155}
+      .aws{fill:#fff;stroke:#cbd5e1;stroke-width:2.2}
+      .vpc{fill:#eff6ff;stroke:#2563eb;stroke-width:3}
+      .public{fill:#fff7ed;stroke:#f97316;stroke-width:3}
+      .app{fill:#ecfeff;stroke:#0891b2;stroke-width:3}
+      .data{fill:#f0fdf4;stroke:#16a34a;stroke-width:3}
+      .config{fill:#fefce8;stroke:#ca8a04;stroke-width:3}
+      .edge{fill:#fdf2f8;stroke:#db2777;stroke-width:3}
+      .box{fill:#fff;stroke:#cbd5e1;stroke-width:2}
+      .h{font:700 22px Arial,"Noto Sans SC",sans-serif;fill:#0f172a}
+      .h2{font:700 17px Arial,"Noto Sans SC",sans-serif;fill:#0f172a}
+      .t{font:16px Arial,"Noto Sans SC",sans-serif;fill:#334155}
+      .s{font:14px Arial,"Noto Sans SC",sans-serif;fill:#475569}
+      .m{font:13px Consolas,"SFMono-Regular",monospace;fill:#1e293b}
+      .arrow{stroke:#25364d;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .soft{stroke:#64748b;stroke-width:2.5;fill:none;marker-end:url(#arrow)}
+      .dash{stroke-dasharray:8 7}
+    </style>
+  </defs>
+  <rect class="bg" width="1700" height="1060"/>
+  <text class="title" x="52" y="62">TopicFollow 在 AWS 上的组件地图</text>
+  <text class="subtitle" x="52" y="96">先按职责分层：入口层、网络层、应用层、数据层、配置/日志层。每个组件只记住它负责的一件事。</text>
+
+  <rect class="edge" x="52" y="150" width="275" height="280" rx="20"/>
+  <text class="h" x="84" y="192">入口层</text>
+  <rect class="box" x="84" y="230" width="210" height="74" rx="12"/>
+  <text class="h2" x="108" y="260">Browser</text>
+  <text class="s" x="108" y="286">用户访问域名</text>
+  <rect class="box" x="84" y="330" width="210" height="74" rx="12"/>
+  <text class="h2" x="108" y="360">Cloudflare</text>
+  <text class="s" x="108" y="386">DNS / Proxy</text>
+
+  <rect class="vpc" x="390" y="150" width="895" height="710" rx="24"/>
+  <text class="h" x="424" y="192">VPC：topicfollow-prod-vpc</text>
+  <text class="m" x="424" y="220">10.20.0.0/16</text>
+
+  <rect class="public" x="424" y="260" width="385" height="245" rx="18"/>
+  <text class="h" x="456" y="300">Public subnets</text>
+  <text class="s" x="456" y="328">允许公网入口组件存在</text>
+  <rect class="box" x="456" y="360" width="300" height="110" rx="12"/>
+  <text class="h2" x="482" y="392">ALB</text>
+  <text class="m" x="482" y="420">topicfollow-prod-alb</text>
+  <text class="s" x="482" y="446">接 80/443，再转发到健康 task</text>
+
+  <rect class="app" x="870" y="260" width="365" height="245" rx="18"/>
+  <text class="h" x="902" y="300">Private app subnets</text>
+  <text class="s" x="902" y="328">应用 task 没有公网入口</text>
+  <rect class="box" x="902" y="360" width="285" height="110" rx="12"/>
+  <text class="h2" x="928" y="392">ECS Fargate Service</text>
+  <text class="m" x="928" y="420">desired=1 / running=1</text>
+  <text class="s" x="928" y="446">维护 TopicFollow task</text>
+
+  <rect class="data" x="870" y="570" width="365" height="210" rx="18"/>
+  <text class="h" x="902" y="610">Private DB subnets</text>
+  <text class="s" x="902" y="638">数据库不对公网开放</text>
+  <rect class="box" x="902" y="670" width="285" height="74" rx="12"/>
+  <text class="h2" x="928" y="700">RDS PostgreSQL</text>
+  <text class="m" x="928" y="726">:5432 from ECS SG only</text>
+
+  <rect class="public" x="424" y="570" width="385" height="210" rx="18"/>
+  <text class="h" x="456" y="610">出网组件</text>
+  <rect class="box" x="456" y="650" width="300" height="94" rx="12"/>
+  <text class="h2" x="482" y="682">NAT Gateway</text>
+  <text class="s" x="482" y="708">private ECS 访问外部 API</text>
+  <text class="s" x="482" y="730">Google OAuth / Resend 等</text>
+
+  <rect class="aws" x="1350" y="150" width="298" height="710" rx="24"/>
+  <text class="h" x="1382" y="192">VPC 外的 AWS 服务</text>
+  <text class="s" x="1382" y="220">ECS 会通过 IAM 权限使用它们</text>
+  <rect class="config" x="1382" y="260" width="234" height="82" rx="12"/>
+  <text class="h2" x="1406" y="292">ECR</text>
+  <text class="s" x="1406" y="318">保存 Docker image</text>
+  <rect class="config" x="1382" y="370" width="234" height="82" rx="12"/>
+  <text class="h2" x="1406" y="402">Secrets Manager</text>
+  <text class="s" x="1406" y="428">保存密码和 token</text>
+  <rect class="config" x="1382" y="480" width="234" height="82" rx="12"/>
+  <text class="h2" x="1406" y="512">S3 env file</text>
+  <text class="s" x="1406" y="538">非 secret 运行配置</text>
+  <rect class="data" x="1382" y="590" width="234" height="82" rx="12"/>
+  <text class="h2" x="1406" y="622">S3 uploads</text>
+  <text class="s" x="1406" y="648">用户上传文件</text>
+  <rect class="config" x="1382" y="700" width="234" height="82" rx="12"/>
+  <text class="h2" x="1406" y="732">CloudWatch Logs</text>
+  <text class="s" x="1406" y="758">container 日志</text>
+
+  <path class="arrow" d="M189 304 L189 330"/>
+  <path class="arrow" d="M294 367 C350 367 380 415 456 415"/>
+  <path class="arrow" d="M756 415 C815 415 840 415 902 415"/>
+  <path class="arrow" d="M1045 470 L1045 670"/>
+  <path class="soft dash" d="M1187 395 C1265 350 1300 302 1382 302"/>
+  <path class="soft dash" d="M1187 415 C1280 420 1300 410 1382 410"/>
+  <path class="soft dash" d="M1187 435 C1290 470 1300 522 1382 522"/>
+  <path class="soft dash" d="M1187 455 C1290 540 1300 632 1382 632"/>
+  <path class="soft dash" d="M1187 445 C1280 650 1300 742 1382 742"/>
+  <path class="soft dash" d="M902 440 C775 520 720 610 756 680"/>
+
+  <rect class="aws" x="52" y="910" width="1596" height="96" rx="18"/>
+  <text class="h2" x="84" y="946">一句话</text>
+  <text class="t" x="84" y="976">ALB 负责接客；ECS Service 负责保持应用 task 活着；RDS 存数据库；S3 存文件和普通配置；Secrets Manager 存敏感配置；CloudWatch 收日志。</text>
+</svg>

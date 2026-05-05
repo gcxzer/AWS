@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">TopicFollow hero image upload to S3 and database update flow</title>
+  <desc id="desc">A non-Mermaid diagram showing how a locally generated hero image is staged in S3, processed by an ECS one-off task, stored as a final S3 object, and written to topics.hero_image in RDS.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#059669"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .title { font: 700 36px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+      .subtitle { font: 500 20px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
+      .box { fill: #ffffff; stroke: #94a3b8; stroke-width: 2; rx: 22; }
+      .box-blue { fill: #eff6ff; stroke: #2563eb; stroke-width: 2; rx: 22; }
+      .box-green { fill: #ecfdf5; stroke: #059669; stroke-width: 2; rx: 22; }
+      .box-amber { fill: #fffbeb; stroke: #d97706; stroke-width: 2; rx: 22; }
+      .box-red { fill: #fef2f2; stroke: #dc2626; stroke-width: 2; rx: 22; }
+      .box-dash { fill: #ffffff; stroke: #64748b; stroke-width: 2; stroke-dasharray: 8 7; rx: 22; }
+      .label { font: 700 24px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+      .small { font: 500 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #334155; }
+      .tiny { font: 500 15px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
+      .code { font: 600 16px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #1e293b; }
+      .arrow { stroke: #2563eb; stroke-width: 4; fill: none; marker-end: url(#arrow); }
+      .arrow-green { stroke: #059669; stroke-width: 4; fill: none; marker-end: url(#arrow-green); }
+      .note-title { font: 700 20px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #92400e; }
+      .note { font: 500 17px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #78350f; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1600" height="980"/>
+  <text x="80" y="70" class="title">TopicFollow：hero 图片上传 S3 并更新数据库</text>
+  <text x="80" y="105" class="subtitle">图片文件和数据库字段必须一起更新：S3 存真实 WebP 文件，RDS 的 topics.hero_image 存公开路径。</text>
+
+  <rect x="70" y="155" width="300" height="145" class="box"/>
+  <text x="100" y="200" class="label">1. 本地生成图片</text>
+  <text x="100" y="235" class="small">OpenAI image / 手动选择</text>
+  <text x="100" y="265" class="code">public/uploads/topic-images/*.webp</text>
+
+  <rect x="455" y="155" width="345" height="145" class="box-blue"/>
+  <text x="485" y="200" class="label">2. 运行 ECS helper</text>
+  <text x="485" y="235" class="code">run-ecs-topic-hero-image.sh</text>
+  <text x="485" y="265" class="small">传入 topic name + local image path</text>
+
+  <rect x="895" y="155" width="360" height="145" class="box-amber"/>
+  <text x="925" y="200" class="label">3. S3 staging source</text>
+  <text x="925" y="235" class="small">临时私有源图</text>
+  <text x="925" y="265" class="code">topic-ingestion-state/topic-hero-source_*</text>
+
+  <path class="arrow" d="M370 228 H445"/>
+  <path class="arrow" d="M800 228 H885"/>
+
+  <rect x="205" y="415" width="360" height="160" class="box-blue"/>
+  <text x="235" y="460" class="label">4. ECS one-off task</text>
+  <text x="235" y="495" class="small">运行 link-topic-images.ts</text>
+  <text x="235" y="525" class="code">--source-s3-uri</text>
+  <text x="235" y="550" class="tiny">task role 读取 staging / 写 uploads / 写 RDS</text>
+
+  <rect x="660" y="415" width="360" height="160" class="box-green"/>
+  <text x="690" y="460" class="label">5. 压缩和标准化</text>
+  <text x="690" y="495" class="small">生成最终 WebP</text>
+  <text x="690" y="525" class="small">匹配 topic slug</text>
+  <text x="690" y="550" class="tiny">路径规则固定，避免旧 topic-images 流程</text>
+
+  <rect x="1115" y="415" width="360" height="160" class="box-amber"/>
+  <text x="1145" y="460" class="label">6. S3 final object</text>
+  <text x="1145" y="495" class="small">正式公开路径背后的对象</text>
+  <text x="1145" y="525" class="code">uploads/topics/topic-&lt;slug&gt;/hero.webp</text>
+
+  <path class="arrow" d="M1075 300 V365 C1075 395 385 395 385 415"/>
+  <path class="arrow" d="M565 495 H650"/>
+  <path class="arrow-green" d="M1020 495 H1105"/>
+
+  <rect x="185" y="700" width="430" height="140" class="box-green"/>
+  <text x="215" y="745" class="label">7. RDS 更新 topics 表</text>
+  <text x="215" y="780" class="code">topics.hero_image</text>
+  <text x="215" y="808" class="code">/uploads/topics/topic-&lt;slug&gt;/hero.webp</text>
+  <text x="215" y="830" class="tiny">metadata 标记 generated / download_url / downloaded_at</text>
+
+  <rect x="725" y="700" width="360" height="140" class="box-blue"/>
+  <text x="755" y="745" class="label">8. 网站读取 DB 路径</text>
+  <text x="755" y="780" class="small">Topic 页面 hero image</text>
+  <text x="755" y="808" class="small">OG / Twitter metadata</text>
+
+  <rect x="1195" y="700" width="305" height="140" class="box-dash"/>
+  <text x="1225" y="745" class="label">9. 清理 staging</text>
+  <text x="1225" y="780" class="small">删除临时源图</text>
+  <text x="1225" y="808" class="small">保留 final object</text>
+
+  <path class="arrow-green" d="M1295 575 V645 C1295 675 400 675 400 700"/>
+  <path class="arrow" d="M615 770 H715"/>
+  <path class="arrow" d="M1295 575 V690"/>
+
+  <rect x="70" y="885" width="1460" height="55" class="box-red"/>
+  <text x="105" y="918" class="note">关键点：只上传 S3 不够，DB 不更新网站就不知道用哪张图；只更新 DB 不上传 S3，页面会引用一个不存在的文件。</text>
+</svg>

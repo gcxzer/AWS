@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
+  <title id="title">AWS multi-account governance</title>
+  <desc id="desc">Organizations, management account, OUs, SCP, IAM Identity Center, permission sets, and Control Tower.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#344054"/></marker>
+    <style>
+      .page{fill:#f6f8fb}.title{font:700 34px Arial,sans-serif;fill:#111827}.subtitle{font:400 18px Arial,sans-serif;fill:#475467}
+      .org{fill:#fff7ed;stroke:#f97316;stroke-width:3;rx:22}.box{fill:#fff;stroke:#d0d5dd;stroke-width:2;rx:14}.identity{fill:#eef4ff;stroke:#175cd3;stroke-width:2.4;rx:14}
+      .ou{fill:#ecfdf3;stroke:#039855;stroke-width:2.4;rx:14}.account{fill:#fdf2fa;stroke:#c11574;stroke-width:2.4;rx:14}.guard{fill:#f4f3ff;stroke:#7a5af8;stroke-width:2.4;rx:14}
+      .label{font:700 21px Arial,sans-serif;fill:#101828}.body{font:400 15.5px Arial,sans-serif;fill:#475467}.tiny{font:400 13.5px Arial,sans-serif;fill:#667085}
+      .line{stroke:#344054;stroke-width:2.5;fill:none;marker-end:url(#arrow)}.dash{stroke:#667085;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#arrow)}
+      .note{fill:#fff;stroke:#d0d5dd;stroke-width:1.8;rx:12}.noteText{font:700 16px Arial,sans-serif;fill:#344054}
+    </style>
+  </defs>
+  <rect class="page" width="1280" height="760"/>
+  <text class="title" x="52" y="58">图 28：多账号治理，Organizations、SSO、Control Tower</text>
+  <text class="subtitle" x="52" y="92">个人学习一个账号够用；团队和生产环境会拆多账号，用 Organizations 管边界，用 Identity Center 管人怎么进账号。</text>
+  <rect class="org" x="54" y="132" width="1168" height="508"/><text class="label" x="88" y="172">AWS Organizations</text><text class="body" x="88" y="200">多账号、统一账单、OU、SCP 权限边界</text>
+  <rect class="box" x="88" y="246" width="228" height="82"/><text class="label" x="122" y="284">Management</text><text class="tiny" x="122" y="310">管理账号，不放业务负载</text>
+  <rect class="ou" x="398" y="236" width="250" height="104"/><text class="label" x="432" y="274">OU: Workloads</text><text class="tiny" x="432" y="300">prod / staging / dev</text><text class="tiny" x="432" y="320">可挂 SCP</text>
+  <rect class="ou" x="398" y="392" width="250" height="104"/><text class="label" x="432" y="430">OU: Security</text><text class="tiny" x="432" y="456">日志、安全、审计账号</text>
+  <path class="line" d="M316 286 L398 286"/><path class="line" d="M316 286 C366 330 376 410 398 442"/>
+  <rect class="account" x="748" y="192" width="168" height="74"/><text class="label" x="780" y="230">Prod</text><text class="tiny" x="780" y="250">生产资源</text>
+  <rect class="account" x="952" y="192" width="168" height="74"/><text class="label" x="984" y="230">Dev</text><text class="tiny" x="984" y="250">开发实验</text>
+  <rect class="account" x="748" y="392" width="168" height="74"/><text class="label" x="780" y="430">Log Archive</text><text class="tiny" x="780" y="450">集中日志</text>
+  <rect class="account" x="952" y="392" width="168" height="74"/><text class="label" x="984" y="430">Audit</text><text class="tiny" x="984" y="450">安全审计</text>
+  <path class="line" d="M648 286 C690 250 710 230 748 228"/><path class="line" d="M648 286 C740 286 850 232 952 228"/><path class="line" d="M648 442 C690 432 710 430 748 430"/><path class="line" d="M648 442 C746 472 850 438 952 430"/>
+  <rect class="identity" x="88" y="490" width="288" height="92"/><text class="label" x="122" y="528">IAM Identity Center</text><text class="tiny" x="122" y="554">用户、组、permission set</text>
+  <path class="dash" d="M376 536 C532 610 776 520 832 466"/><path class="dash" d="M376 536 C574 654 960 550 1036 466"/>
+  <rect class="guard" x="748" y="534" width="372" height="74"/><text class="label" x="782" y="572">Control Tower</text><text class="tiny" x="782" y="592">landing zone、guardrails、账号工厂</text>
+  <path class="dash" d="M934 534 C922 510 908 488 892 466"/>
+  <rect class="note" x="54" y="684" width="1168" height="44"/><text class="noteText" x="86" y="712">一句话：Organizations 管账号结构和边界，Identity Center 管人进哪个账号用什么权限，Control Tower 搭企业标准地基。</text>
+</svg>

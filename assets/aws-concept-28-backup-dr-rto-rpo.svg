@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
+  <title id="title">Backup and disaster recovery RTO RPO</title>
+  <desc id="desc">Backup, snapshots, AWS Backup, Multi-AZ, Multi-Region, RTO, and RPO.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#344054"/></marker>
+    <style>
+      .page{fill:#f6f8fb}.title{font:700 34px Arial,sans-serif;fill:#111827}.subtitle{font:400 18px Arial,sans-serif;fill:#475467}
+      .box{fill:#fff;stroke:#d0d5dd;stroke-width:2;rx:14}.workload{fill:#eef4ff;stroke:#175cd3;stroke-width:2.4;rx:14}.protect{fill:#ecfdf3;stroke:#039855;stroke-width:2.4;rx:14}
+      .dr{fill:#fff7ed;stroke:#f97316;stroke-width:2.4;rx:14}.metric{fill:#fdf2fa;stroke:#c11574;stroke-width:2.4;rx:14}
+      .label{font:700 21px Arial,sans-serif;fill:#101828}.tiny{font:400 13.5px Arial,sans-serif;fill:#667085}
+      .line{stroke:#344054;stroke-width:2.5;fill:none;marker-end:url(#arrow)}.dash{stroke:#667085;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#arrow)}
+      .note{fill:#fff;stroke:#d0d5dd;stroke-width:1.8;rx:12}.noteText{font:700 16px Arial,sans-serif;fill:#344054}
+    </style>
+  </defs>
+  <rect class="page" width="1280" height="760"/>
+  <text class="title" x="52" y="58">图 26：备份、灾备、RTO/RPO</text>
+  <text class="subtitle" x="52" y="92">“有备份”不等于“高可用”。备份解决能不能恢复，灾备设计解决故障时多久恢复、丢多少数据。</text>
+  <rect class="workload" x="70" y="188" width="230" height="92"/><text class="label" x="104" y="226">Production</text><text class="tiny" x="104" y="252">EC2 / ECS / RDS / S3</text>
+  <rect class="protect" x="404" y="118" width="250" height="88"/><text class="label" x="438" y="156">Snapshots</text><text class="tiny" x="438" y="182">EBS / RDS 时间点副本</text>
+  <rect class="protect" x="404" y="252" width="250" height="88"/><text class="label" x="438" y="290">AWS Backup</text><text class="tiny" x="438" y="316">集中策略、保留、跨账号</text>
+  <rect class="protect" x="404" y="386" width="250" height="88"/><text class="label" x="438" y="424">S3 Versioning</text><text class="tiny" x="438" y="450">防误删、误覆盖</text>
+  <path class="line" d="M300 234 C350 200 368 172 404 160"/><path class="line" d="M300 234 L404 296"/><path class="line" d="M300 234 C364 322 374 406 404 428"/>
+  <rect class="dr" x="768" y="142" width="224" height="92"/><text class="label" x="802" y="180">Multi-AZ</text><text class="tiny" x="802" y="206">同 Region 快速切换</text>
+  <rect class="dr" x="768" y="302" width="224" height="92"/><text class="label" x="802" y="340">Cross-Region</text><text class="tiny" x="802" y="366">区域级灾备</text>
+  <rect class="dr" x="768" y="462" width="224" height="92"/><text class="label" x="802" y="500">Restore Test</text><text class="tiny" x="802" y="526">定期演练恢复</text>
+  <path class="line" d="M654 162 L768 188"/><path class="line" d="M654 296 L768 348"/><path class="line" d="M654 430 L768 508"/>
+  <rect class="metric" x="1060" y="186" width="160" height="86"/><text class="label" x="1092" y="224">RTO</text><text class="tiny" x="1092" y="250">多久恢复服务</text>
+  <rect class="metric" x="1060" y="348" width="160" height="86"/><text class="label" x="1092" y="386">RPO</text><text class="tiny" x="1092" y="412">最多丢多少数据</text>
+  <path class="dash" d="M992 188 L1060 228"/><path class="dash" d="M992 348 L1060 388"/>
+  <rect class="box" x="70" y="558" width="584" height="74"/><text class="label" x="104" y="596">常见误区</text><text class="tiny" x="104" y="620">只做 snapshot 但没测试 restore；把 Multi-AZ 当成跨 Region 灾备。</text>
+  <rect class="note" x="70" y="684" width="1150" height="44"/><text class="noteText" x="102" y="712">一句话：备份问能不能找回，RTO 问多久恢复，RPO 问最多丢多少，灾备设计按这两个指标倒推。</text>
+</svg>

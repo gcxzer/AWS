@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">TopicFollow topic ingestion write-plan flow on AWS</title>
+  <desc id="desc">A non-Mermaid diagram showing how local subagent output becomes an aggregation JSON, is uploaded to S3, then written to RDS by an ECS one-off write-plan task.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#dc2626"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .title { font: 700 36px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+      .subtitle { font: 500 20px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
+      .box { fill: #ffffff; stroke: #94a3b8; stroke-width: 2; rx: 22; }
+      .box-blue { fill: #eff6ff; stroke: #2563eb; stroke-width: 2; rx: 22; }
+      .box-green { fill: #ecfdf5; stroke: #059669; stroke-width: 2; rx: 22; }
+      .box-amber { fill: #fffbeb; stroke: #d97706; stroke-width: 2; rx: 22; }
+      .box-red { fill: #fef2f2; stroke: #dc2626; stroke-width: 2; rx: 22; }
+      .box-dash { fill: #ffffff; stroke: #64748b; stroke-width: 2; stroke-dasharray: 8 7; rx: 22; }
+      .label { font: 700 24px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+      .small { font: 500 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #334155; }
+      .tiny { font: 500 15px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
+      .code { font: 600 16px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #1e293b; }
+      .arrow { stroke: #2563eb; stroke-width: 4; fill: none; marker-end: url(#arrow); }
+      .arrow-red { stroke: #dc2626; stroke-width: 4; fill: none; marker-end: url(#arrow-red); }
+      .note-title { font: 700 20px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #92400e; }
+      .note { font: 500 17px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #78350f; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1600" height="980"/>
+  <text x="80" y="70" class="title">TopicFollow：新 topic 从 subagent 到 RDS 写库</text>
+  <text x="80" y="105" class="subtitle">subagent 阶段只产出 JSON；真正写生产 RDS 的动作只发生在 AWS ECS one-off write-plan task 里。</text>
+
+  <rect x="70" y="155" width="300" height="140" class="box"/>
+  <text x="100" y="200" class="label">1. 本地发起 topic</text>
+  <text x="100" y="235" class="small">collector / cleaner / summarizer</text>
+  <text x="100" y="263" class="small">structure / aggregation</text>
+
+  <rect x="470" y="155" width="300" height="140" class="box-blue"/>
+  <text x="500" y="200" class="label">2. tmp JSON artifacts</text>
+  <text x="500" y="235" class="small">subagent 只写本地文件</text>
+  <text x="500" y="263" class="code">tmp/topicfollow-*.json</text>
+
+  <rect x="870" y="155" width="310" height="140" class="box-green"/>
+  <text x="900" y="200" class="label">3. finalized aggregation</text>
+  <text x="900" y="235" class="small">持久化计划，不直接写库</text>
+  <text x="900" y="263" class="code">topicfollow-aggregation_*.json</text>
+
+  <path class="arrow" d="M370 225 H460"/>
+  <path class="arrow" d="M770 225 H860"/>
+
+  <rect x="1235" y="155" width="285" height="140" class="box-amber"/>
+  <text x="1265" y="200" class="label">4. 上传到 S3 staging</text>
+  <text x="1265" y="235" class="small">private ingestion plan object</text>
+  <text x="1265" y="263" class="code">topic-ingestion-plans/...</text>
+  <path class="arrow" d="M1180 225 H1225"/>
+
+  <rect x="155" y="410" width="360" height="155" class="box-blue"/>
+  <text x="185" y="455" class="label">5. ECS one-off task</text>
+  <text x="185" y="490" class="small">不是长期 web service</text>
+  <text x="185" y="520" class="code">write-plan --aggregation-s3-uri</text>
+  <text x="185" y="545" class="tiny">task role 读取 S3 / 连接 RDS</text>
+
+  <rect x="625" y="410" width="370" height="155" class="box-green"/>
+  <text x="655" y="455" class="label">6. applyTopicIngestionPlan()</text>
+  <text x="655" y="490" class="small">真正的写库边界</text>
+  <text x="655" y="520" class="small">upsert topics / articles / events</text>
+  <text x="655" y="545" class="tiny">没有这一步，topic 不会进生产数据库</text>
+
+  <rect x="1105" y="410" width="350" height="155" class="box-amber"/>
+  <text x="1135" y="455" class="label">7. AWS RDS PostgreSQL</text>
+  <text x="1135" y="490" class="small">production database</text>
+  <text x="1135" y="520" class="code">topics / articles / sources</text>
+  <text x="1135" y="545" class="code">topic_events / signals / state</text>
+
+  <path class="arrow" d="M1378 295 V355 C1378 385 335 385 335 410"/>
+  <path class="arrow" d="M515 488 H615"/>
+  <path class="arrow" d="M995 488 H1095"/>
+
+  <rect x="275" y="680" width="360" height="130" class="box-green"/>
+  <text x="305" y="725" class="label">8. CloudWatch Logs</text>
+  <text x="305" y="760" class="small">exit code 0</text>
+  <text x="305" y="790" class="small">JSON confirmation</text>
+
+  <rect x="785" y="680" width="390" height="130" class="box-blue"/>
+  <text x="815" y="725" class="label">9. 网站读取 DB</text>
+  <text x="815" y="760" class="small">topic page / search / metadata</text>
+  <text x="815" y="790" class="small">来自 RDS，不来自 tmp JSON</text>
+
+  <path class="arrow" d="M810 565 V635 C810 665 455 665 455 680"/>
+  <path class="arrow" d="M1280 565 V635 C1280 665 980 665 980 680"/>
+
+  <rect x="70" y="865" width="1460" height="70" class="box-red"/>
+  <text x="105" y="895" class="note-title">安全边界</text>
+  <text x="105" y="920" class="note">Mac 本地不放生产 DATABASE_URL；本地 pipeline 不直接写 RDS。生产写库必须显式运行 ECS one-off write-plan。</text>
+</svg>

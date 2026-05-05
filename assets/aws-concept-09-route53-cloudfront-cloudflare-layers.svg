@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
+  <title id="title">Route 53, CloudFront, and Cloudflare layer comparison</title>
+  <desc id="desc">A diagram explaining the difference between DNS layer and CDN/security layer, comparing Route 53, CloudFront, and Cloudflare.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#344054"/>
+    </marker>
+    <style>
+      .page { fill: #f6f8fb; }
+      .title { font: 700 34px Arial, sans-serif; fill: #111827; }
+      .subtitle { font: 400 18px Arial, sans-serif; fill: #475467; }
+      .layer { fill: #ffffff; stroke: #d0d5dd; stroke-width: 2; rx: 18; }
+      .dns { fill: #eef4ff; stroke: #175cd3; stroke-width: 2.5; rx: 14; }
+      .cdn { fill: #ecfdf3; stroke: #039855; stroke-width: 2.5; rx: 14; }
+      .origin { fill: #fff7ed; stroke: #f97316; stroke-width: 2.5; rx: 14; }
+      .cf { fill: #fdf2fa; stroke: #c11574; stroke-width: 2.5; rx: 14; }
+      .label { font: 700 22px Arial, sans-serif; fill: #101828; }
+      .body { font: 400 16px Arial, sans-serif; fill: #475467; }
+      .tiny { font: 400 14px Arial, sans-serif; fill: #667085; }
+      .line { stroke: #344054; stroke-width: 2.6; fill: none; marker-end: url(#arrow); }
+      .dash { stroke: #667085; stroke-width: 2.2; stroke-dasharray: 8 7; fill: none; marker-end: url(#arrow); }
+      .note { fill: #ffffff; stroke: #d0d5dd; stroke-width: 1.8; rx: 12; }
+      .noteText { font: 700 16px Arial, sans-serif; fill: #344054; }
+    </style>
+  </defs>
+  <rect class="page" width="1280" height="760"/>
+  <text class="title" x="52" y="58">图 9：Route 53、CloudFront、Cloudflare 分层对比</text>
+  <text class="subtitle" x="52" y="92">先分清两层：DNS 只回答“域名去哪儿”；CDN/安全层负责“请求经过哪里、能不能缓存、要不要防护”。</text>
+
+  <rect class="layer" x="66" y="146" width="1148" height="118"/>
+  <text class="label" x="96" y="188">第 1 层：DNS / 域名解析</text>
+  <text class="body" x="96" y="218">用户输入 example.com 后，DNS 告诉浏览器应该去哪个入口。</text>
+  <rect class="dns" x="628" y="170" width="226" height="68"/>
+  <text class="label" x="658" y="211">Route 53</text>
+  <rect class="cf" x="908" y="170" width="226" height="68"/>
+  <text class="label" x="938" y="211">Cloudflare DNS</text>
+
+  <rect class="layer" x="66" y="320" width="1148" height="142"/>
+  <text class="label" x="96" y="362">第 2 层：CDN / 缓存 / 边缘防护</text>
+  <text class="body" x="96" y="392">用户请求真正经过这里；可以缓存静态资源、做 HTTPS、接 WAF、减轻源站压力。</text>
+  <rect class="cdn" x="628" y="356" width="226" height="72"/>
+  <text class="label" x="658" y="398">CloudFront</text>
+  <rect class="cf" x="908" y="356" width="226" height="72"/>
+  <text class="label" x="938" y="398">Cloudflare CDN</text>
+
+  <rect class="layer" x="66" y="520" width="1148" height="106"/>
+  <text class="label" x="96" y="562">第 3 层：Origin / 真正的源站</text>
+  <text class="body" x="96" y="592">如果边缘节点没有缓存，才会回源到 AWS 里的真实服务。</text>
+  <rect class="origin" x="628" y="542" width="148" height="58"/>
+  <text class="label" x="658" y="578">S3</text>
+  <rect class="origin" x="808" y="542" width="148" height="58"/>
+  <text class="label" x="838" y="578">ALB</text>
+  <rect class="origin" x="988" y="542" width="148" height="58"/>
+  <text class="label" x="1018" y="578">API GW</text>
+
+  <path class="line" d="M740 238 L740 356"/>
+  <path class="dash" d="M1020 238 L1020 356"/>
+  <path class="line" d="M740 428 C730 466 718 502 702 542"/>
+  <path class="line" d="M1020 428 C994 472 950 510 882 542"/>
+
+  <rect class="note" x="66" y="684" width="1148" height="44"/>
+  <text class="noteText" x="98" y="712">一句话：Route 53 ≈ Cloudflare DNS；CloudFront ≈ Cloudflare CDN。Cloudflare 是一整套边缘平台，AWS 把这些能力拆成多个服务。</text>
+</svg>

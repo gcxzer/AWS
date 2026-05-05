@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1040" viewBox="0 0 1700 1040" role="img" aria-labelledby="title desc">
+  <title id="title">TopicFollow AWS Security Groups</title>
+  <desc id="desc">解释 AWS Sicherheitsgruppe / Security Group 如何控制 Internet、ALB、ECS task 和 RDS 之间的访问关系。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="13" markerHeight="10" refX="12" refY="5" orient="auto">
+      <path d="M0,0 L13,5 L0,10 Z" fill="#263449"/>
+    </marker>
+    <marker id="deny" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto">
+      <path d="M2,2 L10,10 M10,2 L2,10" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+    </marker>
+    <style>
+      .bg{fill:#f8fafc}
+      .title{font:700 34px Arial,"Noto Sans SC",sans-serif;fill:#0f172a}
+      .subtitle{font:18px Arial,"Noto Sans SC",sans-serif;fill:#334155}
+      .panel{fill:#fff;stroke:#cbd5e1;stroke-width:2.2}
+      .internet{fill:#fdf2f8;stroke:#db2777;stroke-width:3}
+      .alb{fill:#fff7ed;stroke:#f97316;stroke-width:3}
+      .ecs{fill:#ecfeff;stroke:#0891b2;stroke-width:3}
+      .rds{fill:#f0fdf4;stroke:#16a34a;stroke-width:3}
+      .note{fill:#fefce8;stroke:#ca8a04;stroke-width:3}
+      .denyBox{fill:#fef2f2;stroke:#dc2626;stroke-width:2.5}
+      .box{fill:#fff;stroke:#cbd5e1;stroke-width:2}
+      .h{font:700 22px Arial,"Noto Sans SC",sans-serif;fill:#0f172a}
+      .h2{font:700 17px Arial,"Noto Sans SC",sans-serif;fill:#0f172a}
+      .t{font:16px Arial,"Noto Sans SC",sans-serif;fill:#334155}
+      .s{font:14px Arial,"Noto Sans SC",sans-serif;fill:#475569}
+      .m{font:13px Consolas,"SFMono-Regular",monospace;fill:#1e293b}
+      .arrow{stroke:#263449;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .bad{stroke:#dc2626;stroke-width:3;fill:none;stroke-dasharray:9 8;marker-end:url(#deny)}
+      .soft{stroke:#64748b;stroke-width:2.5;fill:none;stroke-dasharray:8 7;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect class="bg" width="1700" height="1040"/>
+  <text class="title" x="52" y="62">Sicherheitsgruppe / Security Group：AWS 里的“网络门禁”</text>
+  <text class="subtitle" x="52" y="96">它不运行应用，也不存数据；它只回答一个问题：谁可以连到这个资源的哪个端口？</text>
+
+  <rect class="panel" x="52" y="145" width="1596" height="645" rx="22"/>
+  <text class="h" x="84" y="188">TopicFollow 的三道门</text>
+
+  <rect class="internet" x="84" y="285" width="250" height="160" rx="18"/>
+  <text class="h2" x="114" y="325">Internet / Cloudflare</text>
+  <text class="s" x="114" y="358">用户请求从这里进来</text>
+  <text class="m" x="114" y="390">0.0.0.0/0</text>
+
+  <rect class="alb" x="455" y="245" width="310" height="240" rx="18"/>
+  <text class="h2" x="485" y="285">ALB Security Group</text>
+  <text class="m" x="485" y="313">topicfollow-prod-alb-sg</text>
+  <rect class="box" x="485" y="345" width="235" height="96" rx="12"/>
+  <text class="h2" x="508" y="377">Inbound allow</text>
+  <text class="m" x="508" y="405">80  from Internet</text>
+  <text class="m" x="508" y="429">443 from Internet</text>
+
+  <rect class="ecs" x="895" y="245" width="310" height="240" rx="18"/>
+  <text class="h2" x="925" y="285">ECS Service SG</text>
+  <text class="m" x="925" y="313">topicfollow-prod-ecs-service-sg</text>
+  <rect class="box" x="925" y="345" width="235" height="96" rx="12"/>
+  <text class="h2" x="948" y="377">Inbound allow</text>
+  <text class="m" x="948" y="405">3000 from ALB SG</text>
+  <text class="s" x="948" y="429">不是 from Internet</text>
+
+  <rect class="rds" x="1335" y="245" width="260" height="240" rx="18"/>
+  <text class="h2" x="1365" y="285">RDS Security Group</text>
+  <text class="m" x="1365" y="313">topicfollow-prod-rds-sg</text>
+  <rect class="box" x="1365" y="345" width="190" height="96" rx="12"/>
+  <text class="h2" x="1388" y="377">Inbound allow</text>
+  <text class="m" x="1388" y="405">5432 from ECS SG</text>
+  <text class="s" x="1388" y="429">只给应用连数据库</text>
+
+  <path class="arrow" d="M334 365 C385 365 405 365 455 365"/>
+  <text class="m" x="365" y="340">80 / 443</text>
+  <path class="arrow" d="M765 365 C815 365 845 365 895 365"/>
+  <text class="m" x="795" y="340">3000</text>
+  <path class="arrow" d="M1205 365 C1255 365 1285 365 1335 365"/>
+  <text class="m" x="1235" y="340">5432</text>
+
+  <path class="bad" d="M210 445 C420 640 670 640 895 445"/>
+  <text class="t" x="395" y="650">公网不能直接连 ECS task</text>
+  <path class="bad" d="M210 445 C620 740 1060 700 1335 445"/>
+  <text class="t" x="690" y="730">公网不能直接连 RDS</text>
+  <path class="bad" d="M765 485 C950 585 1160 575 1335 485"/>
+  <text class="t" x="960" y="590">ALB 也不能直接连数据库</text>
+
+  <rect class="note" x="84" y="560" width="360" height="155" rx="16"/>
+  <text class="h2" x="114" y="598">重点 1：source 可以是另一个 SG</text>
+  <text class="s" x="114" y="630">例如 ECS 允许 3000 from ALB SG。</text>
+  <text class="s" x="114" y="658">这比写死某个 IP 更适合 AWS，</text>
+  <text class="s" x="114" y="686">因为 task IP 会变。</text>
+
+  <rect class="note" x="520" y="560" width="360" height="155" rx="16"/>
+  <text class="h2" x="550" y="598">重点 2：它是 stateful</text>
+  <text class="s" x="550" y="630">如果请求被允许进来，返回流量</text>
+  <text class="s" x="550" y="658">自动允许出去。</text>
+  <text class="s" x="550" y="686">不用手动写反向返回规则。</text>
+
+  <rect class="note" x="956" y="560" width="360" height="155" rx="16"/>
+  <text class="h2" x="986" y="598">重点 3：它不是 IAM</text>
+  <text class="s" x="986" y="630">Security Group 管网络端口。</text>
+  <text class="s" x="986" y="658">IAM 管 AWS API 权限。</text>
+  <text class="s" x="986" y="686">两者解决的问题不同。</text>
+
+  <rect class="denyBox" x="1390" y="560" width="205" height="155" rx="16"/>
+  <text class="h2" x="1420" y="598">不要这样</text>
+  <text class="m" x="1420" y="630">RDS :5432</text>
+  <text class="m" x="1420" y="654">from 0.0.0.0/0</text>
+  <text class="s" x="1420" y="686">数据库不该公网开放</text>
+
+  <rect class="panel" x="52" y="845" width="1596" height="118" rx="18"/>
+  <text class="h2" x="84" y="884">一句话</text>
+  <text class="t" x="84" y="914">Security Group 是资源外面的一圈门禁规则。TopicFollow 只开三条必要路径：Internet 到 ALB，ALB 到 ECS:3000，ECS 到 RDS:5432。</text>
+  <text class="t" x="84" y="944">所以它保护的不是“代码逻辑”，而是“网络入口”。谁没有被规则允许，连端口都碰不到。</text>
+</svg>
