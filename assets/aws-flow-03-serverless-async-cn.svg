@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">AWS Serverless 异步流程</title>
+  <desc id="desc">展示 API Gateway, S3 Event, EventBridge, SQS, Lambda, Step Functions, SNS, DLQ 的异步架构关系。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/></marker>
+    <style>
+      .page{fill:#f8fafc}.title{font:700 36px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}.sub{font:400 18px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .box{fill:#fff;stroke:#cbd5e1;stroke-width:2;rx:18}.event{fill:#eff6ff;stroke:#2563eb;stroke-width:2.3;rx:18}.queue{fill:#fefce8;stroke:#ca8a04;stroke-width:2.3;rx:18}.compute{fill:#fff7ed;stroke:#f97316;stroke-width:2.3;rx:18}.data{fill:#ecfdf5;stroke:#16a34a;stroke-width:2.3;rx:18}.fail{fill:#fef2f2;stroke:#dc2626;stroke-width:2.3;rx:18}
+      .h{font:700 22px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}.t{font:400 15px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}.s{font:400 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#64748b}.line{stroke:#334155;stroke-width:3;fill:none;marker-end:url(#arrow)}.dash{stroke:#64748b;stroke-width:2.3;stroke-dasharray:7 8;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect class="page" width="1600" height="980"/>
+  <text class="title" x="58" y="66">异步架构：用队列、事件总线和工作流把系统解耦</text>
+  <text class="sub" x="58" y="102">不要让用户请求一直等长任务；把任务交给 SQS/EventBridge/Step Functions，再由 Lambda 或容器慢慢处理。</text>
+
+  <rect class="event" x="75" y="170" width="250" height="130"/><text class="h" x="110" y="215">事件来源</text><text class="t" x="110" y="248">API / S3 / Cron / SaaS</text><text class="s" x="110" y="276">用户请求、文件上传、定时任务</text>
+  <rect class="event" x="420" y="170" width="250" height="130"/><text class="h" x="455" y="215">EventBridge</text><text class="t" x="455" y="248">事件总线和规则</text><text class="s" x="455" y="276">过滤、转换、路由事件</text>
+  <rect class="queue" x="765" y="170" width="250" height="130"/><text class="h" x="800" y="215">SQS Queue</text><text class="t" x="800" y="248">排队、削峰、重试</text><text class="s" x="800" y="276">消费者按能力慢慢处理</text>
+  <rect class="compute" x="1110" y="170" width="250" height="130"/><text class="h" x="1145" y="215">Lambda / ECS</text><text class="t" x="1145" y="248">执行任务</text><text class="s" x="1145" y="276">短任务用 Lambda，长任务用容器</text>
+  <path class="line" d="M325 235 H420"/><path class="line" d="M670 235 H765"/><path class="line" d="M1015 235 H1110"/>
+
+  <rect class="data" x="1110" y="450" width="250" height="130"/><text class="h" x="1145" y="495">结果落地</text><text class="t" x="1145" y="528">S3 / DynamoDB / RDS</text><text class="s" x="1145" y="556">保存结果和状态</text>
+  <path class="line" d="M1235 300 V450"/>
+
+  <rect class="compute" x="420" y="450" width="250" height="130"/><text class="h" x="455" y="495">Step Functions</text><text class="t" x="455" y="528">有状态流程编排</text><text class="s" x="455" y="556">分支、等待、重试、人工步骤</text>
+  <path class="dash" d="M545 300 V450"/>
+
+  <rect class="fail" x="765" y="450" width="250" height="130"/><text class="h" x="800" y="495">DLQ / Retry</text><text class="t" x="800" y="528">失败隔离</text><text class="s" x="800" y="556">不要让坏消息卡死主队列</text>
+  <path class="dash" d="M890 300 V450"/>
+
+  <rect class="event" x="75" y="450" width="250" height="130"/><text class="h" x="110" y="495">SNS</text><text class="t" x="110" y="528">广播通知</text><text class="s" x="110" y="556">一条消息发给多个订阅者</text>
+  <path class="dash" d="M420 515 H325"/>
+
+  <rect class="box" x="90" y="735" width="1410" height="105"/>
+  <text class="h" x="125" y="778">选择口诀</text>
+  <text class="t" x="125" y="812">要排队削峰用 SQS；要广播用 SNS；要事件路由用 EventBridge；要多步骤状态机用 Step Functions；要处理短任务用 Lambda。</text>
+</svg>

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">AWS CI/CD 和 IaC 流程</title>
+  <desc id="desc">展示应用代码部署和基础设施代码创建资源的两条线。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/></marker>
+    <style>
+      .page{fill:#f8fafc}.title{font:700 36px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}.sub{font:400 18px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .box{fill:#fff;stroke:#cbd5e1;stroke-width:2;rx:18}.code{fill:#eff6ff;stroke:#2563eb;stroke-width:2.3;rx:18}.build{fill:#fff7ed;stroke:#f97316;stroke-width:2.3;rx:18}.aws{fill:#ecfdf5;stroke:#16a34a;stroke-width:2.3;rx:18}.iac{fill:#fefce8;stroke:#ca8a04;stroke-width:2.3;rx:18}.obs{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2.3;rx:18}
+      .h{font:700 22px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}.t{font:400 15px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}.s{font:400 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#64748b}.line{stroke:#334155;stroke-width:3;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect class="page" width="1600" height="980"/>
+  <text class="title" x="58" y="66">CI/CD 和 IaC 是两条不同但互相配合的线</text>
+  <text class="sub" x="58" y="102">应用代码上线替换运行版本；基础设施代码创建或修改 VPC、IAM、ECS、RDS、S3 等资源。</text>
+
+  <text class="h" x="80" y="170">A. 应用代码上线</text>
+  <rect class="code" x="80" y="210" width="220" height="110"/><text class="h" x="115" y="252">Git push</text><text class="s" x="115" y="284">提交应用代码</text>
+  <rect class="build" x="370" y="210" width="220" height="110"/><text class="h" x="405" y="252">CI</text><text class="s" x="405" y="284">lint / test / build</text>
+  <rect class="build" x="660" y="210" width="220" height="110"/><text class="h" x="695" y="252">Image</text><text class="s" x="695" y="284">Docker build &amp; push ECR</text>
+  <rect class="aws" x="950" y="210" width="220" height="110"/><text class="h" x="985" y="252">Deploy</text><text class="s" x="985" y="284">新 task definition revision</text>
+  <rect class="aws" x="1240" y="210" width="220" height="110"/><text class="h" x="1275" y="252">Runtime</text><text class="s" x="1275" y="284">ECS service rolling update</text>
+  <path class="line" d="M300 265 H370"/><path class="line" d="M590 265 H660"/><path class="line" d="M880 265 H950"/><path class="line" d="M1170 265 H1240"/>
+
+  <text class="h" x="80" y="455">B. 基础设施代码</text>
+  <rect class="iac" x="80" y="495" width="260" height="120"/><text class="h" x="115" y="540">IaC 源码</text><text class="s" x="115" y="572">CDK / CloudFormation / Terraform</text>
+  <rect class="iac" x="440" y="495" width="260" height="120"/><text class="h" x="475" y="540">Plan / Diff</text><text class="s" x="475" y="572">预览要创建/修改/删除什么</text>
+  <rect class="iac" x="800" y="495" width="260" height="120"/><text class="h" x="835" y="540">Apply / Deploy</text><text class="s" x="835" y="572">创建 VPC、IAM、RDS、ECS 等</text>
+  <rect class="obs" x="1160" y="495" width="260" height="120"/><text class="h" x="1195" y="540">Drift Check</text><text class="s" x="1195" y="572">控制台手改后，代码和现实偏离</text>
+  <path class="line" d="M340 555 H440"/><path class="line" d="M700 555 H800"/><path class="line" d="M1060 555 H1160"/>
+
+  <rect class="box" x="100" y="770" width="1400" height="105"/>
+  <text class="h" x="135" y="812">别混</text>
+  <text class="t" x="135" y="846">应用 CI/CD 通常改变“运行什么版本”；IaC 改变“有哪些云资源以及它们怎么连接”。生产里两条线都应该可审查、可回滚。</text>
+</svg>

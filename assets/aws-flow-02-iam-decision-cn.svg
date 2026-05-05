@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">AWS IAM 权限判定流程</title>
+  <desc id="desc">展示请求如何经过身份、策略、显式拒绝、组织限制、资源策略和条件判断。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/></marker>
+    <style>
+      .page{fill:#f8fafc}.title{font:700 36px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}.sub{font:400 18px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .box{fill:#fff;stroke:#cbd5e1;stroke-width:2;rx:18}.req{fill:#eff6ff;stroke:#2563eb;stroke-width:2.3;rx:18}.deny{fill:#fef2f2;stroke:#dc2626;stroke-width:2.3;rx:18}.allow{fill:#ecfdf5;stroke:#16a34a;stroke-width:2.3;rx:18}.check{fill:#fefce8;stroke:#ca8a04;stroke-width:2.3;rx:18}
+      .h{font:700 22px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}.t{font:400 15px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}.s{font:400 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#64748b}.line{stroke:#334155;stroke-width:3;fill:none;marker-end:url(#arrow)}.dash{stroke:#64748b;stroke-width:2.3;stroke-dasharray:7 8;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect class="page" width="1600" height="980"/>
+  <text class="title" x="58" y="66">IAM 不是“有一个 allow 就一定能做”，显式拒绝和边界会挡住</text>
+  <text class="sub" x="58" y="102">一次 AWS API 请求要同时看 principal、action、resource、condition，以及 Organizations/SCP、permission boundary、resource policy。</text>
+
+  <rect class="req" x="80" y="190" width="250" height="135"/><text class="h" x="115" y="236">请求</text><text class="t" x="115" y="270">Principal 想执行 Action</text><text class="s" x="115" y="298">例如 ECS task role 读 S3 object</text>
+  <rect class="check" x="420" y="190" width="250" height="135"/><text class="h" x="455" y="236">身份策略</text><text class="t" x="455" y="270">identity policy</text><text class="s" x="455" y="298">role/user/group 上的 allow/deny</text>
+  <rect class="deny" x="760" y="190" width="250" height="135"/><text class="h" x="795" y="236">显式 Deny?</text><text class="t" x="795" y="270">任何地方出现 deny</text><text class="s" x="795" y="298">直接拒绝，allow 救不回来</text>
+  <rect class="check" x="1100" y="190" width="250" height="135"/><text class="h" x="1135" y="236">边界限制</text><text class="t" x="1135" y="270">SCP / boundary / session</text><text class="s" x="1135" y="298">限制最大权限范围</text>
+
+  <path class="line" d="M330 258 H420"/><path class="line" d="M670 258 H760"/><path class="line" d="M1010 258 H1100"/>
+
+  <rect class="check" x="250" y="500" width="300" height="150"/><text class="h" x="285" y="546">资源策略</text><text class="t" x="285" y="580">resource policy</text><text class="s" x="285" y="610">S3 bucket policy、KMS key policy</text>
+  <rect class="check" x="650" y="500" width="300" height="150"/><text class="h" x="685" y="546">条件匹配</text><text class="t" x="685" y="580">Condition</text><text class="s" x="685" y="610">来源 IP、VPC endpoint、tag、MFA</text>
+  <rect class="allow" x="1050" y="500" width="300" height="150"/><text class="h" x="1085" y="546">最终允许</text><text class="t" x="1085" y="580">Allow 生效</text><text class="s" x="1085" y="610">没有 deny，且所有边界都允许</text>
+  <path class="line" d="M1225 325 C1225 430 400 410 400 500"/><path class="line" d="M550 575 H650"/><path class="line" d="M950 575 H1050"/>
+
+  <rect class="box" x="80" y="755" width="1420" height="110"/>
+  <text class="h" x="115" y="798">排查 403 的顺序</text>
+  <text class="t" x="115" y="832">先确认谁在请求：user、role、ECS task role、Lambda role、GitHub OIDC role。再看 action/resource 是否写对，最后查 SCP、permission boundary、bucket/key policy 和 condition。</text>
+</svg>

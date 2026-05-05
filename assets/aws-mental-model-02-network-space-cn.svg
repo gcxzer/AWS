@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">AWS 资源空间和网络模型</title>
+  <desc id="desc">展示 AWS Account, Region, AZ, VPC, public subnet, private subnet, route table, NAT, VPC Endpoint 的层级关系。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/></marker>
+    <style>
+      .page{fill:#f8fafc}
+      .title{font:700 36px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .sub{font:400 18px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .outer{fill:#fff;stroke:#94a3b8;stroke-width:2.5;rx:28}
+      .region{fill:#f8fafc;stroke:#64748b;stroke-width:2.2;rx:24}
+      .vpc{fill:#ecfdf5;stroke:#16a34a;stroke-width:2.4;rx:24}
+      .az{fill:#fff;stroke:#cbd5e1;stroke-width:2;rx:20}
+      .public{fill:#eff6ff;stroke:#2563eb;stroke-width:2.2;rx:18}
+      .private{fill:#fefce8;stroke:#ca8a04;stroke-width:2.2;rx:18}
+      .db{fill:#fdf2f8;stroke:#db2777;stroke-width:2.2;rx:18}
+      .box{fill:#fff;stroke:#cbd5e1;stroke-width:2;rx:16}
+      .h{font:700 23px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .t{font:400 16px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .s{font:400 14px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#64748b}
+      .mono{font:500 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#334155}
+      .line{stroke:#334155;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .dash{stroke:#64748b;stroke-width:2.3;stroke-dasharray:7 8;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect class="page" width="1600" height="980"/>
+  <text class="title" x="58" y="66">资源空间：账号是账本，Region 是城市，VPC 是你的私有园区</text>
+  <text class="sub" x="58" y="102">很多“找不到资源”的问题，其实是账号或 Region 看错；很多“连不上”的问题，是 subnet、route table 或安全组没对。</text>
+
+  <rect class="outer" x="60" y="150" width="1480" height="680"/>
+  <text class="h" x="100" y="198">AWS Account</text>
+  <text class="s" x="100" y="226">权限、账单、资源归属的最大容器</text>
+
+  <rect class="region" x="100" y="260" width="980" height="500"/>
+  <text class="h" x="140" y="308">Region: eu-central-1</text>
+  <text class="s" x="140" y="336">资源所在的大地理区域；Console 右上角选错时，资源就像消失了</text>
+
+  <rect class="vpc" x="140" y="380" width="900" height="330"/>
+  <text class="h" x="175" y="426">VPC: 你的私有网络边界</text>
+
+  <rect class="az" x="180" y="470" width="390" height="195"/>
+  <text class="t" x="210" y="505">AZ A</text>
+  <rect class="public" x="210" y="530" width="150" height="92"/>
+  <text class="t" x="232" y="564">Public subnet</text>
+  <text class="s" x="232" y="590">ALB / NAT</text>
+  <rect class="private" x="390" y="530" width="150" height="92"/>
+  <text class="t" x="412" y="564">Private app</text>
+  <text class="s" x="412" y="590">ECS / EC2</text>
+
+  <rect class="az" x="610" y="470" width="390" height="195"/>
+  <text class="t" x="640" y="505">AZ B</text>
+  <rect class="public" x="640" y="530" width="150" height="92"/>
+  <text class="t" x="662" y="564">Public subnet</text>
+  <text class="s" x="662" y="590">ALB / NAT</text>
+  <rect class="db" x="820" y="530" width="150" height="92"/>
+  <text class="t" x="842" y="564">Private DB</text>
+  <text class="s" x="842" y="590">RDS</text>
+
+  <rect class="box" x="1160" y="245" width="300" height="125"/>
+  <text class="h" x="1195" y="292">Internet Gateway</text>
+  <text class="s" x="1195" y="324">让 public subnet 里的入口资源</text>
+  <text class="s" x="1195" y="348">可以和公网互通</text>
+
+  <rect class="box" x="1160" y="420" width="300" height="125"/>
+  <text class="h" x="1195" y="467">NAT Gateway</text>
+  <text class="s" x="1195" y="499">让 private subnet 主动出网</text>
+  <text class="s" x="1195" y="523">但公网不能主动进来</text>
+
+  <rect class="box" x="1160" y="595" width="300" height="125"/>
+  <text class="h" x="1195" y="642">VPC Endpoint</text>
+  <text class="s" x="1195" y="674">私有访问 S3、DynamoDB</text>
+  <text class="s" x="1195" y="698">或 Secrets、ECR、CloudWatch</text>
+
+  <path class="line" d="M1080 308 H1160"/>
+  <path class="dash" d="M360 576 C520 430 900 430 1160 482"/>
+  <path class="dash" d="M540 576 C700 680 920 680 1160 658"/>
+
+  <rect class="box" x="100" y="860" width="1380" height="64"/>
+  <text class="t" x="130" y="898">判断 public/private 不看名字，看 route table：默认路由去 Internet Gateway 才是 public；只经 NAT 出网通常是 private。</text>
+</svg>

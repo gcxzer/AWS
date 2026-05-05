@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">AWS 运维、成本、可靠性和 AI 模型</title>
+  <desc id="desc">展示运行后如何监控、控费、备份灾备，以及 Bedrock, SageMaker, Amazon Q 的选择。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/></marker>
+    <style>
+      .page{fill:#f8fafc}
+      .title{font:700 36px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .sub{font:400 18px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .box{fill:#fff;stroke:#cbd5e1;stroke-width:2;rx:18}
+      .ops{fill:#eff6ff;stroke:#2563eb;stroke-width:2.3;rx:18}
+      .cost{fill:#fff7ed;stroke:#f97316;stroke-width:2.3;rx:18}
+      .rel{fill:#ecfdf5;stroke:#16a34a;stroke-width:2.3;rx:18}
+      .ai{fill:#f0fdfa;stroke:#0f766e;stroke-width:2.3;rx:18}
+      .h{font:700 23px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .t{font:400 16px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .s{font:400 14px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#64748b}
+      .line{stroke:#334155;stroke-width:3;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect class="page" width="1600" height="980"/>
+  <text class="title" x="58" y="66">上线以后：看得见、花得明白、坏了能恢复，再考虑 AI 能力</text>
+  <text class="sub" x="58" y="102">生产系统不是跑起来就完了，还要有日志、预算、备份、恢复目标和模型能力边界。</text>
+
+  <rect class="ops" x="90" y="170" width="320" height="190"/>
+  <text class="h" x="125" y="216">看运行</text>
+  <text class="t" x="125" y="248">CloudWatch</text>
+  <text class="s" x="125" y="284">日志：应用报错</text>
+  <text class="s" x="125" y="310">指标：CPU、内存、延迟</text>
+  <text class="s" x="125" y="336">告警：超过阈值提醒</text>
+
+  <rect class="ops" x="470" y="170" width="320" height="190"/>
+  <text class="h" x="505" y="216">看操作</text>
+  <text class="t" x="505" y="248">CloudTrail / Config</text>
+  <text class="s" x="505" y="284">谁删除或修改了资源</text>
+  <text class="s" x="505" y="310">资源配置是否漂移</text>
+  <text class="s" x="505" y="336">合规状态是否变化</text>
+
+  <rect class="cost" x="850" y="170" width="320" height="190"/>
+  <text class="h" x="885" y="216">控成本</text>
+  <text class="t" x="885" y="248">Budgets / Cost Explorer</text>
+  <text class="s" x="885" y="284">先设预算再实验</text>
+  <text class="s" x="885" y="310">按 tag 分摊项目成本</text>
+  <text class="s" x="885" y="336">注意 NAT、RDS、EBS、日志</text>
+
+  <rect class="rel" x="1230" y="170" width="320" height="190"/>
+  <text class="h" x="1265" y="216">能恢复</text>
+  <text class="t" x="1265" y="248">Backup / Multi-AZ / Snapshot</text>
+  <text class="s" x="1265" y="284">RTO：多久恢复服务</text>
+  <text class="s" x="1265" y="310">RPO：最多丢多少数据</text>
+  <text class="s" x="1265" y="336">备份要演练 restore</text>
+
+  <text class="h" x="90" y="465">AI 服务怎么选</text>
+  <rect class="ai" x="90" y="505" width="400" height="190"/>
+  <text class="h" x="125" y="550">Bedrock</text>
+  <text class="t" x="125" y="582">调用基础模型</text>
+  <text class="s" x="125" y="618">RAG、Agent、Guardrails、模型 API</text>
+  <text class="s" x="125" y="644">想用大模型能力时优先看它</text>
+
+  <rect class="ai" x="600" y="505" width="400" height="190"/>
+  <text class="h" x="635" y="550">SageMaker AI</text>
+  <text class="t" x="635" y="582">自定义机器学习平台</text>
+  <text class="s" x="635" y="618">训练、调参、部署、Endpoint、MLOps</text>
+  <text class="s" x="635" y="644">要训练/部署自己的模型时看它</text>
+
+  <rect class="ai" x="1110" y="505" width="400" height="190"/>
+  <text class="h" x="1145" y="550">Amazon Q / 专用 AI API</text>
+  <text class="t" x="1145" y="582">给人或具体任务的成品能力</text>
+  <text class="s" x="1145" y="618">Q：开发者/企业知识/控制台助手</text>
+  <text class="s" x="1145" y="644">Textract、Comprehend 等专用 API</text>
+
+  <rect class="box" x="120" y="790" width="1360" height="105"/>
+  <text class="h" x="155" y="832">上线后最小清单</text>
+  <text class="t" x="155" y="866">健康检查、日志、告警、预算、备份、恢复演练、权限审计。AI 应用还要看数据权限、模型调用成本、评估和安全护栏。</text>
+</svg>

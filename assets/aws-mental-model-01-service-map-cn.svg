@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">AWS 服务分层心智地图</title>
+  <desc id="desc">把常见 AWS 服务按入口、网络、计算、数据、安全、观测、成本和 AI 分层。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .page{fill:#f8fafc}
+      .title{font:700 36px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .sub{font:400 18px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .band{fill:#fff;stroke:#cbd5e1;stroke-width:2;rx:22}
+      .entry{fill:#eff6ff;stroke:#2563eb}
+      .net{fill:#ecfdf5;stroke:#16a34a}
+      .compute{fill:#fff7ed;stroke:#f97316}
+      .data{fill:#fefce8;stroke:#ca8a04}
+      .sec{fill:#fdf2f8;stroke:#db2777}
+      .ops{fill:#f5f3ff;stroke:#7c3aed}
+      .ai{fill:#f0fdfa;stroke:#0f766e}
+      .h{font:700 24px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .t{font:400 16px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .s{font:400 14px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#64748b}
+      .pill{fill:#e2e8f0;stroke:#cbd5e1;stroke-width:1.4;rx:16}
+      .pillText{font:700 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#334155}
+      .line{stroke:#334155;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .dash{stroke:#64748b;stroke-width:2.3;stroke-dasharray:7 8;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+
+  <rect class="page" width="1600" height="980"/>
+  <text class="title" x="58" y="66">AWS 先不要背服务名，先按责任分层</text>
+  <text class="sub" x="58" y="102">一条线上记住：入口把请求带进来，网络决定能不能到，计算运行代码，数据保存状态，安全和观测横切所有层。</text>
+
+  <rect class="band entry" x="70" y="160" width="300" height="180"/>
+  <text class="h" x="105" y="206">入口层</text>
+  <text class="t" x="105" y="238">用户从哪里进来</text>
+  <text class="s" x="105" y="274">Route 53：DNS</text>
+  <text class="s" x="105" y="300">CloudFront：CDN / 边缘缓存</text>
+  <text class="s" x="105" y="326">ALB / API Gateway / AppSync</text>
+
+  <rect class="band net" x="470" y="160" width="300" height="180"/>
+  <text class="h" x="505" y="206">网络层</text>
+  <text class="t" x="505" y="238">资源放在哪里，路怎么走</text>
+  <text class="s" x="505" y="274">VPC / Subnet / Route Table</text>
+  <text class="s" x="505" y="300">Internet Gateway / NAT</text>
+  <text class="s" x="505" y="326">VPC Endpoint / PrivateLink</text>
+
+  <rect class="band compute" x="870" y="160" width="300" height="180"/>
+  <text class="h" x="905" y="206">计算层</text>
+  <text class="t" x="905" y="238">代码真正在哪里运行</text>
+  <text class="s" x="905" y="274">EC2：虚拟机</text>
+  <text class="s" x="905" y="300">ECS / Fargate：容器</text>
+  <text class="s" x="905" y="326">Lambda：函数</text>
+
+  <rect class="band data" x="1230" y="160" width="300" height="180"/>
+  <text class="h" x="1265" y="206">数据层</text>
+  <text class="t" x="1265" y="238">状态、文件、缓存放哪里</text>
+  <text class="s" x="1265" y="274">S3 / EBS / EFS</text>
+  <text class="s" x="1265" y="300">RDS / DynamoDB</text>
+  <text class="s" x="1265" y="326">ElastiCache / Glue / Athena</text>
+
+  <path class="line" d="M370 250 H470"/>
+  <path class="line" d="M770 250 H870"/>
+  <path class="line" d="M1170 250 H1230"/>
+
+  <rect class="band sec" x="170" y="470" width="360" height="210"/>
+  <text class="h" x="205" y="516">安全和权限</text>
+  <text class="t" x="205" y="548">谁能做什么，流量能不能进</text>
+  <text class="s" x="205" y="586">IAM / STS / Organizations</text>
+  <text class="s" x="205" y="612">Security Group / NACL</text>
+  <text class="s" x="205" y="638">KMS / Secrets Manager</text>
+  <text class="s" x="205" y="664">WAF / Shield / GuardDuty / Inspector</text>
+
+  <rect class="band ops" x="620" y="470" width="360" height="210"/>
+  <text class="h" x="655" y="516">观测、成本、可靠性</text>
+  <text class="t" x="655" y="548">看运行、看操作、控费用、能恢复</text>
+  <text class="s" x="655" y="586">CloudWatch：指标 / 日志 / 告警</text>
+  <text class="s" x="655" y="612">CloudTrail：谁调用了什么 API</text>
+  <text class="s" x="655" y="638">Config / Budgets / Cost Explorer</text>
+  <text class="s" x="655" y="664">Backup / Multi-AZ / Snapshot</text>
+
+  <rect class="band ai" x="1070" y="470" width="360" height="210"/>
+  <text class="h" x="1105" y="516">AI 和数据应用</text>
+  <text class="t" x="1105" y="548">模型能力和机器学习平台</text>
+  <text class="s" x="1105" y="586">Bedrock：调用基础模型 / RAG / Agent</text>
+  <text class="s" x="1105" y="612">SageMaker：训练 / 部署 / MLOps</text>
+  <text class="s" x="1105" y="638">Amazon Q：给人用的成品助手</text>
+  <text class="s" x="1105" y="664">Textract / Comprehend 等专用 AI API</text>
+
+  <path class="dash" d="M350 470 C350 402 620 386 620 340"/>
+  <path class="dash" d="M800 470 V340"/>
+  <path class="dash" d="M1250 470 C1250 402 1030 386 1030 340"/>
+
+  <rect class="pill" x="70" y="760" width="1460" height="92"/>
+  <text class="h" x="105" y="802">最重要的一句话</text>
+  <text class="t" x="105" y="834">排查 AWS 问题时，先问它卡在哪一层：DNS/入口、网络、安全组、计算、数据、权限、日志，还是成本/容量。</text>
+  <text class="s" x="105" y="862">服务名很多，但大多数问题都能先归入这几层，再去 Console 里找对应资源。</text>
+</svg>

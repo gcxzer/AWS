@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">AWS 安全、权限和观测模型</title>
+  <desc id="desc">展示 IAM, Security Group, KMS, Secrets Manager, WAF, GuardDuty, CloudWatch, CloudTrail, Config 的分工。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/></marker>
+    <style>
+      .page{fill:#f8fafc}
+      .title{font:700 36px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .sub{font:400 18px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .box{fill:#fff;stroke:#cbd5e1;stroke-width:2;rx:18}
+      .iam{fill:#eff6ff;stroke:#2563eb;stroke-width:2.3;rx:18}
+      .net{fill:#ecfdf5;stroke:#16a34a;stroke-width:2.3;rx:18}
+      .secret{fill:#fefce8;stroke:#ca8a04;stroke-width:2.3;rx:18}
+      .guard{fill:#fdf2f8;stroke:#db2777;stroke-width:2.3;rx:18}
+      .obs{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2.3;rx:18}
+      .h{font:700 23px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .t{font:400 16px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .s{font:400 14px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#64748b}
+      .line{stroke:#334155;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .dash{stroke:#64748b;stroke-width:2.3;stroke-dasharray:7 8;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect class="page" width="1600" height="980"/>
+  <text class="title" x="58" y="66">安全排查不要混：权限、网络、密钥、入口防护、日志是五件事</text>
+  <text class="sub" x="58" y="102">IAM 允许调用 API 不等于网络端口通；安全组放行端口也不等于有数据库密码。</text>
+
+  <rect class="iam" x="80" y="165" width="300" height="180"/>
+  <text class="h" x="115" y="210">IAM / STS</text>
+  <text class="t" x="115" y="242">身份和 API 权限</text>
+  <text class="s" x="115" y="278">Principal：谁</text>
+  <text class="s" x="115" y="304">Action：做什么</text>
+  <text class="s" x="115" y="330">Resource：对哪个资源</text>
+
+  <rect class="net" x="460" y="165" width="300" height="180"/>
+  <text class="h" x="495" y="210">Security Group</text>
+  <text class="t" x="495" y="242">网络端口门禁</text>
+  <text class="s" x="495" y="278">来源可以是 CIDR</text>
+  <text class="s" x="495" y="304">也可以是另一个 SG</text>
+  <text class="s" x="495" y="330">常用于 ALB -> ECS -> RDS</text>
+
+  <rect class="secret" x="840" y="165" width="300" height="180"/>
+  <text class="h" x="875" y="210">KMS / Secrets</text>
+  <text class="t" x="875" y="242">加密和敏感配置</text>
+  <text class="s" x="875" y="278">KMS：加密钥匙</text>
+  <text class="s" x="875" y="304">Secrets Manager：密码和 token</text>
+  <text class="s" x="875" y="330">Parameter Store：配置路径</text>
+
+  <rect class="guard" x="1220" y="165" width="300" height="180"/>
+  <text class="h" x="1255" y="210">WAF / GuardDuty</text>
+  <text class="t" x="1255" y="242">入口和威胁检测</text>
+  <text class="s" x="1255" y="278">WAF / Shield：挡入口攻击</text>
+  <text class="s" x="1255" y="304">GuardDuty：发现可疑行为</text>
+  <text class="s" x="1255" y="330">Inspector：漏洞和暴露面</text>
+
+  <text class="h" x="80" y="455">观测三件套</text>
+  <rect class="obs" x="80" y="495" width="390" height="170"/>
+  <text class="h" x="115" y="540">CloudWatch</text>
+  <text class="t" x="115" y="572">运行发生了什么</text>
+  <text class="s" x="115" y="608">metrics / logs / alarms / dashboard</text>
+
+  <rect class="obs" x="605" y="495" width="390" height="170"/>
+  <text class="h" x="640" y="540">CloudTrail</text>
+  <text class="t" x="640" y="572">谁调用了什么 AWS API</text>
+  <text class="s" x="640" y="608">审计删除、修改、登录、AssumeRole</text>
+
+  <rect class="obs" x="1130" y="495" width="390" height="170"/>
+  <text class="h" x="1165" y="540">AWS Config</text>
+  <text class="t" x="1165" y="572">资源配置曾经是什么</text>
+  <text class="s" x="1165" y="608">看安全组、加密、公开访问是否合规</text>
+
+  <path class="dash" d="M230 345 C230 430 275 450 275 495"/>
+  <path class="dash" d="M610 345 C610 430 800 450 800 495"/>
+  <path class="dash" d="M1370 345 C1370 430 1325 450 1325 495"/>
+
+  <rect class="box" x="120" y="760" width="1360" height="110"/>
+  <text class="h" x="155" y="804">排查口诀</text>
+  <text class="t" x="155" y="838">403 多半先看 IAM / resource policy；连接超时先看 route table 和 security group；程序报错先看 CloudWatch；谁改了资源看 CloudTrail；配置漂移看 Config。</text>
+</svg>
