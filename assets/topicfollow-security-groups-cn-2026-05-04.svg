@@ -33,7 +33,7 @@
   <text class="m" x="1045" y="225">sg-0ba3af6d70566127f</text>
   <text class="s" x="1045" y="265">允许进入：</text>
   <text class="m" x="1070" y="294">TCP 3000 from ALB SG</text>
-  <text class="s" x="1045" y="342">不允许公网直接访问 task</text>
+  <text class="s" x="1045" y="342">即使 task 有 public IP，也不允许公网直连</text>
 
   <rect class="allow" x="1010" y="535" width="330" height="190" rx="18"/>
   <text class="h" x="1045" y="580">RDS Security Group</text>
@@ -55,5 +55,5 @@
 
   <rect class="deny" x="70" y="535" width="650" height="105" rx="14"/>
   <text class="h" x="105" y="580">为什么这样安全？</text>
-  <text class="t" x="105" y="615">数据库没有公网入口；ECS task 也没有公网入口。公网流量只能先经过 ALB。</text>
+  <text class="t" x="105" y="615">数据库没有公网入口；ECS task 没有开放公网入站规则。公网流量只能先经过 ALB。</text>
 </svg>

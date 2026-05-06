@@ -30,7 +30,7 @@
 
 ## 一、用户访问网站这条线
 
-![TopicFollow current AWS overview](assets/topicfollow-current-aws-overview-cn-2026-05-04.svg)
+![TopicFollow cost optimized public ECS](assets/topicfollow-cost-optimized-public-ecs-cn-2026-05-06.svg)
 
 真实请求路径：
 
@@ -88,9 +88,7 @@ ACM 的角色：
 
 ![TopicFollow subnets](assets/topicfollow-subnets-purpose-cn-2026-05-04.svg)
 
-这张图展示的是 AWS 生产常见的“public ALB + private app + private DB”模型。TopicFollow 为了降低学习阶段的固定费用，当前 web service 采用下面的低成本变体：ECS task 放在 public subnets 并分配 public IP，去掉 NAT Gateway；安全组仍然只允许 ALB 访问应用端口。
-
-![TopicFollow cost optimized public ECS](assets/topicfollow-cost-optimized-public-ecs-cn-2026-05-06.svg)
+TopicFollow 当前采用低成本变体：ALB 和 ECS web task 都在 public subnets；ECS task 分配 public IP 只用于主动访问 AWS API / 外网，入站 3000 仍只允许 ALB security group。RDS 仍在 private database subnets，没有公网入口。
 
 当前子网用途：
 

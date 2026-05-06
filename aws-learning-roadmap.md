@@ -1,3 +1,10 @@
+<!--
+ * @@Description: 
+ * @@Version: 
+ * @@Author: Xuan Zhu
+ * @@Date: 
+ * @LastEditTime: 2026-05-05 15:55:26
+-->
 # AWS 项目式学习路线
 
 目标：用项目把 AWS 学起来，而不是按 Console 服务列表死记。每个阶段都产出一个能运行、能解释、能清理的作品。
