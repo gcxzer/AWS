@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1140" viewBox="0 0 1800 1140" role="img" aria-labelledby="title desc">
+  <title id="title">TopicFollow AWS resources by setup phase</title>
+  <desc id="desc">展示 TopicFollow AWS 资源分别是在创建网络、创建安全边界、创建入口、创建应用运行环境、创建数据层、代码上线时设置出来的。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .page{fill:#f8fafc}
+      .title{font:700 38px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .sub{font:400 18px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .h{font:700 22px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .h2{font:700 18px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .t{font:400 15px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .s{font:400 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#64748b}
+      .code{font:600 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#334155}
+      .phase{fill:#fff;stroke:#cbd5e1;stroke-width:2;rx:22}
+      .network{fill:#eff6ff;stroke:#2563eb;stroke-width:2.4;rx:18}
+      .security{fill:#fff7ed;stroke:#f97316;stroke-width:2.4;rx:18}
+      .entry{fill:#ecfdf5;stroke:#16a34a;stroke-width:2.4;rx:18}
+      .runtime{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2.4;rx:18}
+      .data{fill:#fdf2f8;stroke:#db2777;stroke-width:2.4;rx:18}
+      .deploy{fill:#fefce8;stroke:#ca8a04;stroke-width:2.4;rx:18}
+      .note{fill:#ffffff;stroke:#cbd5e1;stroke-width:2;rx:16}
+      .line{stroke:#334155;stroke-width:3;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+
+  <rect class="page" width="1800" height="1140"/>
+  <text class="title" x="64" y="72">这些 AWS 资源是在“不同创建阶段”产生的</text>
+  <text class="sub" x="64" y="108">VPC 网络不是部署代码时创建的；Listener/Target Group 是入口层；ECR image 和 task definition revision 才是每次上线变化的东西。</text>
+
+  <rect class="phase" x="70" y="170" width="500" height="295"/>
+  <text class="h" x="105" y="215">1. 创建网络骨架</text>
+  <text class="s" x="105" y="245">通常在创建 VPC / VPC and more 时出现</text>
+  <rect class="network" x="105" y="275" width="190" height="62"/><text class="h2" x="130" y="313">VPC</text>
+  <rect class="network" x="325" y="275" width="190" height="62"/><text class="h2" x="350" y="313">Subnets</text>
+  <rect class="network" x="105" y="360" width="190" height="62"/><text class="h2" x="130" y="398">Route Tables</text>
+  <rect class="network" x="325" y="360" width="190" height="62"/><text class="h2" x="350" y="398">IGW / NAT / VPCE</text>
+
+  <rect class="phase" x="650" y="170" width="500" height="295"/>
+  <text class="h" x="685" y="215">2. 创建安全边界</text>
+  <text class="s" x="685" y="245">通常在创建 ALB、ECS service、RDS 时分别设置</text>
+  <rect class="security" x="685" y="285" width="400" height="62"/><text class="h2" x="715" y="323">ALB Security Group</text>
+  <rect class="security" x="685" y="365" width="400" height="62"/><text class="h2" x="715" y="403">ECS Security Group</text>
+  <text class="code" x="900" y="403">3000 only from ALB SG</text>
+
+  <rect class="phase" x="1230" y="170" width="500" height="295"/>
+  <text class="h" x="1265" y="215">3. 创建网站入口</text>
+  <text class="s" x="1265" y="245">通常在创建 ALB 或配置 listener/rule 时出现</text>
+  <rect class="entry" x="1265" y="275" width="190" height="62"/><text class="h2" x="1290" y="313">ALB</text>
+  <rect class="entry" x="1485" y="275" width="190" height="62"/><text class="h2" x="1510" y="313">Listeners</text>
+  <rect class="entry" x="1265" y="360" width="190" height="62"/><text class="h2" x="1290" y="398">Rules</text>
+  <rect class="entry" x="1485" y="360" width="190" height="62"/><text class="h2" x="1510" y="398">Target Group</text>
+
+  <path class="line" d="M570 318 H650"/>
+  <path class="line" d="M1150 318 H1230"/>
+
+  <rect class="phase" x="70" y="535" width="500" height="300"/>
+  <text class="h" x="105" y="580">4. 创建应用运行环境</text>
+  <text class="s" x="105" y="610">通常在创建 ECS/Fargate service 时出现</text>
+  <rect class="runtime" x="105" y="645" width="190" height="62"/><text class="h2" x="130" y="683">ECS Cluster</text>
+  <rect class="runtime" x="325" y="645" width="190" height="62"/><text class="h2" x="350" y="683">ECS Service</text>
+  <rect class="runtime" x="105" y="730" width="190" height="62"/><text class="h2" x="130" y="768">Task Definition</text>
+  <rect class="runtime" x="325" y="730" width="190" height="62"/><text class="h2" x="350" y="768">IAM Roles</text>
+
+  <rect class="phase" x="650" y="535" width="500" height="300"/>
+  <text class="h" x="685" y="580">5. 创建数据层</text>
+  <text class="s" x="685" y="610">通常在创建 RDS、S3 bucket、Secrets 时出现</text>
+  <rect class="data" x="685" y="645" width="190" height="62"/><text class="h2" x="710" y="683">RDS</text>
+  <rect class="data" x="905" y="645" width="190" height="62"/><text class="h2" x="930" y="683">RDS SG</text>
+  <text class="code" x="930" y="723">5432 only from ECS SG</text>
+  <rect class="data" x="685" y="745" width="190" height="62"/><text class="h2" x="710" y="783">S3 Bucket</text>
+  <rect class="data" x="905" y="745" width="190" height="62"/><text class="h2" x="930" y="783">Secrets</text>
+
+  <rect class="phase" x="1230" y="535" width="500" height="300"/>
+  <text class="h" x="1265" y="580">6. 每次代码上线才更新</text>
+  <text class="s" x="1265" y="610">git push / GitHub Actions / 手动 CLI 部署会改变这些</text>
+  <rect class="deploy" x="1265" y="645" width="190" height="62"/><text class="h2" x="1290" y="683">Docker Image</text>
+  <rect class="deploy" x="1485" y="645" width="190" height="62"/><text class="h2" x="1510" y="683">ECR Tag</text>
+  <rect class="deploy" x="1265" y="730" width="190" height="62"/><text class="h2" x="1290" y="768">New Revision</text>
+  <rect class="deploy" x="1485" y="730" width="190" height="62"/><text class="h2" x="1510" y="768">Update Service</text>
+
+  <path class="line" d="M570 685 H650"/>
+  <path class="line" d="M1150 685 H1230"/>
+
+  <rect class="note" x="70" y="900" width="1660" height="150"/>
+  <text class="h2" x="105" y="940">最重要的分界</text>
+  <text class="t" x="105" y="976">网络、路由、IGW、NAT、S3 endpoint 是基础设施，通常建好后很少变。</text>
+  <text class="t" x="105" y="1008">Security Group 和 Listener/Rules 是入口安全与转发逻辑，排查网站进不来时重点看。</text>
+  <text class="t" x="105" y="1040">ECR image、task definition revision、ECS service rolling update 才是每次代码上线会变的部分。</text>
+</svg>

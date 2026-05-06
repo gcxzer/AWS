@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1750" height="1120" viewBox="0 0 1750 1120" role="img" aria-labelledby="title desc">
+  <title id="title">TopicFollow ALB Security Group、Listener、Rule 和 Target Group 当前设置</title>
+  <desc id="desc">展示 TopicFollow 当前生产 ALB 的安全组、80/443 listener、HTTP 到 HTTPS 重定向、HTTPS 转发到 target group、ECS 和 RDS 安全组关系。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <marker id="blueArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <marker id="greenArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#16a34a"/>
+    </marker>
+    <marker id="redArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#dc2626"/>
+    </marker>
+    <style>
+      .page{fill:#f8fafc}
+      .title{font:700 38px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .sub{font:400 18px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .h{font:700 22px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .h2{font:700 18px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .t{font:400 15px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .s{font:400 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#64748b}
+      .code{font:600 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#334155}
+      .box{fill:#fff;stroke:#cbd5e1;stroke-width:2;rx:18}
+      .internet{fill:#eff6ff;stroke:#2563eb;stroke-width:2.4;rx:18}
+      .sg{fill:#fff7ed;stroke:#f97316;stroke-width:2.4;rx:18}
+      .alb{fill:#ecfdf5;stroke:#16a34a;stroke-width:2.4;rx:20}
+      .listener{fill:#f0fdf4;stroke:#22c55e;stroke-width:2;rx:16}
+      .tg{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2.4;rx:18}
+      .ecs{fill:#fefce8;stroke:#ca8a04;stroke-width:2.4;rx:18}
+      .rds{fill:#fdf2f8;stroke:#db2777;stroke-width:2.4;rx:18}
+      .note{fill:#ffffff;stroke:#cbd5e1;stroke-width:2;rx:16}
+      .line{stroke:#334155;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .blue{stroke:#2563eb;stroke-width:3;fill:none;marker-end:url(#blueArrow)}
+      .green{stroke:#16a34a;stroke-width:3;fill:none;marker-end:url(#greenArrow)}
+      .red{stroke:#dc2626;stroke-width:3;fill:none;marker-end:url(#redArrow)}
+      .dash{stroke-dasharray:8 8}
+    </style>
+  </defs>
+
+  <rect class="page" width="1750" height="1120"/>
+  <text class="title" x="64" y="72">TopicFollow 当前 ALB 设置：Security Group 先拦门，Listener/Rules 再转发</text>
+  <text class="sub" x="64" y="108">实际读取自 eu-central-1：ALB 只挂一个安全组，监听 80/443；80 重定向到 443，443 转发到 ECS target group。</text>
+
+  <rect class="internet" x="70" y="205" width="240" height="125"/>
+  <text class="h" x="105" y="250">Browser / Cloudflare</text>
+  <text class="t" x="105" y="282">公网用户入口</text>
+  <text class="code" x="105" y="310">HTTP 80 / HTTPS 443</text>
+
+  <rect class="sg" x="390" y="155" width="315" height="225"/>
+  <text class="h" x="425" y="205">Sicherheitsgruppe</text>
+  <text class="h2" x="425" y="235">ALB Security Group</text>
+  <text class="code" x="425" y="264">sg-00394479ba2e93c4d</text>
+  <text class="t" x="425" y="302">Inbound:</text>
+  <text class="code" x="505" y="302">TCP 80  from 0.0.0.0/0</text>
+  <text class="code" x="505" y="330">TCP 443 from 0.0.0.0/0</text>
+  <text class="s" x="425" y="358">这里先决定请求能不能碰到 ALB</text>
+
+  <rect class="alb" x="805" y="135" width="610" height="400"/>
+  <text class="h" x="840" y="185">Application Load Balancer</text>
+  <text class="code" x="840" y="214">topicfollow-prod-alb</text>
+  <text class="s" x="840" y="242">internet-facing · public subnets eu-central-1a / eu-central-1b</text>
+
+  <rect class="listener" x="850" y="280" width="235" height="120"/>
+  <text class="h2" x="880" y="320">Listener 80</text>
+  <text class="code" x="880" y="350">HTTP :80</text>
+  <text class="t" x="880" y="378">Rule: 301 redirect</text>
+
+  <rect class="listener" x="1130" y="280" width="245" height="120"/>
+  <text class="h2" x="1160" y="320">Listener 443</text>
+  <text class="code" x="1160" y="350">HTTPS :443</text>
+  <text class="t" x="1160" y="378">ACM cert + forward</text>
+
+  <rect class="note" x="910" y="430" width="425" height="72"/>
+  <text class="s" x="940" y="462">TLS policy: ELBSecurityPolicy-TLS13-1-2-Res-PQ-2025-09</text>
+  <text class="s" x="940" y="486">ACM cert: topicfollow.com / www.topicfollow.com</text>
+
+  <path class="blue" d="M310 268 H390"/>
+  <text class="s" x="326" y="250">先到防火墙</text>
+  <path class="green" d="M705 268 H805"/>
+  <text class="s" x="720" y="250">放行后才到 listener</text>
+  <path class="red" d="M968 400 C1015 435 1110 435 1215 400"/>
+  <text class="s" x="1015" y="424">HTTP 80 -> HTTPS 443</text>
+
+  <rect class="tg" x="1490" y="235" width="215" height="210"/>
+  <text class="h2" x="1520" y="280">Zielgruppe</text>
+  <text class="h2" x="1520" y="306">Target Group</text>
+  <text class="code" x="1520" y="336">topicfollow-prod-web-tg</text>
+  <text class="t" x="1520" y="370">HTTP :3000</text>
+  <text class="t" x="1520" y="398">Health: /api/health = 200</text>
+  <text class="s" x="1520" y="426">target type: ip</text>
+
+  <path class="green" d="M1375 340 H1490"/>
+  <text class="s" x="1400" y="322">forward</text>
+
+  <rect class="sg" x="580" y="650" width="330" height="200"/>
+  <text class="h2" x="615" y="695">ECS Service Security Group</text>
+  <text class="code" x="615" y="724">sg-0ba3af6d70566127f</text>
+  <text class="t" x="615" y="762">Inbound:</text>
+  <text class="code" x="695" y="762">TCP 3000</text>
+  <text class="s" x="615" y="792">source = ALB SG</text>
+  <text class="s" x="615" y="820">公网不能直接访问 ECS</text>
+
+  <rect class="ecs" x="1000" y="650" width="300" height="200"/>
+  <text class="h2" x="1035" y="695">ECS Fargate Task</text>
+  <text class="t" x="1035" y="728">Next.js container</text>
+  <text class="code" x="1035" y="758">10.20.156.112:3000</text>
+  <text class="s" x="1035" y="790">Target health: healthy</text>
+  <text class="s" x="1035" y="818">AZ: eu-central-1b</text>
+
+  <rect class="sg" x="760" y="920" width="330" height="140"/>
+  <text class="h2" x="795" y="960">RDS Security Group</text>
+  <text class="code" x="795" y="988">sg-0cb247a8aeb04623a</text>
+  <text class="code" x="795" y="1018">TCP 5432 source = ECS SG</text>
+  <text class="s" x="795" y="1046">只有 ECS 能连数据库端口</text>
+
+  <rect class="rds" x="1180" y="920" width="300" height="140"/>
+  <text class="h2" x="1215" y="960">RDS PostgreSQL</text>
+  <text class="code" x="1215" y="990">topicfollow-prod-postgres</text>
+  <text class="t" x="1215" y="1022">TCP 5432</text>
+
+  <path class="green" d="M1598 445 C1540 590 1365 670 1300 730"/>
+  <text class="s" x="1400" y="620">TG sends traffic to task IP:3000</text>
+  <path class="green" d="M910 750 H1000"/>
+  <text class="s" x="922" y="732">SG allows 3000</text>
+  <path class="green" d="M1150 850 C1110 900 1030 920 960 920"/>
+  <text class="s" x="1010" y="892">app connects to DB</text>
+  <path class="green" d="M1090 990 H1180"/>
+  <text class="s" x="1100" y="972">SG allows 5432</text>
+
+  <rect class="box" x="70" y="910" width="585" height="150"/>
+  <text class="h2" x="105" y="952">怎么读这张图</text>
+  <text class="t" x="105" y="986">1. Security Group 只看 IP、来源、协议、端口。</text>
+  <text class="t" x="105" y="1018">2. Listener/Rules 只在请求已经进到 ALB 后才工作。</text>
+  <text class="t" x="105" y="1050">3. Target Group 负责把 ALB 和 ECS task IP:3000 连起来，并做健康检查。</text>
+</svg>

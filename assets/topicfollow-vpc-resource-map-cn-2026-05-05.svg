@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1180" viewBox="0 0 1800 1180" role="img" aria-labelledby="title desc">
+  <title id="title">TopicFollow VPC resource map：subnet、route table、IGW、NAT、S3 endpoint</title>
+  <desc id="desc">展示 TopicFollow 当前 VPC 内 6 个 subnet、7 个 route table、Internet Gateway、regional NAT Gateway 和 S3 Gateway Endpoint 的关系。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <marker id="greenArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#16a34a"/>
+    </marker>
+    <marker id="orangeArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#f97316"/>
+    </marker>
+    <marker id="purpleArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7c3aed"/>
+    </marker>
+    <style>
+      .page{fill:#f8fafc}
+      .title{font:700 38px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .sub{font:400 18px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .h{font:700 22px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .h2{font:700 18px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .t{font:400 15px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .s{font:400 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#64748b}
+      .tiny{font:400 12px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#64748b}
+      .code{font:600 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#334155}
+      .vpc{fill:#ffffff;stroke:#94a3b8;stroke-width:3;rx:28}
+      .az{fill:#f8fafc;stroke:#cbd5e1;stroke-width:2;rx:22}
+      .pub{fill:#eff6ff;stroke:#2563eb;stroke-width:2.4;rx:16}
+      .priv{fill:#f0fdf4;stroke:#16a34a;stroke-width:2.4;rx:16}
+      .rt{fill:#fff7ed;stroke:#f97316;stroke-width:2.2;rx:16}
+      .conn{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2.4;rx:18}
+      .note{fill:#fff;stroke:#cbd5e1;stroke-width:2;rx:16}
+      .line{stroke:#334155;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .green{stroke:#16a34a;stroke-width:3;fill:none;marker-end:url(#greenArrow)}
+      .orange{stroke:#f97316;stroke-width:3;fill:none;marker-end:url(#orangeArrow)}
+      .purple{stroke:#7c3aed;stroke-width:3;fill:none;marker-end:url(#purpleArrow)}
+      .dash{stroke-dasharray:8 8}
+    </style>
+  </defs>
+
+  <rect class="page" width="1800" height="1180"/>
+  <text class="title" x="64" y="72">TopicFollow VPC：Subnet 是位置，Route Table 是路牌，Network Connections 是出口/私有门</text>
+  <text class="sub" x="64" y="108">实际读取自 topicfollow-prod-vpc：6 个 subnet、7 个 route table、1 个 Internet Gateway、1 个 regional NAT Gateway、1 个 S3 Gateway Endpoint。</text>
+
+  <rect class="vpc" x="60" y="150" width="1680" height="875"/>
+  <text class="h" x="95" y="195">VPC: topicfollow-prod-vpc</text>
+  <text class="code" x="95" y="225">vpc-048908daa27b5c4d7 · CIDR 10.20.0.0/16</text>
+
+  <rect class="az" x="95" y="270" width="560" height="500"/>
+  <text class="h2" x="125" y="310">Availability Zone: eu-central-1a</text>
+  <rect class="pub" x="125" y="340" width="240" height="92"/>
+  <text class="h2" x="150" y="372">public1 subnet</text>
+  <text class="code" x="150" y="400">10.20.0.0/20</text>
+  <text class="s" x="150" y="420">ALB can live here</text>
+
+  <rect class="priv" x="125" y="470" width="240" height="92"/>
+  <text class="h2" x="150" y="502">private1 subnet</text>
+  <text class="code" x="150" y="530">10.20.128.0/20</text>
+  <text class="s" x="150" y="550">ECS app subnet</text>
+
+  <rect class="priv" x="125" y="600" width="240" height="92"/>
+  <text class="h2" x="150" y="632">private3 subnet</text>
+  <text class="code" x="150" y="660">10.20.160.0/20</text>
+  <text class="s" x="150" y="680">DB / private subnet</text>
+
+  <rect class="rt" x="430" y="340" width="190" height="92"/>
+  <text class="h2" x="455" y="372">rtb-public</text>
+  <text class="code" x="455" y="400">0.0.0.0/0 -> IGW</text>
+  <rect class="rt" x="430" y="470" width="190" height="92"/>
+  <text class="h2" x="455" y="502">rtb-private1</text>
+  <text class="code" x="455" y="530">0/0 -> NAT</text>
+  <text class="code" x="455" y="550">S3 -> VPCE</text>
+  <rect class="rt" x="430" y="600" width="190" height="92"/>
+  <text class="h2" x="455" y="632">rtb-private3</text>
+  <text class="code" x="455" y="660">0/0 -> NAT</text>
+  <text class="code" x="455" y="680">S3 -> VPCE</text>
+
+  <rect class="az" x="700" y="270" width="560" height="500"/>
+  <text class="h2" x="730" y="310">Availability Zone: eu-central-1b</text>
+  <rect class="pub" x="730" y="340" width="240" height="92"/>
+  <text class="h2" x="755" y="372">public2 subnet</text>
+  <text class="code" x="755" y="400">10.20.16.0/20</text>
+  <text class="s" x="755" y="420">ALB can live here</text>
+
+  <rect class="priv" x="730" y="470" width="240" height="92"/>
+  <text class="h2" x="755" y="502">private2 subnet</text>
+  <text class="code" x="755" y="530">10.20.144.0/20</text>
+  <text class="s" x="755" y="550">ECS app subnet</text>
+
+  <rect class="priv" x="730" y="600" width="240" height="92"/>
+  <text class="h2" x="755" y="632">private4 subnet</text>
+  <text class="code" x="755" y="660">10.20.176.0/20</text>
+  <text class="s" x="755" y="680">DB / private subnet</text>
+
+  <rect class="rt" x="1035" y="340" width="190" height="92"/>
+  <text class="h2" x="1060" y="372">rtb-public</text>
+  <text class="code" x="1060" y="400">0.0.0.0/0 -> IGW</text>
+  <rect class="rt" x="1035" y="470" width="190" height="92"/>
+  <text class="h2" x="1060" y="502">rtb-private2</text>
+  <text class="code" x="1060" y="530">0/0 -> NAT</text>
+  <text class="code" x="1060" y="550">S3 -> VPCE</text>
+  <rect class="rt" x="1035" y="600" width="190" height="92"/>
+  <text class="h2" x="1060" y="632">rtb-private4</text>
+  <text class="code" x="1060" y="660">0/0 -> NAT</text>
+  <text class="code" x="1060" y="680">S3 -> VPCE</text>
+
+  <rect class="conn" x="1370" y="265" width="300" height="110"/>
+  <text class="h2" x="1405" y="306">Internet Gateway</text>
+  <text class="code" x="1405" y="334">topicfollow-prod-igw</text>
+  <text class="s" x="1405" y="356">public subnet 的公网大门</text>
+
+  <rect class="conn" x="1370" y="445" width="300" height="120"/>
+  <text class="h2" x="1405" y="486">Regional NAT Gateway</text>
+  <text class="code" x="1405" y="514">topicfollow-prod-regional-nat</text>
+  <text class="s" x="1405" y="536">private subnet 主动出公网</text>
+
+  <rect class="conn" x="1370" y="635" width="300" height="120"/>
+  <text class="h2" x="1405" y="676">S3 Gateway Endpoint</text>
+  <text class="code" x="1405" y="704">topicfollow-prod-vpce-s3</text>
+  <text class="s" x="1405" y="726">private route table 私有访问 S3</text>
+
+  <path class="orange" d="M365 386 H430"/>
+  <path class="orange" d="M365 516 H430"/>
+  <path class="orange" d="M365 646 H430"/>
+  <path class="orange" d="M970 386 H1035"/>
+  <path class="orange" d="M970 516 H1035"/>
+  <path class="orange" d="M970 646 H1035"/>
+
+  <path class="purple" d="M620 386 C820 240 1180 240 1370 315"/>
+  <path class="purple" d="M1225 386 C1290 360 1325 340 1370 320"/>
+  <path class="purple" d="M620 515 C880 420 1130 420 1370 500"/>
+  <path class="purple" d="M1225 515 H1370"/>
+  <path class="purple" d="M620 646 C900 730 1130 730 1370 695"/>
+  <path class="purple" d="M1225 646 C1285 665 1330 680 1370 695"/>
+
+  <rect class="rt" x="95" y="820" width="370" height="100"/>
+  <text class="h2" x="130" y="858">main route table</text>
+  <text class="code" x="130" y="888">rtb-0b0f167865a163b03</text>
+  <text class="s" x="130" y="910">只保留 local route；没有显式 subnet 使用它</text>
+
+  <rect class="rt" x="505" y="820" width="430" height="100"/>
+  <text class="h2" x="540" y="858">NAT gateway route table</text>
+  <text class="code" x="540" y="888">rtb-0b2f07986371cba7d -> IGW</text>
+  <text class="s" x="540" y="910">NAT 自己也需要一张能去公网的路由表</text>
+
+  <rect class="note" x="980" y="820" width="690" height="150"/>
+  <text class="h2" x="1015" y="858">读图口诀</text>
+  <text class="t" x="1015" y="892">Subnet = 资源站在哪个网段和 AZ。</text>
+  <text class="t" x="1015" y="922">Route Table = 这个 subnet 的流量下一跳去哪里。</text>
+  <text class="t" x="1015" y="952">Network Connection = 通公网、出公网、私有访问 AWS 服务的连接能力。</text>
+
+  <text class="tiny" x="1260" y="315">public route: 0.0.0.0/0 -> IGW</text>
+  <text class="tiny" x="1250" y="500">private route: 0.0.0.0/0 -> NAT</text>
+  <text class="tiny" x="1245" y="690">private route: S3 prefix list -> VPCE</text>
+</svg>

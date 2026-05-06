@@ -20,7 +20,9 @@
 | AWS 为什么明明有权限还是 AccessDenied | [8. IAM 权限判定流程](#8-iam-权限判定流程) |
 | SQS、EventBridge、Lambda、Step Functions 怎么串 | [9. Serverless 异步流程](#9-serverless-异步流程) |
 | CI/CD 和 IaC 分别负责什么 | [10. CI/CD 和 IaC 流程](#10-cicd-和-iac-流程) |
-| 高可用、备份、RTO/RPO 怎么一起理解 | [11. 可靠性和恢复流程](#11-可靠性和恢复流程) |
+| Docker image 到 ECS task，以及两个 role 怎么分 | [11. ECR image 到 ECS task 的两个 Role](#11-ecr-image-到-ecs-task-的两个-role) |
+| AWS 监控、日志、审计、安全、成本分别看什么 | [12. 监控和可观测性地图](#12-监控和可观测性地图) |
+| 高可用、备份、RTO/RPO 怎么一起理解 | [13. 可靠性和恢复流程](#13-可靠性和恢复流程) |
 
 ## 1. AWS 服务分层地图
 
@@ -253,6 +255,7 @@ CloudWatch 看到错误 != CloudWatch 负责授权
 成本容易漏的地方：
 
 - NAT Gateway 即使只是出网也可能很贵。
+- 学习或小型站点可以考虑 public subnet task + 严格 Security Group，省掉 NAT Gateway 固定小时费。
 - RDS、EBS、snapshot、日志、数据传输都会持续计费。
 - 关掉 EC2 instance 不等于所有相关费用都没了。
 - 新实验先设预算，再开资源。
@@ -418,7 +421,91 @@ edit IaC
 - IaC 通常改变“有哪些云资源、权限和网络连接”。
 - 控制台手改资源可能造成 drift，之后代码和真实环境会不一致。
 
-## 11. 可靠性和恢复流程
+## 11. ECR image 到 ECS task 的两个 Role
+
+![ECR image 到 ECS task 的两个 Role](assets/aws-flow-06-ecr-ecs-roles-cn.svg)
+
+这张图专门解释 AWS Console 里这两个德语字段：
+
+```text
+Aufgabenausführungsrolle = Task Execution Role
+Aufgabenrolle = Task Role
+```
+
+从 image 到 ECS 更新的主链路：
+
+```text
+docker build
+  -> tag image
+  -> push to ECR
+  -> register new task definition revision
+  -> update ECS service
+  -> start new ECS task
+```
+
+两个 role 的分工：
+
+| 控制台字段 | 英文 | 谁使用 | 解决什么问题 |
+| --- | --- | --- | --- |
+| Aufgabenausführungsrolle | Task Execution Role | ECS / Fargate 平台 | 拉 ECR image、读取启动 secret/env file、写 CloudWatch Logs |
+| Aufgabenrolle | Task Role | 容器里的应用代码 | 运行时访问 S3、Secrets、AWS API 等业务资源 |
+
+最容易混的点：
+
+- `ECR` 只保存 image，不会让网站自动更新。
+- `Task Definition` 引用 image，也写着 `executionRoleArn` 和 `taskRoleArn`。
+- `ECS Service` 负责把新 task definition revision 滚动部署出去。
+- `Task Execution Role` 是 ECS 启动容器前后用的“搬运工权限”。
+- `Task Role` 是容器里应用代码运行时拿到的“应用本人权限”。
+- 应用用数据库时，通常是先通过 ECS 注入 `DATABASE_URL`，代码再用连接串访问 RDS；RDS 网络能不能通还要看 Security Group。
+
+记忆句：
+
+```text
+Execution Role 给 ECS 平台用，Task Role 给容器里的应用代码用。
+```
+
+## 12. 监控和可观测性地图
+
+![AWS 监控和可观测性地图](assets/aws-monitoring-observability-map-cn.svg)
+
+AWS 监控不要先背服务名，先问“我要回答什么问题”：
+
+| 问题 | 先看什么 |
+| --- | --- |
+| 服务现在是否健康、有没有报错 | CloudWatch Metrics / Logs / Alarms |
+| 谁改了 AWS 资源 | CloudTrail |
+| 资源配置有没有偏离预期 | AWS Config |
+| 钱花在哪里、有没有异常增长 | Budgets / Cost Explorer / Cost Anomaly Detection |
+| 用户能不能真的访问网站 | Synthetics Canary / Route 53 Health Check |
+| 有没有攻击迹象或漏洞 | GuardDuty / Inspector / Security Hub |
+| 网络连接有没有被拒、入口请求细节 | VPC Flow Logs / ALB access logs |
+| 数据库为什么慢 | RDS Performance Insights |
+| ECS task/container 资源是否够用 | ECS Container Insights |
+
+TopicFollow 最小推荐：
+
+```text
+CloudWatch Logs: /topicfollow/prod/web
+ALB 5xx alarm
+ECS service running task count
+RDS CPU / connections / free storage
+Budget monthly alarm
+CloudTrail enabled
+```
+
+后续按需要再加：
+
+```text
+Synthetics Canary: /api/health
+ECS Container Insights
+ALB access logs
+VPC Flow Logs
+GuardDuty / Inspector
+RDS Performance Insights
+```
+
+## 13. 可靠性和恢复流程
 
 ![AWS 可靠性和恢复流程](assets/aws-flow-05-resilience-recovery-cn.svg)
 

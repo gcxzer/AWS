@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1160" viewBox="0 0 1800 1160" role="img" aria-labelledby="title desc">
+  <title id="title">AWS 监控和可观测性地图</title>
+  <desc id="desc">按运行、日志、审计、安全、成本、可用性、配置、网络和数据库整理 AWS 监控服务，并标出 TopicFollow 推荐最小监控。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .page{fill:#f8fafc}
+      .title{font:700 38px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .sub{font:400 18px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .h{font:700 22px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .h2{font:700 18px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .t{font:400 15px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .s{font:400 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#64748b}
+      .code{font:600 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#334155}
+      .core{fill:#eff6ff;stroke:#2563eb;stroke-width:2.4;rx:18}
+      .audit{fill:#fff7ed;stroke:#f97316;stroke-width:2.4;rx:18}
+      .security{fill:#fef2f2;stroke:#dc2626;stroke-width:2.4;rx:18}
+      .cost{fill:#fefce8;stroke:#ca8a04;stroke-width:2.4;rx:18}
+      .availability{fill:#ecfdf5;stroke:#16a34a;stroke-width:2.4;rx:18}
+      .special{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2.4;rx:18}
+      .tf{fill:#ffffff;stroke:#0f172a;stroke-width:2.4;rx:18}
+      .line{stroke:#334155;stroke-width:3;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+
+  <rect class="page" width="1800" height="1160"/>
+  <text class="title" x="64" y="72">AWS 监控别按服务名背，先按“想回答什么问题”分类</text>
+  <text class="sub" x="64" y="108">CloudWatch 看运行和日志；CloudTrail 看谁改了资源；Config 看配置变化；Budgets 看钱；GuardDuty/Inspector 看安全；Canary 看用户能不能访问。</text>
+
+  <rect class="core" x="80" y="170" width="390" height="230"/>
+  <text class="h" x="115" y="215">1. 运行和日志</text>
+  <text class="h2" x="115" y="252">CloudWatch</text>
+  <text class="t" x="115" y="286">Metrics / Logs / Alarms / Dashboards</text>
+  <text class="s" x="115" y="320">回答：服务现在是否健康？哪里报错？</text>
+  <text class="code" x="115" y="354">ECS CPU / memory</text>
+  <text class="code" x="115" y="378">ALB 5xx / latency</text>
+
+  <rect class="audit" x="530" y="170" width="390" height="230"/>
+  <text class="h" x="565" y="215">2. 审计和配置</text>
+  <text class="h2" x="565" y="252">CloudTrail + AWS Config</text>
+  <text class="t" x="565" y="286">API 调用历史 + 资源配置历史</text>
+  <text class="s" x="565" y="320">回答：谁改了什么？资源变成什么样？</text>
+  <text class="code" x="565" y="354">update-service / security group changes</text>
+  <text class="code" x="565" y="378">S3 public / RDS public drift</text>
+
+  <rect class="security" x="980" y="170" width="340" height="230"/>
+  <text class="h" x="1015" y="215">3. 安全风险</text>
+  <text class="h2" x="1015" y="252">GuardDuty / Inspector</text>
+  <text class="t" x="1015" y="286">异常行为 + 漏洞扫描</text>
+  <text class="s" x="1015" y="320">回答：有没有被攻击或有 CVE？</text>
+  <text class="code" x="1015" y="354">ECR image vulnerabilities</text>
+  <text class="code" x="1015" y="378">suspicious API / network activity</text>
+
+  <rect class="cost" x="1380" y="170" width="340" height="230"/>
+  <text class="h" x="1415" y="215">4. 成本</text>
+  <text class="h2" x="1415" y="252">Budgets / Cost Explorer</text>
+  <text class="t" x="1415" y="286">预算、账单拆分、异常花费</text>
+  <text class="s" x="1415" y="320">回答：钱花在哪里？有没有异常？</text>
+  <text class="code" x="1415" y="354">NAT / RDS / Fargate / Logs</text>
+
+  <rect class="availability" x="80" y="480" width="390" height="230"/>
+  <text class="h" x="115" y="525">5. 用户可用性</text>
+  <text class="h2" x="115" y="562">Synthetics Canary</text>
+  <text class="t" x="115" y="596">模拟用户定期访问网站/API</text>
+  <text class="s" x="115" y="630">回答：真实用户能不能打开？</text>
+  <text class="code" x="115" y="664">GET /api/health should be 200</text>
+
+  <rect class="special" x="530" y="480" width="390" height="230"/>
+  <text class="h" x="565" y="525">6. 网络流量</text>
+  <text class="h2" x="565" y="562">VPC Flow Logs / ALB Access Logs</text>
+  <text class="t" x="565" y="596">底层连接 + HTTP 入口访问日志</text>
+  <text class="s" x="565" y="630">回答：连接有没有被拒？哪个路径慢？</text>
+  <text class="code" x="565" y="664">accepted / rejected traffic</text>
+
+  <rect class="special" x="980" y="480" width="340" height="230"/>
+  <text class="h" x="1015" y="525">7. 数据库性能</text>
+  <text class="h2" x="1015" y="562">RDS Performance Insights</text>
+  <text class="t" x="1015" y="596">SQL、等待事件、连接、IO</text>
+  <text class="s" x="1015" y="630">回答：数据库为什么慢？</text>
+  <text class="code" x="1015" y="664">slow queries / DB load</text>
+
+  <rect class="special" x="1380" y="480" width="340" height="230"/>
+  <text class="h" x="1415" y="525">8. 容器细节</text>
+  <text class="h2" x="1415" y="562">ECS Container Insights</text>
+  <text class="t" x="1415" y="596">service / task / container 级指标</text>
+  <text class="s" x="1415" y="630">回答：哪个 task 资源不够？</text>
+  <text class="code" x="1415" y="664">task CPU / memory / restart</text>
+
+  <rect class="tf" x="80" y="800" width="1640" height="230"/>
+  <text class="h" x="115" y="845">TopicFollow 推荐最小监控</text>
+  <text class="t" x="115" y="885">先做低成本、最高信号的监控，再按问题加高级项。</text>
+  <text class="code" x="115" y="928">CloudWatch Logs: /topicfollow/prod/web</text>
+  <text class="code" x="115" y="958">ALB 5xx alarm + target response time</text>
+  <text class="code" x="115" y="988">ECS service running task count / deployment failures</text>
+  <text class="code" x="760" y="928">RDS CPU / connections / free storage</text>
+  <text class="code" x="760" y="958">Budget monthly alarm + Cost Anomaly Detection</text>
+  <text class="code" x="760" y="988">CloudTrail enabled for “who changed what”</text>
+  <text class="code" x="1290" y="928">Later: Canary / Container Insights</text>
+  <text class="code" x="1290" y="958">Later: ALB access logs / VPC Flow Logs</text>
+  <text class="code" x="1290" y="988">Later: GuardDuty / Inspector</text>
+</svg>

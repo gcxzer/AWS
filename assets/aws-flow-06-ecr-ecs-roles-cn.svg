@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1080" viewBox="0 0 1700 1080" role="img" aria-labelledby="title desc">
+  <title id="title">ECR image 到 ECS task，以及两个 IAM Role 的分工</title>
+  <desc id="desc">展示 Docker image 推送到 ECR 后，task definition、ECS service、Fargate task、task execution role 和 task role 之间的关系。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <marker id="blueArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <marker id="greenArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#16a34a"/>
+    </marker>
+    <marker id="orangeArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#f97316"/>
+    </marker>
+    <style>
+      .page{fill:#f8fafc}
+      .title{font:700 38px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .sub{font:400 18px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .h{font:700 22px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .h2{font:700 18px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .t{font:400 15px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#475569}
+      .s{font:400 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#64748b}
+      .tiny{font:400 12px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#64748b}
+      .code{font:600 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#334155}
+      .box{fill:#fff;stroke:#cbd5e1;stroke-width:2;rx:18}
+      .local{fill:#eff6ff;stroke:#2563eb;stroke-width:2.4;rx:18}
+      .registry{fill:#fef3c7;stroke:#f59e0b;stroke-width:2.4;rx:18}
+      .ecs{fill:#ecfdf5;stroke:#16a34a;stroke-width:2.4;rx:18}
+      .roleA{fill:#fff7ed;stroke:#f97316;stroke-width:2.4;rx:18}
+      .roleB{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2.4;rx:18}
+      .data{fill:#f0fdfa;stroke:#0d9488;stroke-width:2;rx:16}
+      .logs{fill:#eef2ff;stroke:#6366f1;stroke-width:2;rx:16}
+      .line{stroke:#334155;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .blue{stroke:#2563eb;stroke-width:3;fill:none;marker-end:url(#blueArrow)}
+      .green{stroke:#16a34a;stroke-width:3;fill:none;marker-end:url(#greenArrow)}
+      .orange{stroke:#f97316;stroke-width:3;fill:none;marker-end:url(#orangeArrow)}
+      .dash{stroke-dasharray:8 8}
+    </style>
+  </defs>
+
+  <rect class="page" width="1700" height="1080"/>
+  <text class="title" x="64" y="70">从 Docker image 到 ECS task：两个 Role 谁用谁</text>
+  <text class="sub" x="64" y="106">Task Execution Role 给 ECS/Fargate 平台启动容器用；Task Role 给容器里的应用代码运行时用。</text>
+
+  <rect class="local" x="70" y="175" width="250" height="125"/>
+  <text class="h" x="105" y="220">本地 / CI</text>
+  <text class="t" x="105" y="253">docker buildx build</text>
+  <text class="code" x="105" y="280">tag: web-&lt;commit&gt;</text>
+
+  <rect class="registry" x="405" y="175" width="250" height="125"/>
+  <text class="h" x="440" y="220">ECR Repository</text>
+  <text class="t" x="440" y="253">保存 Docker image</text>
+  <text class="code" x="440" y="280">topicfollow-prod:web-...</text>
+
+  <rect class="ecs" x="740" y="175" width="285" height="125"/>
+  <text class="h" x="775" y="220">Task Definition</text>
+  <text class="t" x="775" y="253">运行说明书 revision</text>
+  <text class="code" x="775" y="280">image + ports + env + roles</text>
+
+  <rect class="ecs" x="1110" y="175" width="250" height="125"/>
+  <text class="h" x="1145" y="220">ECS Service</text>
+  <text class="t" x="1145" y="253">长期维持 task 数量</text>
+  <text class="t" x="1145" y="280">滚动替换新版本</text>
+
+  <rect class="ecs" x="1445" y="175" width="190" height="125"/>
+  <text class="h" x="1480" y="220">ECS Task</text>
+  <text class="t" x="1480" y="253">真正运行的容器</text>
+  <text class="t" x="1480" y="280">Next.js / helper</text>
+
+  <path class="blue" d="M320 237 H405"/>
+  <text class="tiny" x="338" y="222">push</text>
+  <path class="line" d="M655 237 H740"/>
+  <text class="tiny" x="676" y="222">引用 image</text>
+  <path class="green" d="M1025 237 H1110"/>
+  <text class="tiny" x="1044" y="222">注册新 revision</text>
+  <path class="green" d="M1360 237 H1445"/>
+  <text class="tiny" x="1380" y="222">启动/替换 task</text>
+
+  <rect class="roleA" x="170" y="430" width="520" height="220"/>
+  <text class="h" x="205" y="475">Aufgabenausführungsrolle</text>
+  <text class="h2" x="205" y="505">Task Execution Role</text>
+  <text class="code" x="205" y="535">ecsTaskExecutionRole</text>
+  <text class="t" x="205" y="575">谁用：ECS / Fargate 平台</text>
+  <text class="t" x="205" y="605">何时用：容器启动前和启动过程中</text>
+  <text class="t" x="205" y="635">心智模型：搬运工权限</text>
+
+  <rect class="roleB" x="1010" y="430" width="520" height="220"/>
+  <text class="h" x="1045" y="475">Aufgabenrolle</text>
+  <text class="h2" x="1045" y="505">Task Role</text>
+  <text class="code" x="1045" y="535">topicfollow-prod-web-task-role</text>
+  <text class="t" x="1045" y="575">谁用：容器里的应用代码</text>
+  <text class="t" x="1045" y="605">何时用：Next.js / scripts 运行时</text>
+  <text class="t" x="1045" y="635">心智模型：应用本人权限</text>
+
+  <path class="orange" d="M890 300 C840 365 650 365 515 430"/>
+  <text class="tiny" x="600" y="382">task definition 里写 executionRoleArn</text>
+  <path class="green" d="M895 300 C965 365 1110 365 1185 430"/>
+  <text class="tiny" x="975" y="382">task definition 里写 taskRoleArn</text>
+
+  <rect class="registry" x="100" y="755" width="265" height="100"/>
+  <text class="h2" x="135" y="795">ECR</text>
+  <text class="s" x="135" y="825">拉取 Docker image</text>
+
+  <rect class="data" x="425" y="755" width="265" height="100"/>
+  <text class="h2" x="460" y="795">Secrets / S3 env file</text>
+  <text class="s" x="460" y="825">注入启动配置</text>
+
+  <rect class="logs" x="750" y="755" width="265" height="100"/>
+  <text class="h2" x="785" y="795">CloudWatch Logs</text>
+  <text class="s" x="785" y="825">写容器 stdout/stderr</text>
+
+  <rect class="data" x="1075" y="755" width="265" height="100"/>
+  <text class="h2" x="1110" y="795">S3 / AWS APIs</text>
+  <text class="s" x="1110" y="825">应用运行时读写资源</text>
+
+  <rect class="data" x="1400" y="755" width="210" height="100"/>
+  <text class="h2" x="1435" y="795">RDS</text>
+  <text class="s" x="1435" y="825">通过连接串访问</text>
+
+  <path class="orange dash" d="M395 650 C340 690 260 710 235 755"/>
+  <path class="orange dash" d="M445 650 C485 695 525 715 555 755"/>
+  <path class="orange dash" d="M510 650 C650 700 800 710 875 755"/>
+  <path class="green dash" d="M1265 650 V755"/>
+  <path class="green dash" d="M1365 650 C1430 695 1485 715 1505 755"/>
+
+  <rect class="box" x="70" y="920" width="1565" height="105"/>
+  <text class="h2" x="105" y="960">一句话记忆</text>
+  <text class="t" x="105" y="992">Execution Role 帮 ECS 把容器启动起来；Task Role 决定容器里的应用代码启动后能访问哪些 AWS 资源。</text>
+</svg>

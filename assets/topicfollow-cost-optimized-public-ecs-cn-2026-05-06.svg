@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="560" viewBox="0 0 1180 560" role="img" aria-labelledby="title desc">
+  <title id="title">TopicFollow cost optimized public ECS network</title>
+  <desc id="desc">Cloudflare sends HTTPS traffic to a public ALB. The ALB forwards to an ECS task in public subnets. The ECS task has a public IP for outbound AWS and internet access, but inbound app traffic is only allowed from the ALB security group. RDS remains private.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f8fafc}
+      .band{fill:#ffffff;stroke:#cbd5e1;stroke-width:2}
+      .box{fill:#ffffff;stroke:#334155;stroke-width:2;rx:10}
+      .soft{fill:#eff6ff;stroke:#2563eb}
+      .warn{fill:#fff7ed;stroke:#ea580c}
+      .safe{fill:#ecfdf5;stroke:#059669}
+      .data{fill:#f5f3ff;stroke:#7c3aed}
+      .text{font-family:Arial, Helvetica, sans-serif;fill:#0f172a}
+      .muted{fill:#475569}
+      .small{font-size:18px}
+      .body{font-size:21px}
+      .title{font-size:28px;font-weight:700}
+      .label{font-size:20px;font-weight:700}
+      .arrow{stroke:#334155;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .blocked{stroke:#dc2626;stroke-width:3;stroke-dasharray:9 7;fill:none;marker-end:url(#xarrow)}
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#334155"/>
+    </marker>
+    <marker id="xarrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#dc2626"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1180" height="560"/>
+  <text class="text title" x="42" y="50">TopicFollow 降费后网络：Public ECS task，无 NAT Gateway</text>
+  <text class="text small muted" x="42" y="82">目标：保留 ALB 入口和 RDS 私有性，去掉 NAT 固定小时费；ECS 通过公网 IP 主动出网，但入站端口仍只接受 ALB 来源。</text>
+
+  <rect class="band" x="42" y="112" width="1096" height="365" rx="18"/>
+  <text class="text label" x="70" y="150">VPC topicfollow-prod-vpc</text>
+
+  <rect class="box soft" x="78" y="190" width="235" height="118"/>
+  <text class="text label" x="106" y="230">Cloudflare</text>
+  <text class="text small muted" x="106" y="262">DNS / proxy / HTTPS edge</text>
+
+  <rect class="box soft" x="382" y="168" width="270" height="165"/>
+  <text class="text label" x="410" y="207">Public Subnets</text>
+  <text class="text body" x="410" y="245">ALB</text>
+  <text class="text small muted" x="410" y="277">SG: allow 80/443 from internet</text>
+  <text class="text small muted" x="410" y="305">Listener 443 -> Target Group</text>
+
+  <rect class="box warn" x="720" y="168" width="330" height="165"/>
+  <text class="text label" x="748" y="207">Public Subnets</text>
+  <text class="text body" x="748" y="245">ECS Fargate task</text>
+  <text class="text small muted" x="748" y="277">assignPublicIp = ENABLED</text>
+  <text class="text small muted" x="748" y="305">SG: allow 3000 only from ALB SG</text>
+
+  <rect class="box data" x="720" y="372" width="330" height="82"/>
+  <text class="text body" x="748" y="407">RDS PostgreSQL</text>
+  <text class="text small muted" x="748" y="434">Private subnet, no public access</text>
+
+  <rect class="box safe" x="382" y="372" width="270" height="82"/>
+  <text class="text body" x="410" y="407">S3 / ECR / Secrets / Logs</text>
+  <text class="text small muted" x="410" y="434">ECS 主动访问 AWS API</text>
+
+  <path class="arrow" d="M313 249 H372"/>
+  <text class="text small muted" x="322" y="230">HTTPS</text>
+
+  <path class="arrow" d="M652 249 H710"/>
+  <text class="text small muted" x="660" y="230">HTTP 3000</text>
+
+  <path class="arrow" d="M885 333 V362"/>
+  <text class="text small muted" x="900" y="354">5432</text>
+
+  <path class="arrow" d="M720 413 H662"/>
+  <text class="text small muted" x="634" y="393">outbound</text>
+
+  <path class="blocked" d="M195 338 C280 500 648 500 806 333"/>
+  <text class="text small" x="186" y="375" fill="#dc2626">公网不能直接进 ECS:3000</text>
+
+  <rect class="box" x="78" y="398" width="235" height="56"/>
+  <text class="text body" x="102" y="434">NAT Gateway: deleted</text>
+
+  <text class="text small muted" x="42" y="520">注意：ECS task 有公网 IP 是为了主动出网；真正的入口仍是 Cloudflare -> ALB。安全边界靠 Security Group 和 RDS private subnet 保持。</text>
+</svg>

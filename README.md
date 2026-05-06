@@ -24,7 +24,9 @@
 | IAM 为什么会 AccessDenied | [AWS 概念心智模型图册](aws-concepts-mental-models.md#8-iam-权限判定流程) |
 | SQS、EventBridge、Lambda、Step Functions 怎么串异步流程 | [AWS 概念心智模型图册](aws-concepts-mental-models.md#9-serverless-异步流程) |
 | CI/CD 和 IaC 分别改什么 | [AWS 概念心智模型图册](aws-concepts-mental-models.md#10-cicd-和-iac-流程) |
-| 高可用、备份、RTO/RPO 怎么一起理解 | [AWS 概念心智模型图册](aws-concepts-mental-models.md#11-可靠性和恢复流程) |
+| Docker image、ECR、ECS task 和两个 role 怎么连起来 | [AWS 概念心智模型图册](aws-concepts-mental-models.md#11-ecr-image-到-ecs-task-的两个-role) |
+| AWS 监控、日志、审计、安全、成本分别看什么 | [AWS 概念心智模型图册](aws-concepts-mental-models.md#12-监控和可观测性地图) |
+| 高可用、备份、RTO/RPO 怎么一起理解 | [AWS 概念心智模型图册](aws-concepts-mental-models.md#13-可靠性和恢复流程) |
 
 ## 主文档
 
@@ -36,7 +38,7 @@
 - [AWS 概念心智模型图册](aws-concepts-mental-models.md)
   - 只讲通用 AWS 概念。
   - 先按账号、网络、计算、存储、安全、运维、AI 建立分层。
-  - 再用 Web 请求、IAM 判权、异步任务、CI/CD、可靠性恢复流程图串起来。
+  - 再用 Web 请求、IAM 判权、异步任务、CI/CD、ECS role、监控、可靠性恢复流程图串起来。
 
 ## 学习路线
 
