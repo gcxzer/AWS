@@ -1,0 +1,11 @@
+AWS AI Document Assistant Overview
+
+The AWS AI document assistant stores original uploaded files in Amazon S3. S3 is object storage, so it is a good place for PDFs, text files, images, logs, and other raw documents.
+
+Amazon DynamoDB stores document metadata and chat history. The document table can list all documents for a user, and the chat table can restore the messages for one conversation session.
+
+Amazon OpenSearch Service is used for retrieval. The application splits each document into smaller chunks, stores every chunk as a searchable document, and returns the chunks that match a user's question.
+
+Amazon Bedrock generates answers from retrieved context. Instead of asking the model to guess from memory, the application passes relevant chunks from OpenSearch into the prompt.
+
+Bedrock AgentCore can later turn this fixed RAG flow into an agent workflow. The agent can call tools such as search documents, read document metadata, get chat history, and save answers.

@@ -1,0 +1,10 @@
+AWS AI Document Assistant
+
+This is the first sample document for the AWS AI document assistant project.
+
+The project stores original documents in Amazon S3.
+It will store document metadata and chat history in Amazon DynamoDB.
+It will use Amazon OpenSearch Service to search document chunks.
+It will call Amazon Bedrock to generate answers from retrieved context.
+
+This sample file is intentionally small so that the first S3 upload is easy to verify in the AWS Console.

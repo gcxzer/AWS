@@ -1,0 +1,29 @@
+[
+  {
+    "user_id": "user_001",
+    "document_id": "doc_004",
+    "chunk_id": "doc_004#chunk_0001",
+    "text": "AWS AI Document Assistant Overview\n\nThe AWS AI document assistant stores original uploaded files in Amazon S3. S3 is object storage, so it is a good place for PDFs, text files, images, logs, and other raw documents.\n\nAmazon DynamoDB stores document metadata and chat history. The document table can list all documents for a user, and the chat table can restore the messages for one conversation session.",
+    "source": "aws-ai-doc-assistant-overview.txt",
+    "s3_uri": null,
+    "token_count": 67
+  },
+  {
+    "user_id": "user_001",
+    "document_id": "doc_004",
+    "chunk_id": "doc_004#chunk_0002",
+    "text": "Amazon OpenSearch Service is used for retrieval. The application splits each document into smaller chunks, stores every chunk as a searchable document, and returns the chunks that match a user's question.\n\nAmazon Bedrock generates answers from retrieved context. Instead of asking the model to guess from memory, the application passes relevant chunks from OpenSearch into the prompt.",
+    "source": "aws-ai-doc-assistant-overview.txt",
+    "s3_uri": null,
+    "token_count": 58
+  },
+  {
+    "user_id": "user_001",
+    "document_id": "doc_004",
+    "chunk_id": "doc_004#chunk_0003",
+    "text": "Bedrock AgentCore can later turn this fixed RAG flow into an agent workflow. The agent can call tools such as search documents, read document metadata, get chat history, and save answers.",
+    "source": "aws-ai-doc-assistant-overview.txt",
+    "s3_uri": null,
+    "token_count": 31
+  }
+]
